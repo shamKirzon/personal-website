@@ -1,8 +1,10 @@
 import HomePage from "./components/HomePage"
+import "./index.css"
+
 
 const App = () => {
   return (
-    <div>
+    <div className="bg-zinc-900 h-screen w-screen">
       <HomePage/>
     </div>
   ) 
