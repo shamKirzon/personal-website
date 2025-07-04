@@ -4,8 +4,10 @@ import "./index.css"
 
 const App = () => {
   return (
-    <div className="bg-zinc-900 h-screen w-screen">
+   <div className="bg-zinc-900 min-h-screen w-full">
+
       <HomePage/>
+      
     </div>
   ) 
 }

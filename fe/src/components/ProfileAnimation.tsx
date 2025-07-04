@@ -6,6 +6,7 @@ import email from "@/assets/icons/email.svg";
 import { motion } from "motion/react";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import LoadingThreeDotsPulse from "./LoadingThreeDotsPulse";
 
 type Props = {
   onFinish?: () => void;
@@ -18,23 +19,20 @@ const ProfileAnimation = ({ onFinish }: Props) => {
     { name: "Send Email", icon: email },
   ];
 
-
   return (
+    <>
     <motion.div
-     
-        initial={{scale:1, y:0}}
-        animate ={{scale: 0.6, y: -200}}
-        transition={{ delay: 2, duration: 1, ease: "easeInOut" }}
-
+      initial={{ scale: 1, y: 0 }}
+      animate={{ scale: 0.6, y: -200 }}
+      transition={{ delay: 2, duration: 1, ease: "easeInOut" }}
       onAnimationComplete={() => {
         setAnimationFinished(true);
-        if(onFinish) onFinish()
+        if (onFinish) onFinish();
       }}
-
-       className="flex items-center justify-center mt-[10rem] "
+      className="flex items-center justify-center mt-48"
     >
       {/* content container */}
-      <div className="w-[65rem] flex h-[19rem] space-x-8">
+      <div className="flex w-[65rem] space-x-8">
         <img src={profile} alt="Profile" className="h-[19rem] rounded-[1rem]" />
 
         {/* content */}
@@ -100,6 +98,7 @@ const ProfileAnimation = ({ onFinish }: Props) => {
         </div>
       </div>
     </motion.div>
+    </>
   );
 };
 
