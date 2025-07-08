@@ -4,7 +4,7 @@ import "./index.css"
 
 const App = () => {
   return (
-   <div className="bg-zinc-900 min-h-screen w-full">
+   <div className="bg-zinc-900 min-w-full min-h-screen">
 
       <HomePage/>
       
