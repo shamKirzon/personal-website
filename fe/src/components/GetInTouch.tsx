@@ -8,7 +8,7 @@ const GetInTouch = () => {
         <span className="text-5xl  text-white">
           UNDER DEVELOPMENT, PLEASE USE MOBILE VIEW FOR NOW
         </span>
-        <LoadingThreeDotsPulse/> 
+        <LoadingThreeDotsPulse/>
       </div>
     </div>
   );

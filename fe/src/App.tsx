@@ -20,9 +20,13 @@ const App = () => {
   }, []);
 
   return (
-    <div className="bg-zinc-900 min-w-full min-h-screen">
-      {screenWidth! < 640 ? <HomePage /> : <GetInTouch />}
-    </div>
+    <>
+      <div className="relative bg-zinc-900 min-w-full min-h-screen ">
+        {screenWidth! < 640 ? <HomePage /> : <GetInTouch />}
+      </div>
+
+      <div className="fixed bottom-0 left-0 w-full h-15 pointer-events-none bg-gradient-to-t from-zinc-900 to-transparent"></div>
+    </>
   );
 };
 

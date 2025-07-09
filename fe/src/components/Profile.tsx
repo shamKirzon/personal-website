@@ -1,5 +1,6 @@
 import myProfile from "@/assets/images/profile.jpg";
 import { Location, Download, Email } from "@/assets/icons/Icons";
+import { motion, useInView } from "motion/react";
 
 const Profile = () => {
   const profileButtons = [
@@ -25,16 +26,29 @@ const Profile = () => {
   };
 
   const sendEmail = () => {
-    window.location.href = "mailto:shammysuyat@gmail.com?subject=Visitors&body=Hi Shammy, I visited your web";
-  }
+    window.location.href =
+      "mailto:shammysuyat@gmail.com?subject=Visitors&body=Hi Shammy, I visited your web";
+  };
 
   return (
     <>
       {/*Parent Container*/}
       <div className="flex justify-center mt-4 ">
         {/* Profile, Text Container */}
-        <div className="flex flex-col items-center w-full max-w-sm">
-          <img
+        <div className="flex flex-col items-center w-full max-w-md">
+          <motion.img
+            animate={{
+              rotate: 360,
+            }}
+
+            transition={{
+              repeat:Infinity, 
+              repeatType:"loop", 
+              duration: 2,
+              ease: "linear" 
+            }}
+
+           
             src={myProfile}
             alt="Profile"
             className="w-50  object-cover rounded-md"
@@ -68,7 +82,7 @@ const Profile = () => {
                 `}
                 onClick={() => {
                   if (button.label === "Download CV") downloadCV();
-                  else sendEmail()
+                  else sendEmail();
                 }}
               >
                 {button.icon}
