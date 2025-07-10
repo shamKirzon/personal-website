@@ -15,7 +15,7 @@ const Profile = () => {
   ];
 
   const downloadCV = () => {
-    const URL = "/kambing.jpg";
+    const URL = "/myCV-censored.pdf";
     const link = document.createElement("a");
 
     link.href = URL;
