@@ -1,6 +1,7 @@
 import Profile from "./Profile"
 import About from "./About"
 import TechStack from "./TechStack"
+import Education from "./Education"
 
 
 const HomePage = () => {
@@ -10,6 +11,7 @@ const HomePage = () => {
         <Profile/>
         <About/>
         <TechStack/>
+        <Education/> 
     </div>
   )
 }

@@ -6,7 +6,7 @@ import kambing from "@/assets/kambing.jpg";
 
 const TechStack = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const isInView = useInView(ref, { once: false });
 
   return (
     <motion.div
