@@ -1,8 +1,11 @@
 import myProfile from "@/assets/images/profile.jpg";
 import { Location, Download, Email } from "@/assets/icons/Icons";
-import { motion, useInView } from "motion/react";
+import { motion } from "motion/react";
+import { useRef } from "react";
 
 const Profile = () => {
+  const ref = useRef(null);
+
   const profileButtons = [
     {
       label: "Download CV",
@@ -33,22 +36,21 @@ const Profile = () => {
   return (
     <>
       {/*Parent Container*/}
-      <div className="flex justify-center mt-4 ">
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 40, scale: 0.98 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{
+          duration: 0.8,
+          ease: "easeIn",
+          delay: 0.1,
+        }}
+        viewport={{ once: true, amount: 0.3 }}
+        className="flex justify-center mt-4 "
+      >
         {/* Profile, Text Container */}
         <div className="flex flex-col items-center w-full max-w-md">
-          <motion.img
-            animate={{
-              rotate: 360,
-            }}
-
-            transition={{
-              repeat:Infinity, 
-              repeatType:"loop", 
-              duration: 2,
-              ease: "linear" 
-            }}
-
-           
+          <img
             src={myProfile}
             alt="Profile"
             className="w-50  object-cover rounded-md"
@@ -93,7 +95,7 @@ const Profile = () => {
             ))}
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };

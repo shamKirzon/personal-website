@@ -2,6 +2,7 @@ import Profile from "./Profile"
 import About from "./About"
 import TechStack from "./TechStack"
 import Education from "./Education"
+import Work from "./Work"
 
 
 const HomePage = () => {
@@ -12,6 +13,7 @@ const HomePage = () => {
         <About/>
         <TechStack/>
         <Education/> 
+        <Work/>
     </div>
   )
 }

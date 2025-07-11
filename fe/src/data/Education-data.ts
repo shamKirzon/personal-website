@@ -4,13 +4,13 @@ export const education = [
     {
       school: "University of Makati",
       course: "BS Computer Science",
-      icon: umak, 
+      image: umak, 
       years: "2023 - 2027",
     },
     {
-      school: "Benigno Ninoy Aquino Highschool",
+      school: "Benigno \"Ninoy\" Aquino Highschool",
       course: "ICT - Computer Programming",
-      icon: bnahs,
+      image: bnahs,
       years: "2021 - 2023",
     },
   ];

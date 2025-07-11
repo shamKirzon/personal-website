@@ -11,9 +11,6 @@ const Education = () => {
           <h1 className="text-white h-10 text-5xl font-bold mt-2 text-center w-full">
             Education
           </h1>
-          <h1 className="text-zinc-500 font-light text-3xl mt-2 text-center w-full">
-            with Programming Experience
-          </h1>
         </div>
 
         <div className="flex flex-col gap-y-5">
@@ -34,9 +31,9 @@ const Education = () => {
               {/* content */}
               <div className="relative flex items-start gap-x-4 py-3 z-10">
                 <img
-                  src={data.icon}
-                  alt={data.icon}
-                  className="w-20 object-cover rounded-[3rem]"
+                  src={data.image}
+                  alt={data.image}
+                  className="w-19 object-cover rounded-[3rem]"
                 />
 
                 <div className="flex flex-col">
