@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { project } from "../data/Project-data";
-import heronest from "../assets/images/projects/heronest.png";
 import { ChevronDown } from "lucide-react";
 import {
   Accordion,
@@ -25,7 +24,14 @@ const Project = () => {
         <div className="flex flex-col items-center flex-wrap  gap-y-20">
           {/* project container */}
           {project.map((data, index) => (
-            <div  key = {index} className="flex flex-col gap-y-5 ">
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              viewport={{ once: false, amount: 0.3 }}
+              className="flex flex-col gap-y-5 "
+            >
               <div className="flex justify-center items-center px-3 py-1 ml-auto rounded-sm bg-white/10 backdrop-blur-md border border-white/20 shadow-md">
                 <span className=" text-white">{data.app}</span>
               </div>
@@ -58,8 +64,11 @@ const Project = () => {
                       {/* tech stack */}
                       <div className="flex flex-wrap p-4 gap-2">
                         {data.technology.map((technology, index) => (
-                          <p key={index} className="text-white py-1 px-2 font-medium rounded-sm bg-white/10 backdrop-blur-md border border-white/20 shadow-md">
-                           {technology.name}
+                          <p
+                            key={index}
+                            className="text-white py-1 px-2 font-medium rounded-sm bg-white/10 backdrop-blur-md border border-white/20 shadow-md"
+                          >
+                            {technology.name}
                           </p>
                         ))}
                       </div>
@@ -67,7 +76,7 @@ const Project = () => {
                   </AccordionItem>
                 </Accordion>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

@@ -11,11 +11,11 @@ const HomePage = () => {
 
   return (
     <div className="p-4">
-        {/* <Profile/>
+        <Profile/>
         <About/>
         <TechStack/>
         <Education/> 
-        <Work/> */}
+        <Work/>
         <Project/>
     </div>
   )
