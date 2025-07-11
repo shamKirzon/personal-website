@@ -1,4 +1,3 @@
-import kambing from "../assets/kambing.jpg";
 import lorem from "../assets/images/lorem-itsum.jpg"
 
 type Props = {
