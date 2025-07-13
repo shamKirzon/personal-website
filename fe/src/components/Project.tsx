@@ -8,6 +8,7 @@ import {
   AccordionTrigger,
 } from "@radix-ui/react-accordion";
 
+
 const Project = () => {
   return (
     // parent container
@@ -53,7 +54,7 @@ const Project = () => {
                         className="ml-auto transition-transform duration-200 group-data-[state=open]:rotate-180"
                       />
                     </AccordionTrigger>
-                    <AccordionContent>
+                    <AccordionContent className="overflow-hidden transition-all data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
                       {/* description */}
                       <div className="flex px-4">
                         <p className="text-white leading-5">

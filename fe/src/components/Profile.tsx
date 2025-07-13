@@ -13,7 +13,7 @@ const Profile = () => {
     },
     {
       label: "Send Email",
-      icon: <Email width="35" />,
+      icon: <Email width="35" height="32" />,
     },
   ];
 
@@ -62,7 +62,7 @@ const Profile = () => {
           {/* location */}
 
           <div className="flex items-center gap-x-1">
-            <Location width="25" />
+            <Location width="25" height="32" />
             <h1 className="text-white text-lg ">Taguig City, Philippines</h1>
           </div>
           <p className=" text-[#A1A1AA] text-center text-lg leading-6 mt-2 ">
