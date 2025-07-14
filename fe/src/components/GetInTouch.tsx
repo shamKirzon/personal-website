@@ -6,7 +6,7 @@ import * as z from "zod";
 import { useEffect, useState } from "react";
 
 const GetInTouch = () => {
-  // message form schema
+  
 
 
 
@@ -31,6 +31,31 @@ const GetInTouch = () => {
       setEmail("");
       setMessage("");
     };
+
+
+    async function handleSend (data: any){
+      const {name, email, message} = data
+
+      
+
+      const response = await fetch("/api/send-email.ts", {
+        method: "POST", 
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name, 
+          email: email, 
+          message: message
+
+        })
+      })
+
+      if(response) console.log(response, typeof response)
+
+    }
+
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
@@ -44,9 +69,21 @@ const GetInTouch = () => {
       const result = MessageSchema.safeParse(data);
 
       if (result.success) {
-        console.log(data, typeof data)
+        console.log(  data , typeof data)
         resetForm();
         setFormErrors({});
+        console.log("SUCESS ANG BUTTON")
+        handleSend(data)
+
+
+
+      
+       
+
+
+
+
+
       } else {
         const formattedErrors = result.error.format();
         setFormErrors({
