@@ -8,7 +8,6 @@ import {
   AccordionTrigger,
 } from "@radix-ui/react-accordion";
 
-
 const Project = () => {
   return (
     // parent container
@@ -37,7 +36,7 @@ const Project = () => {
                 <span className=" text-white">{data.app}</span>
               </div>
 
-              <div className="flex flex-col rounded-b-lg bg-white/10 backdrop-blur-md border border-white/20 shadow-md">
+              <div className="flex flex-col rounded-b-lg bg-white/10 backdrop-blur-md border border-white/20 shadow-md pb-5">
                 <img src={data.image} alt="" className="h-50 w-full" />
 
                 <Accordion type="single" collapsible className="mt-3">
@@ -73,6 +72,22 @@ const Project = () => {
                           </p>
                         ))}
                       </div>
+
+                      {/* buttons */}
+                      {data.buttons.map((button, index) => (
+                        <div className="flex justify-center  w-full text-black mt-5">
+                          <a
+                            href={button.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <button className="flex justify-center items-center p-1 bg-white rounded-md">
+                              <button.icon width="30" />
+                              <span className="font-bold">{button.label}</span>
+                            </button>
+                          </a>
+                        </div>
+                      ))}
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>

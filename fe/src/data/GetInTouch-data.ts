@@ -1,4 +1,4 @@
-import { Location, Email, Facebook, LinkedIn, Github } from "@/assets/icons/Icons";
+import { Location, Email, Facebook, LinkedIn, GithubWhite } from "@/assets/icons/Icons";
 
 
 
@@ -14,6 +14,6 @@ export const contact = [
 export const socials = [
   { name: "Facebook", url: "https://www.facebook.com/shammykirzon", icon: Facebook },
   { name: "LinkedIn", url: "https://www.linkedin.com/in/shammy-kierson-suyat/", icon: LinkedIn },
-  { name: "Github", url: "https://github.com/shamKirzon", icon: Github },
+  { name: "Github", url: "https://github.com/shamKirzon", icon: GithubWhite },
 ];
 

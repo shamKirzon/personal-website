@@ -3,16 +3,9 @@ import heronest from "../assets/images/projects/heronest.png";
 import library from "../assets/images/projects/library-management-system.png";
 import pateros from "../assets/images/projects/pateros-catholic-school.png";
 import bathOfPaws from "../assets/images/projects/bath-of-paws.png";
+import { GithubBlack } from "@/assets/icons/Icons";
 
-type Props = {
-  name: string;
-  app: "Mobile App" | "Website App" | "Desktop App";
-  description: string;
-  technology: { name: string }[];
-  image: string;
-};
-
-export const project: Props[] = [
+export const project = [
   {
     name: "Smart Queue",
     app: "Mobile App",
@@ -26,6 +19,13 @@ export const project: Props[] = [
       { name: "Expo" },
     ],
     image: smartQueue,
+    buttons: [
+      {
+        label: "Github",
+        icon: GithubBlack,
+        url: "https://github.com/shamKirzon/smart-queue",
+      },
+    ],
   },
   {
     name: "Heronest",
@@ -40,6 +40,13 @@ export const project: Props[] = [
       { name: "Postgres" },
     ],
     image: heronest,
+    buttons: [
+      {
+        label: "Github",
+        icon: GithubBlack,
+        url: "https://github.com/shamKirzon/heronest-be",
+      },
+    ],
   },
   {
     name: "Pateros Catholic School",
@@ -53,8 +60,15 @@ export const project: Props[] = [
       { name: "PostgreSQL" },
     ],
     image: pateros,
+    buttons: [
+      {
+        label: "Github",
+        icon: GithubBlack,
+        url: "https://github.com/shamKirzon/enrollment-system-backend",
+      },
+    ],
   },
-   {
+  {
     name: "Library Management System",
     app: "Desktop App",
     description:
@@ -66,18 +80,27 @@ export const project: Props[] = [
       { name: "MySQL" },
     ],
     image: library,
+    buttons: [
+      {
+        label: "Github",
+        icon: GithubBlack,
+        url: "https://github.com/shamKirzon/library-management-system",
+      },
+    ],
   },
   {
     name: "Bath of Paws",
     app: "Website App",
     description:
       "A frontend pet website built using basic web development tools, focusing on layout, styling, and interactive elements to enhance user experience.",
-    technology: [
-      { name: "JavaScript" },
-      { name: "HTML" },
-      { name: "CSS" },
-    ],
+    technology: [{ name: "JavaScript" }, { name: "HTML" }, { name: "CSS" }],
     image: bathOfPaws,
+    buttons: [
+      {
+        label: "Github",
+        icon: GithubBlack,
+        url: "https://github.com/shamKirzon/bath-of-paws",
+      },
+    ],
   },
- 
 ];
