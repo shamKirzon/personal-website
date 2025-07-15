@@ -2,35 +2,37 @@ import HomePage from "./components/HomePage";
 import "./index.css";
 import WebView from "./components/WebView";
 import { useEffect, useState } from "react";
+import { Toaster } from "./components/ui/sonner";
 
 const App = () => {
-  const [screenWidth, setScreenWidth] = useState<number | undefined>(
-    window.innerWidth
-  );
-  const [lightMode, setLightMode] = useState<boolean | null>(false);
+  const [screenWidth, setScreenWidth] = useState<number | undefined>(window.innerWidth);
+  const [lightMode, setLightMode] = useState<boolean>(false);
 
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
     handleResize();
 
     window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
     <>
       <div
-        className={`relative  min-w-full min-h-screen ${
+        className={`relative min-w-full min-h-screen ${
           lightMode ? "bg-red-900" : "bg-zinc-900"
         }`}
       >
         {screenWidth! < 640 ? (
-          <HomePage isLightMode={() => setLightMode((prev) => !prev)} />
+          <>
+            <HomePage isLightMode={() => setLightMode((prev) => !prev)} />
+            <Toaster richColors position="top-center"/>
+          </>
         ) : (
-          <WebView />
+          <>
+            <WebView />
+            <Toaster richColors position="bottom-right" />
+          </>
         )}
       </div>
 

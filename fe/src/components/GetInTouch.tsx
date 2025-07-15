@@ -5,12 +5,9 @@ import { contact, socials } from "../data/GetInTouch-data";
 import * as z from "zod";
 import { useEffect, useState } from "react";
 
+import { toast } from "sonner";
+
 const GetInTouch = () => {
-  
-
-
-
-
   const MessageForm = () => {
     const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
     const [name, setName] = useState("");
@@ -25,36 +22,35 @@ const GetInTouch = () => {
       message: z.string().min(1, "Please enter your message"),
     });
 
-    // functions
     const resetForm = () => {
       setName("");
       setEmail("");
       setMessage("");
     };
 
-
-    async function handleSend (data: any){
-      const {name, email, message} = data
-
-      
+    async function handleSend(data: any) {
+      const { name, email, message } = data;
 
       const response = await fetch("/api/send-email.ts", {
-        method: "POST", 
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: name, 
-          email: email, 
-          message: message
+          name: name,
+          email: email,
+          message: message,
+        }),
+      });
 
-        })
-      })
+      if (response.ok) {
+       toast("👷 Work in Progress", {
+  description: `Hey ${name.split(" ")[0]}, it's not done yet haha!`,
+  className: "bg-cyan-500 text-yellow-100 border border-yellow-700",
+});
 
-      if(response) console.log(response, typeof response)
-
+      }
     }
-
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -69,21 +65,10 @@ const GetInTouch = () => {
       const result = MessageSchema.safeParse(data);
 
       if (result.success) {
-        console.log(  data , typeof data)
+        console.log(data, typeof data);
         resetForm();
         setFormErrors({});
-        console.log("SUCESS ANG BUTTON")
-        handleSend(data)
-
-
-
-      
-       
-
-
-
-
-
+        handleSend(data);
       } else {
         const formattedErrors = result.error.format();
         setFormErrors({
