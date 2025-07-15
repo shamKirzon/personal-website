@@ -3,7 +3,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 const resend = new Resend(process.env.RESEND_API);
 
-export default async function (req: VercelRequest, res: VercelResponse) {
+export default async function (req: any, res: any) {
 
  console.log("ACCESS PLSS")
   
