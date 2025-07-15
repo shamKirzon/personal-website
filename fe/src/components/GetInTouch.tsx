@@ -36,20 +36,20 @@ const GetInTouch = () => {
         className: "bg-cyan-500 text-yellow-100 border border-yellow-700",
       });
 
-      const response = await fetch("/api/send-email.ts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: name,
-          email: email,
-          message: message,
-        }),
-      });
+      // const response = await fetch("/api/send-email.ts", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     name: name,
+      //     email: email,
+      //     message: message,
+      //   }),
+      // });
 
-      if (response.ok) {
-      }
+      // if (response.ok) {
+      // }
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
