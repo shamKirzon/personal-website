@@ -31,6 +31,11 @@ const GetInTouch = () => {
     async function handleSend(data: any) {
       const { name, email, message } = data;
 
+      toast("👷 Work in Progress", {
+        description: `Hey ${name.split(" ")[0]}, it's not done yet haha!`,
+        className: "bg-cyan-500 text-yellow-100 border border-yellow-700",
+      });
+
       const response = await fetch("/api/send-email.ts", {
         method: "POST",
         headers: {
@@ -44,11 +49,6 @@ const GetInTouch = () => {
       });
 
       if (response.ok) {
-       toast("👷 Work in Progress", {
-  description: `Hey ${name.split(" ")[0]}, it's not done yet haha!`,
-  className: "bg-cyan-500 text-yellow-100 border border-yellow-700",
-});
-
       }
     }
 
