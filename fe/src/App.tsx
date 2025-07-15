@@ -19,9 +19,7 @@ const App = () => {
   return (
     <>
       <div
-        className={`relative min-w-full min-h-screen ${
-          lightMode ? "bg-red-900" : "bg-zinc-900"
-        }`}
+        className={`relative min-w-full min-h-screen bg-white dark:bg-zinc-900`}
       >
         {screenWidth! < 640 ? (
           <>
@@ -36,7 +34,7 @@ const App = () => {
         )}
       </div>
 
-      <div className="fixed bottom-0 left-0 w-full h-15 pointer-events-none bg-gradient-to-t from-zinc-900 to-transparent"></div>
+      <div className="fixed bottom-0 left-0 w-full h-15 pointer-events-none bg-gradient-to-t  from-white dark:from-zinc-900 to-transparent"></div>
     </>
   );
 };

@@ -13,7 +13,7 @@ const Profile = () => {
     },
     {
       label: "Send Email",
-      icon: <Email width="35" height="32" />,
+      icon: <Email  className="w-8 h-7 "/>,
     },
   ];
 
@@ -55,17 +55,18 @@ const Profile = () => {
             alt="Profile"
             className="w-50  object-cover rounded-md"
           />
-          <h1 className="text-white text-3xl font-bold mt-2">
+          <h1 className="text-zinc-900 text-3xl font-bold mt-2 dark:text-white">
             Shammy Kierson Suyat
           </h1>
 
           {/* location */}
 
           <div className="flex items-center gap-x-1">
-            <Location width="25" height="32" />
-            <h1 className="text-white text-lg ">Taguig City, Philippines</h1>
+            <Location className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-black dark:text-white" />
+
+            <h1 className="text-zinc-900 text-lg dark:text-white">Taguig City, Philippines</h1>
           </div>
-          <p className=" text-[#A1A1AA] text-center text-lg leading-6 mt-2 ">
+          <p className=" text-zinc-500 text-center text-lg leading-6 mt-2 ">
             Computer Science student focused on learning full-stack development.
           </p>
 
@@ -74,7 +75,7 @@ const Profile = () => {
             {profileButtons.map((button, index) => (
               <button
                 key={index}
-                className={`flex items-center justify-center gap-x-1 bg-zinc-900 p-[.45rem] rounded-lg ${
+                className={`flex items-center justify-center gap-x-1 bg-zinc-900 p-[.45rem] border-2 rounded-lg ${
                   button.label === "Download CV"
                     ? "border-cyan-300 active:bg-cyan-500"
                     : "border-zinc-400 active:bg-zinc-800"

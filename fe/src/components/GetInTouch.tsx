@@ -3,9 +3,10 @@ import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { contact, socials } from "../data/GetInTouch-data";
 import * as z from "zod";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { toast } from "sonner";
+import { Separator } from "./ui/separator";
 
 const GetInTouch = () => {
   const MessageForm = () => {
@@ -81,14 +82,14 @@ const GetInTouch = () => {
 
     return (
       <form onSubmit={handleSubmit}>
-        <div className="flex flex-col mt-10 bg-zinc-900 border gap-y-5 border-zinc-700 px-3 py-5 rounded-md">
+        <div className="flex flex-col mt-10 bg-zinc-700 dark:bg-zinc-900 border gap-y-5 border-zinc-700 px-3 py-5 rounded-md">
           <Input
             name="name"
             type="text"
             value={name}
             placeholder="Your Name"
             onChange={(e) => setName(e.target.value)}
-            className="h-10 bg-zinc-700 rounded-sm border-none focus-visible:ring-0 text-white"
+            className="h-10  bg-zinc-600 dark:bg-zinc-700 rounded-sm border-none focus-visible:ring-0 text-white"
           />
           {formErrors.name && (
             <p className="text-red-500 text-sm ">{formErrors.name}</p>
@@ -100,7 +101,7 @@ const GetInTouch = () => {
             value={email}
             placeholder="Your Email"
             onChange={(e) => setEmail(e.target.value)}
-            className="h-10 bg-zinc-700 rounded-sm border-none focus-visible:ring-0 text-white"
+            className="h-10  bg-zinc-600 dark:bg-zinc-700 rounded-sm border-none focus-visible:ring-0 text-white"
           />
           {formErrors.email && (
             <p className="text-red-500 text-sm">{formErrors.email}</p>
@@ -111,7 +112,7 @@ const GetInTouch = () => {
             value={message}
             placeholder="Your Message"
             onChange={(e) => setMessage(e.target.value)}
-            className="h-10 bg-zinc-700 rounded-sm border-none focus-visible:ring-0 text-white"
+            className="h-10  bg-zinc-600 dark:bg-zinc-700rounded-sm border-none focus-visible:ring-0 text-white"
           />
           {formErrors.message && (
             <p className="text-red-500 text-sm">{formErrors.message}</p>
@@ -140,12 +141,12 @@ const GetInTouch = () => {
     <div className="flex justify-center mt-30">
       {/* content */}
       <div className="flex flex-col w-full max-w-md ">
-        <h1 className="text-white h-10 text-5xl font-bold mt-2 text-center w-full">
+        <h1 className="text-black dark:text-white h-10 text-5xl font-bold mt-2 text-center w-full">
           Get in Touch
         </h1>
 
         {/* Let's Connect */}
-        <div className="flex flex-col mt-10 bg-zinc-900 border gap-y-5 border-zinc-700   pl-7 pr-3 py-5 rounded-md ">
+        <div className="flex flex-col mt-10  bg-zinc-700 dark:bg-zinc-900 border gap-y-5 border-zinc-700   pl-7 pr-3 py-5 rounded-md ">
           <h1 className="text-white h-10 text-3xl font-bold ">Let's Connect</h1>
 
           {/* Long Text */}
@@ -158,8 +159,8 @@ const GetInTouch = () => {
 
           <div className="flex flex-col gap-y-4 ">
             {contact.map((data, index) => (
-              <div key={index} className="flex  items-center ">
-                {data.icon && <data.icon width="60" height="45" />}
+              <div key={index} className="flex gap-x-2 items-center ">
+                {data.icon && <data.icon className="w-10 h-10 text-white" />}
 
                 {/* header, text */}
                 <div className="flex flex-col  text-white ">
@@ -182,7 +183,7 @@ const GetInTouch = () => {
           </div>
 
           {/* separator */}
-          <div className="h-[1px] w-75 bg-zinc-700 mt-1" />
+          <div className="h-[1px] w-75 bg-white dark:bg-zinc-700 mt-1" />
 
           {/* socials */}
           <div className="flex flex-col">
@@ -212,7 +213,15 @@ const GetInTouch = () => {
         {/* <MessageForm /> */}
 
         {MessageForm()}
+
+              {/* website owner ship */}
+            <div className=" flex bg-zinc-700 dark:bg-zinc-700 mt-30 h-px "/>
+            <span className="mx-auto text-sm mt-1 text-zinc-700 dark:text-zinc-700">© 2025 Shammy Kierson Suyat. All rights reserved.</span>
+            <div/>
       </div>
+
+     
+
     </div>
   );
 };

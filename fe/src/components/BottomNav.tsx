@@ -49,6 +49,7 @@ const BottomNav = ({ lightMode, ref }: BottomNavProps) => {
         onClick={() => {
           lightMode();
           setSelfLightMode((prev) => !prev);
+          document.documentElement.classList.toggle("dark")
         }}
       >
         {selfLightMode ? <DarkMode width="30" /> : <LightMode width="30" />}

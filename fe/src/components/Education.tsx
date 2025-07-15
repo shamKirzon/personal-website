@@ -8,7 +8,7 @@ const Education = () => {
       <div className="flex flex-col w-full max-w-md gap-y-7">
         {/* header*/}
         <div className="flex flex-col">
-          <h1 className="text-white h-10 text-5xl font-bold mt-2 text-center w-full">
+          <h1 className="text-black dark:text-white h-10 text-5xl font-bold mt-2 text-center w-full">
             Education
           </h1>
         </div>
@@ -25,7 +25,7 @@ const Education = () => {
             >
               {/* line */}
               {data.school === "University of Makati" && (
-                <div className="absolute left-10 top-8 w-0.5 h-[12rem] bg-white z-0"></div>
+                <div className="absolute left-10 top-8 w-0.5 h-[12rem] bg-black dark:bg-white z-0"></div>
               )}
 
               {/* content */}
@@ -37,7 +37,7 @@ const Education = () => {
                 />
 
                 <div className="flex flex-col">
-                  <span className="text-white text-[1.4rem] font-medium">
+                  <span className="text-black dark:text-white text-[1.4rem] font-medium">
                     {data.school}
                   </span>
 
@@ -46,7 +46,7 @@ const Education = () => {
                   </span>
 
                   <div className="bg-zinc-800 mt-2 w-fit py-1 px-3 rounded-md border border-zinc-700">
-                    <p className="text-zinc-500 text-sm">{data.years}</p>
+                    <p className="text-zinc-300 dark:text-zinc-500 text-sm">{data.years}</p>
                   </div>
                 </div>
               </div>

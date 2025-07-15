@@ -18,7 +18,7 @@ const TechStack = () => {
     >
       {/* Content container */}
       <div className="flex flex-col items-center w-full max-w-md gap-y-7">
-        <h1 className="text-white text-5xl font-bold mt-2">Tech Stack</h1>
+        <h1 className="text-black text-5xl font-bold mt-2 dark:text-white">Tech Stack</h1>
 
         {/* tech stack list */}
         <div className="flex flex-wrap justify-center gap-3">
@@ -43,7 +43,8 @@ const TechStack = () => {
                 rotate: [0, 5, -5, 0], // wiggle on hover
                 transition: { duration: 1 },
               }}
-              className="flex items-center gap-x-2 bg-zinc-600 text-white px-4 py-2 rounded-md cursor-pointer"
+              className="flex items-center gap-x-2 bg-zinc-600 text-white px-4 py-2 rounded-md cursor-pointer shadow-md"
+
             >
               <img
                 src={obj.icons || kambing}

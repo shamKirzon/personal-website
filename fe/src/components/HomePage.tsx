@@ -42,7 +42,7 @@ const HomePage = ({isLightMode}: Props) => {
         />
       </div>
 
-      {/* <div ref={profileRef}>
+      <div ref={profileRef}>
         <Profile />
       </div>
       <div ref={aboutRef}>
@@ -53,7 +53,7 @@ const HomePage = ({isLightMode}: Props) => {
       </div>
       <div ref={educationRef}>
         <Education />
-      </div> */}
+      </div>
       <div ref={projectRef}>
         <Project />
       </div>
@@ -62,7 +62,7 @@ const HomePage = ({isLightMode}: Props) => {
       </div>
 
 
-      <div className="pb-30" ref={ getInTouchRef}>
+      <div className="pb-20" ref={ getInTouchRef}>
         <GetInTouch />
       </div>
     </div>

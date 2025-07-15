@@ -5,26 +5,21 @@ type Props = {
 };
 
 export const Location = ({
-  width,
-  height,
+  className,
 }: {
-  width: string;
-  height: string;
+  className?: string;
 }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    // width="32"
-    width={width}
-    height={height}
+    className={className}
     viewBox="0 0 24 24"
+    fill="currentColor"
   >
-    <circle cx="12" cy="9.5" r="1.5" fill="#fff" />
-    <path
-      fill="#fff"
-      d="M12 2a8 8 0 0 0-8 7.92c0 5.48 7.05 11.58 7.35 11.84a1 1 0 0 0 1.3 0C13 21.5 20 15.4 20 9.92A8 8 0 0 0 12 2m0 11a3.5 3.5 0 1 1 3.5-3.5A3.5 3.5 0 0 1 12 13"
-    />
+    <circle cx="12" cy="9.5" r="1.5" />
+    <path d="M12 2a8 8 0 0 0-8 7.92c0 5.48 7.05 11.58 7.35 11.84a1 1 0 0 0 1.3 0C13 21.5 20 15.4 20 9.92A8 8 0 0 0 12 2m0 11a3.5 3.5 0 1 1 3.5-3.5A3.5 3.5 0 0 1 12 13" />
   </svg>
 );
+
 
 export const Download = ({ width }: Props) => (
   <svg
@@ -40,12 +35,10 @@ export const Download = ({ width }: Props) => (
   </svg>
 );
 
-export const Email = ({ width, height }: { width: string; height: string }) => (
+export const Email = ({  className }: { className: string }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={width}
-    // height="32"
-    height={height}
+    className={className}
     viewBox="0 0 24 24"
   >
     <g fill="none">

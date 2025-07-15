@@ -15,7 +15,7 @@ const Project = () => {
       <div className="flex flex-col w-full max-w-md gap-y-15">
         {/* header*/}
         <div className="flex flex-col">
-          <h1 className="text-white h-10 text-5xl font-bold mt-2 text-center w-full">
+          <h1 className="text-black dark:text-white h-10 text-5xl font-bold mt-2 text-center w-full">
             Project
           </h1>
         </div>
@@ -32,11 +32,11 @@ const Project = () => {
               viewport={{ once: false, amount: 0.3 }}
               className="flex flex-col gap-y-5 "
             >
-              <div className="flex justify-center items-center px-3 py-1 ml-auto rounded-sm bg-white/10 backdrop-blur-md border border-white/20 shadow-md">
+              <div className="flex justify-center items-center px-3 py-1 ml-auto rounded-sm bg-zinc-700  backdrop-blur-md  shadow-md">
                 <span className=" text-white">{data.app}</span>
               </div>
 
-              <div className="flex flex-col rounded-b-lg bg-white/10 backdrop-blur-md border border-white/20 shadow-md pb-5">
+              <div className="flex flex-col rounded-b-lg bg-zinc-700 backdrop-blur-md border  shadow-md pb-5">
                 <img src={data.image} alt="" className="h-50 w-full" />
 
                 <Accordion type="single" collapsible className="mt-3">
