@@ -11,17 +11,21 @@ import {
 const Project = () => {
   return (
     // parent container
-    <div className="flex justify-center mt-20 px-3">
-      <div className="flex flex-col w-full max-w-md gap-y-15">
+    <div className="flex justify-center mt-20 px-3 ">
+      <div
+        className="flex flex-col w-full max-w-md gap-y-15  md:items-start
+     md:min-w-md md:max-w-2xl md:gap-x-5 lg:max-w-4xl
+      "
+      >
         {/* header*/}
-        <div className="flex flex-col">
-          <h1 className="text-black dark:text-white h-10 text-5xl font-bold mt-2 text-center w-full">
+        <div className="flex flex-col ">
+          <h1 className="text-black dark:text-white h-10 text-5xl font-bold mt-2 text-center w-full md:text-start">
             Project
           </h1>
         </div>
 
         {/* content */}
-        <div className="flex flex-col items-center flex-wrap  gap-y-20">
+        <div className="flex flex-col  flex-wrap  gap-y-20 md:flex-row md:gap-x-10 md:justify-between lg:items-center lg:justify-center ">
           {/* project container */}
           {project.map((data, index) => (
             <motion.div
@@ -30,18 +34,18 @@ const Project = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
               viewport={{ once: false, amount: 0.3 }}
-              className="flex flex-col gap-y-5 "
+              className="flex flex-col gap-y-5  md:w-79  lg:w-99"
             >
               <div className="flex justify-center items-center px-3 py-1 ml-auto rounded-sm bg-zinc-700  backdrop-blur-md  shadow-md">
                 <span className=" text-white">{data.app}</span>
               </div>
 
-              <div className="flex flex-col rounded-b-lg bg-zinc-700 backdrop-blur-md border  shadow-md pb-5">
+              <div className="flex flex-col rounded-b-lg bg-zinc-700 backdrop-blur-md border shadow-md pb-5  ">
                 <img src={data.image} alt="" className="h-50 w-full" />
 
                 <Accordion type="single" collapsible className="mt-3">
                   <AccordionItem value="item-1">
-                    <AccordionTrigger className=" flex items-center text-white w-full pr-4 group">
+                    <AccordionTrigger className=" flex items-center text-white w-full pr-4 group ">
                       <div className="w-55 pl-3 pb-6">
                         <h1 className=" text-start font-bold text-white leading-7 text-[1.8rem]  mt-2">
                           {data.name}

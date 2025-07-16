@@ -1,6 +1,5 @@
 import HomePage from "./components/HomePage";
 import "./index.css";
-import WebView from "./components/WebView";
 import { useEffect, useState } from "react";
 import { Toaster } from "./components/ui/sonner";
 
@@ -21,19 +20,10 @@ const App = () => {
       <div
         className={`relative min-w-full min-h-screen bg-white dark:bg-zinc-900`}
       >
-        {screenWidth! < 640 ? (
-          <>
-            <HomePage isLightMode={() => setLightMode((prev) => !prev)} />
-            <Toaster richColors position="top-center"/>
-          </>
-        ) : (
-          <>
-            <WebView />
-            <Toaster richColors position="bottom-right" />
-          </>
-        )}
+        <HomePage isLightMode={() => setLightMode((prev) => !prev)}/>
+          <Toaster richColors  position="bottom-right" /> 
       </div>
-
+        
       <div className="fixed bottom-0 left-0 w-full h-15 pointer-events-none bg-gradient-to-t  from-white dark:from-zinc-900 to-transparent"></div>
     </>
   );

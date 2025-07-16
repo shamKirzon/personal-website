@@ -6,7 +6,7 @@ import Work from "./Work";
 import Project from "./Project";
 import BottomNav from "./BottomNav";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import GetInTouch from "./GetInTouch";
 
 
@@ -23,6 +23,17 @@ const HomePage = ({isLightMode}: Props) => {
   const workRef = useRef<HTMLDivElement | null>(null);
   const getInTouchRef = useRef<HTMLDivElement | null>(null);
 
+  const[screenWidth, setScreenWidth] = useState<number | undefined>(window.innerWidth)
+
+  useEffect(() => {
+    const handleSize =() => setScreenWidth(window.innerWidth); 
+    handleSize();
+
+    window.addEventListener("resize", handleSize)
+    
+    return window.removeEventListener("resize", handleSize)
+
+  }, [])
 
 
   return (
@@ -43,7 +54,7 @@ const HomePage = ({isLightMode}: Props) => {
       </div>
 
       <div ref={profileRef}>
-        <Profile />
+        <Profile screenWidth={screenWidth}/>
       </div>
       <div ref={aboutRef}>
         <About />
@@ -60,8 +71,6 @@ const HomePage = ({isLightMode}: Props) => {
       <div ref={workRef}>
         <Work />
       </div>
-
-
       <div className="pb-20" ref={ getInTouchRef}>
         <GetInTouch />
       </div>

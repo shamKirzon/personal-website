@@ -12,9 +12,16 @@ const Work = () => {
   return (
     // parent container
     <div className="flex justify-center mt-20">
-      <div className="flex flex-col w-full max-w-md gap-y-7">
+      {/* here */}
+      <div
+        className="flex flex-col w-full max-w-md gap-y-7 
+      md:items-start
+         md:min-w-md md:max-w-2xl md:gap-x-5 lg:max-w-4xl
+      
+      "
+      >
         {/* header*/}
-        <h1 className="text-black dark:text-white  text-5xl font-bold mt-2 text-center w-full">
+        <h1 className="text-black dark:text-white  text-5xl font-bold mt-2 text-center w-full md:text-start">
           Work Experience
         </h1>
 
@@ -30,10 +37,10 @@ const Work = () => {
             >
               {/* line */}
               {data.name === "Lorem Itsum" && (
-                <div className="absolute left-10 top-8 w-0.5 h-[19rem] bg-black dark:bg-white  z-0"></div>
+                <div className="absolute left-10 top-8 w-[0.2rem] h-[19rem] bg-black dark:bg-white  z-0"></div>
               )}
               {/* content */}
-              <div className="relative flex items-start gap-x-4 py-3 z-10">
+              <div className="relative  flex items-start gap-x-4 py-3 z-10 ">
                 <img
                   src={data.image}
                   alt={data.image}
@@ -49,27 +56,36 @@ const Work = () => {
                     {data.position}
                   </span>
 
-                  <div className="bg-zinc-800 mt-2 w-fit py-1 px-3 rounded-md border border-zinc-700">
-                    <p className="text-zinc-200 dark:text-zinc-500 text-sm">{data.year}</p>
+                  <div className="  block md:hidden bg-zinc-800 mt-2 w-fit py-1 px-3 rounded-md border border-zinc-700">
+                    <p className="text-zinc-200 dark:text-zinc-500 text-sm">
+                      {data.year}
+                    </p>
                   </div>
                 </div>
+                
+                <div className=" hidden md:block bg-zinc-800 mt-2 py-1 px-3  w-38 rounded-md border border-zinc-700">
+                    <p className="text-zinc-200 dark:text-zinc-500 text-sm">
+                      {data.year}
+                    </p>
+                  </div>
+
               </div>
 
               <div className="border-l-3 border-black dark:border-white ml-10 pl-10 mt-7 flex flex-col gap-y-5 relative">
-
                 {data.description.map((desc, index) => (
                   <div key={index} className="relative">
                     {/* dot */}
                     <div className="absolute -left-[3.08rem] top-2 h-4 w-4  bg-black dark:bg-white rounded-full z-10" />
 
                     {/* accordion */}
-                    <Accordion type="single" collapsible >
+                    <Accordion type="single" collapsible  >
                       <AccordionItem value={`index-${index}`}>
-                        <AccordionTrigger className="text-black dark:text-white text-lg">
-                          {desc.header}
+                        <AccordionTrigger className="text-black    dark:text-white text-lg w-full ">
+                          {desc.header} 
+                          <p className="hidden md:block"> qui tempore aliquid.</p>
                         </AccordionTrigger>
                         <AccordionContent className="text-black dark:text-white text-lg">
-                          {desc.content}
+                          {desc.content} 
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>

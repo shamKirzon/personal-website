@@ -18,12 +18,14 @@ const About = () => {
       }}
 
       viewport={{ once: true, amount: 0.3 }}
-      className="flex justify-center mt-24">
+      className="flex justify-center mt-24  ">
       {/* header, content */}
-      <div className="flex flex-col items-center gap-y-4  w-full max-w-md">
+      <div className="flex flex-col items-center gap-y-4  w-full  max-w-md
+      md:items-start
+      md:min-w-md md:max-w-2xl md:gap-x-5 lg:max-w-4xl">
         <h1 className="text-black text-5xl font-bold mt-2 dark:text-white">About</h1>
 
-        <p className="text-black text-lg text-center leading-9 dark:text-white ">
+        <p className="text-black text-lg  leading-9 dark:text-white ">
           I'm Shammy Kierson Suyat, a Computer Science student living in Taguig
           City, Philippines. I’m currently focusing on full-stack development
           and starting to learn about AI and machine learning. I believe and

@@ -17,11 +17,15 @@ const TechStack = () => {
       className="flex flex-col items-center px-4 mt-20"
     >
       {/* Content container */}
-      <div className="flex flex-col items-center w-full max-w-md gap-y-7">
+      <div className="flex flex-col items-center w-full max-w-md gap-y-7 md:items-start
+      md:gap-y-5 
+      md:min-w-md md:max-w-2xl md:gap-x-5 lg:max-w-4xl
+        
+      ">
         <h1 className="text-black text-5xl font-bold mt-2 dark:text-white">Tech Stack</h1>
 
         {/* tech stack list */}
-        <div className="flex flex-wrap justify-center gap-3">
+        <div className="flex flex-wrap justify-center gap-3 md:justify-start">
           {myTechStack.map((obj, index) => (
             <motion.div
               key={index}
