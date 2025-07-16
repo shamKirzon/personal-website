@@ -53,7 +53,7 @@ const Profile = ({ screenWidth }: Props) => {
       >
         {/* Profile, Text Container */}
         <div className="flex   flex-col items-center w-full max-w-md md:flex-row md:items-start
-         md:min-w-md md:max-w-2xl md:gap-x-5 lg:max-w-4xl ">
+         md:min-w-md md:max-w-2xl md:gap-x-5 lg:max-w-4xl lg:items-center ">
           <img
             src={myProfile}
             alt="Profile"
@@ -81,11 +81,11 @@ const Profile = ({ screenWidth }: Props) => {
             </p>
 
             {/* buttons tablet and web view layout */}
-            <div className=" hidden  md:flex w-full md:mt-7 md:gap-x-5">
+            <div className=" hidden  md:flex w-full md:mt-7 md:gap-x-5 lg:mt-10">
               {profileButtons.map((button, index) => (
                 <button
                   key={index}
-                  className={`flex items-center justify-center gap-x-1 bg-zinc-900 px-2 py-1 border-2 rounded-sm ${
+                  className={`flex items-center justify-center gap-x-1 bg-zinc-900 px-2 py-1 lg:px-2 lg:py-2 border-2 rounded-sm ${
                     button.label === "Download CV"
                       ? "border-cyan-500 active:bg-cyan-500"
                       : "border-zinc-00 active:bg-zinc-800"
