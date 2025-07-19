@@ -28,9 +28,7 @@ const HomePage = ({isLightMode}: Props) => {
   return (
     <div className=" p-4">
 
-      <div className="fixed bottom-30 right-5 z-30">
-      <ChatBot/>
-      </div>
+    <ChatBot/>
       <div className="  z-20 fixed bottom-5 left-1/2 transform -translate-x-1/2">
         <BottomNav
           lightMode={isLightMode}
