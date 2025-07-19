@@ -3,11 +3,9 @@ import { Location, Download, Email } from "@/assets/icons/Icons";
 import { motion } from "motion/react";
 import { useRef } from "react";
 
-type Props = {
-  screenWidth: number | undefined;
-};
 
-const Profile = ({ screenWidth }: Props) => {
+
+const Profile = () => {
   const ref = useRef(null);
   const profileButtons = [
     {

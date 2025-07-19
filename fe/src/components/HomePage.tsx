@@ -5,6 +5,7 @@ import Education from "./Education";
 import Work from "./Work";
 import Project from "./Project";
 import BottomNav from "./BottomNav";
+import ChatBot from "./ChatBot";
 
 import { useEffect, useRef, useState } from "react";
 import GetInTouch from "./GetInTouch";
@@ -23,22 +24,14 @@ const HomePage = ({isLightMode}: Props) => {
   const workRef = useRef<HTMLDivElement | null>(null);
   const getInTouchRef = useRef<HTMLDivElement | null>(null);
 
-  const[screenWidth, setScreenWidth] = useState<number | undefined>(window.innerWidth)
-
-  useEffect(() => {
-    const handleSize =() => setScreenWidth(window.innerWidth); 
-    handleSize();
-
-    window.addEventListener("resize", handleSize)
-    
-    return window.removeEventListener("resize", handleSize)
-
-  }, [])
-
-
+ 
   return (
     <div className=" p-4">
-      <div className=" z-20 fixed bottom-5 left-1/2 transform -translate-x-1/2">
+
+      <div className="fixed bottom-30 right-5 z-30">
+      <ChatBot/>
+      </div>
+      <div className="  z-20 fixed bottom-5 left-1/2 transform -translate-x-1/2">
         <BottomNav
           lightMode={isLightMode}
           ref={{
@@ -54,7 +47,7 @@ const HomePage = ({isLightMode}: Props) => {
       </div>
 
       <div ref={profileRef}>
-        <Profile screenWidth={screenWidth}/>
+        <Profile />
       </div>
       <div ref={aboutRef}>
         <About />
