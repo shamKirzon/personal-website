@@ -233,7 +233,7 @@ const GetInTouch = () => {
         </div>
 
         {/* website owner ship */}
-        <div className=" flex bg-white dark:bg-zinc-700 mt-30 h-px w-full  " />
+        <div className=" flex bg-white dark:bg-zinc-700 mt-10 h-px w-full  " />
         <span className="mx-auto text-sm mt-1 text-zinc-700 dark:text-zinc-700">
           © 2025 Shammy Kierson Suyat. All rights reserved.
         </span>

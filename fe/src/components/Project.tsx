@@ -34,7 +34,7 @@ const Project = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
               viewport={{ once: false, amount: 0.3 }}
-              className="flex flex-col gap-y-5  md:w-79  lg:w-99"
+              className="flex  flex-col gap-y-5  md:w-79  lg:w-99"
             >
               <div className="flex justify-center items-center px-3 py-1 ml-auto rounded-sm bg-zinc-700  backdrop-blur-md  shadow-md">
                 <span className=" text-white">{data.app}</span>

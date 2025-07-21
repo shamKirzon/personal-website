@@ -6,6 +6,7 @@ import {
   DarkMode,
   LightMode,
 } from "../assets/icons/Icons";
+import ChatBot from "./ChatBot";
 import type React from "react";
 import { useState } from "react";
 
@@ -45,6 +46,9 @@ const BottomNav = ({ lightMode, ref }: BottomNavProps) => {
       {/* Divider */}
       <div className="h-6 w-px bg-zinc-700 mx-2" />
 
+    <button className="lg:hidden">
+  <ChatBot/>  
+    </button>
       <button
         onClick={() => {
           lightMode();

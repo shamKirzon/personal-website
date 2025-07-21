@@ -26,10 +26,13 @@ const HomePage = ({isLightMode}: Props) => {
 
  
   return (
-    <div className=" p-4">
+    <div className="relative  p-4">
+       <div className="hidden lg:block">
+         <ChatBot />
+       </div>
 
-    <ChatBot/>
-      <div className="  z-20 fixed bottom-5 left-1/2 transform -translate-x-1/2">
+      <div className="flex  z-20 fixed bottom-5 left-1/2 transform -translate-x-1/2">
+          
         <BottomNav
           lightMode={isLightMode}
           ref={{
