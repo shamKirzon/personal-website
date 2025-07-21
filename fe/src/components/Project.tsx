@@ -25,7 +25,7 @@ const Project = () => {
         </div>
 
         {/* content */}
-        <div className="flex flex-col  flex-wrap  gap-y-20 md:flex-row md:gap-x-10 md:justify-between lg:items-center lg:justify-center ">
+        <div className="flex flex-col  flex-wrap  gap-y-20 md:flex-row md:gap-x-10 md:justify-between lg:justify-center  ">
           {/* project container */}
           {project.map((data, index) => (
             <motion.div
