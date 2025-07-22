@@ -1,8 +1,8 @@
-import {Router} from "express"
+import { Router } from "express";
 import { messageService } from "./message.service";
 
 const messageRoute = Router(); 
 
-messageRoute.get("message", messageService )
+messageRoute.get("/message", messageService)
 
-export default messageRoute; 
+export default messageRoute
