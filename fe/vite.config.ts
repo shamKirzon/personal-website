@@ -12,6 +12,13 @@ export default defineConfig({
     },
   },
   server: {
+    proxy:{
+       '/api': {
+        target: 'http://localhost:5000', // your backend URL
+        changeOrigin: true,
+        secure: false,
+      },
+    },
     host: "192.168.55.100"
   }
 })
