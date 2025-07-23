@@ -1,33 +1,53 @@
 import { ChatRobot, Times } from "@/assets/icons/Icons";
 import { motion } from "motion/react";
 import { useEffect, useState, type JSX } from "react";
+import axios from "axios"
+
+type Message = {
+  sender: "user" | "chatbot";
+  text: string;
+};
 
 const ChatBot = () => {
+  const greet =
+    "Hi! I'm Shammy's chatbot assistant. Feel free to ask anything about Shammy — I'll respond using the information Shammy trained me with.";
   const [openChat, SetOpenChat] = useState<boolean>(false);
   const [inputMessage, setInputMessage] = useState<string>("");
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<Message[]>([{sender:"chatbot", text:greet}]);
+
+  const handleChatbotResponse = async () => {
+
+   try{
+     const response = await axios.post("https://personal-website-mb25.onrender.com/api/chat-bot", {
+      data: inputMessage
+    }); 
+
+      setMessages((prev) => [
+      ...(prev ?? []),
+      { sender: "chatbot", text: response.data },
+    ]);
+   }
+   catch(err){
+    console.log("ChatBot problem: ",err)
+   }
+
+   
+  }
 
   const handleSendMessage = async () => {
     if (inputMessage.trim() === "") return;
 
-    setMessages((prev) => [...prev, inputMessage]);
-    
-    
-    const response = await fetch("/api/chat-bot", {
-      method:"POST", 
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(messages)
-    })
+    setMessages((prev) => [
+      ...(prev ?? []),
+      { sender: "user", text: inputMessage },
+    ]);
 
-
-    const data = await response.json; 
-
-    console.log("CHATBOT RESPONSE: ", data) 
-
+    handleChatbotResponse()
     setInputMessage("");
   };
+
+
+ 
 
   // to avoid scrolling in body
   useEffect(() => {
@@ -40,6 +60,41 @@ const ChatBot = () => {
   }, [openChat]);
 
   const chatContent = (): JSX.Element => {
+    const chatbotResponseUI = (text: string, index: number): JSX.Element => (
+        <div key={index}
+       className="flex flex-col gap-y-3 ">
+        {/* profile, name */}
+        <div className="flex items-center gap-x-3">
+          <img
+            src="/profile.jpg"
+            alt="sham's profile"
+            className="h-8 rounded-4xl "
+          />
+
+          <span className="text-sm font-medium">Shammy Kierson Suyat</span>
+        </div>
+
+        <div className="bg-gray-200 p-2 rounded-md max-w-[75%]">
+          <p className="text-black text-start">{text}</p>
+        </div>
+      </div>
+    );
+
+    const userInputUI = (text: string, index: number): JSX.Element => (
+      <motion.div
+      key={index}
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        className="flex justify-end"
+      >
+        <div className="bg-cyan-500 text-white p-2 rounded-md max-w-[75%]">
+          <p className="text-sm">{text}</p>
+        </div>
+      </motion.div>
+    );
+
     return (
       <div
         className="fixed bottom-20 w-89 h-[30rem] bg-zinc-900 rounded-xl shadow-lg z-30 
@@ -68,46 +123,21 @@ const ChatBot = () => {
           </button>
         </div>
 
+        {/* message content */}
         <div className="flex-1 p-3 overflow-y-auto space-y-5 text-sm">
-          {/* response*/}
-          <div className="flex flex-col gap-y-3 ">
-            {/* profile, name */}
-            <div className="flex items-center gap-x-3">
-              <img
-                src="/profile.jpg"
-                alt="sham's profile"
-                className="h-8 rounded-4xl "
-              />
 
-              <span className="text-sm font-medium">Shammy Kierson Suyat</span>
-            </div>
 
-            <div className="bg-gray-200 p-2 rounded-md max-w-[75%]">
-              <p className="text-black text-start">
-                Ako pala ang chatbot ni boss shami, send money pambili ng
-                spaghetti ng boss ko.
-              </p>
-            </div>
-          </div>
+        {messages?.map((message, index) => (
+          
+          message.sender==="user" ? 
+            userInputUI(message.text, index): chatbotResponseUI(message.text, index)
+          
+        ))}
 
-          {messages.map((message, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="flex justify-end"
-            >
-              <div className="bg-cyan-500 text-white p-2 rounded-md max-w-[75%]">
-                <p className="text-sm">{message}</p>
-              </div>
-            </motion.div>
-          ))}
         </div>
         <div className="p-3 border-t flex gap-2">
           <input
-          value={inputMessage}
+            value={inputMessage}
             type="text"
             className="flex-1 h-10 rounded-md px-2 py-1 text-sm border border-cyan-500"
             placeholder="Type your message..."
