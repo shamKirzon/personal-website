@@ -19,7 +19,9 @@ const ChatBot = () => {
 
    try{
      const response = await axios.post("https://personal-website-mb25.onrender.com/api/chat-bot", {
-      data: inputMessage
+    //  const response = await axios.post("/api/chat-bot", {
+
+    data: inputMessage
     }); 
 
       setMessages((prev) => [
@@ -74,7 +76,7 @@ const ChatBot = () => {
           <span className="text-sm font-medium">Shammy Kierson Suyat</span>
         </div>
 
-        <div className="bg-gray-200 p-2 rounded-md max-w-[75%]">
+        <div className="bg-gray-200 p-2 w-fit rounded-md max-w-[75%]">
           <p className="text-black text-start">{text}</p>
         </div>
       </div>
