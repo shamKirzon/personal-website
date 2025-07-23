@@ -3,6 +3,8 @@ dotenv.config();
 import { GoogleGenAI } from "@google/genai";
 import { data } from "../static/data";
 
+
+
 const baseInstruction = `You are a helpful assistant that answers only questions 
 about your owner, Shammy Kierson Suyat. Use the following information when 
 replying:\n\n`;
@@ -23,10 +25,14 @@ If the question is about Shammy but the answer is not in the list, respond with:
 const prompt = baseInstruction + ownerInfo + fallback
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
 export const chatbotService = async (req: any, res: any) => {
+  console.log("backend: question from client: ", req.body.data)
+
+  
   const response = await ai.models.generateContent({
     model: "gemini-2.5-flash",
-    contents: "generate me a website",
+    contents: req.body.data,
     config: {
       thinkingConfig: {
         thinkingBudget:0

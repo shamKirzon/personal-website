@@ -5,7 +5,7 @@ import { chatbotService } from "./chatbot.service";
 
 const chatbotRoute = Router(); 
 
-chatbotRoute.get("/chat-bot", chatbotService)
+chatbotRoute.post("/chat-bot", chatbotService)
 
 
 export default chatbotRoute; 
