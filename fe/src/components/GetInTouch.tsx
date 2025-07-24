@@ -31,7 +31,7 @@ const GetInTouch = () => {
     async function handleSend(data: any) {
       const { name, email, message } = data;
 
-      const response = await axios.post("/api/message", {
+      const response = await axios.post("https://personal-website-mb25.onrender.com/api/message", {
         data: { name: name, email: email, message: message },
       });
 
