@@ -1,7 +1,7 @@
 import { ChatRobot, Times } from "@/assets/icons/Icons";
 import { motion } from "motion/react";
 import { useEffect, useState, type JSX } from "react";
-import axios from "axios"
+import axios from "axios";
 
 type Message = {
   sender: "user" | "chatbot";
@@ -13,28 +13,29 @@ const ChatBot = () => {
     "Hi! I'm Shammy's chatbot assistant. Feel free to ask anything about Shammy — I'll respond using the information Shammy trained me with.";
   const [openChat, SetOpenChat] = useState<boolean>(false);
   const [inputMessage, setInputMessage] = useState<string>("");
-  const [messages, setMessages] = useState<Message[]>([{sender:"chatbot", text:greet}]);
+  const [messages, setMessages] = useState<Message[]>([
+    { sender: "chatbot", text: greet },
+  ]);
 
   const handleChatbotResponse = async () => {
+    try {
+      const response = await axios.post(
+        "https://personal-website-mb25.onrender.com/api/chat-bot",
+        {
+          //  const response = await axios.post("/api/chat-bot", {
 
-   try{
-     const response = await axios.post("https://personal-website-mb25.onrender.com/api/chat-bot", {
-    //  const response = await axios.post("/api/chat-bot", {
-
-    data: inputMessage
-    }); 
+          data: inputMessage,
+        }
+      );
 
       setMessages((prev) => [
-      ...(prev ?? []),
-      { sender: "chatbot", text: response.data },
-    ]);
-   }
-   catch(err){
-    console.log("ChatBot problem: ",err)
-   }
-
-   
-  }
+        ...(prev ?? []),
+        { sender: "chatbot", text: response.data },
+      ]);
+    } catch (err) {
+      console.log("ChatBot problem: ", err);
+    }
+  };
 
   const handleSendMessage = async () => {
     if (inputMessage.trim() === "") return;
@@ -44,12 +45,9 @@ const ChatBot = () => {
       { sender: "user", text: inputMessage },
     ]);
 
-    handleChatbotResponse()
+    handleChatbotResponse();
     setInputMessage("");
   };
-
-
- 
 
   // to avoid scrolling in body
   useEffect(() => {
@@ -63,8 +61,7 @@ const ChatBot = () => {
 
   const chatContent = (): JSX.Element => {
     const chatbotResponseUI = (text: string, index: number): JSX.Element => (
-        <div key={index}
-       className="flex flex-col gap-y-3 ">
+      <div key={index} className="flex flex-col gap-y-3 ">
         {/* profile, name */}
         <div className="flex items-center gap-x-3">
           <img
@@ -84,7 +81,7 @@ const ChatBot = () => {
 
     const userInputUI = (text: string, index: number): JSX.Element => (
       <motion.div
-      key={index}
+        key={index}
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0 }}
@@ -102,9 +99,9 @@ const ChatBot = () => {
         className="fixed bottom-20 w-89 h-[30rem] bg-zinc-900 rounded-xl shadow-lg z-30 
              flex flex-col overflow-y-auto border border-zinc-500
              left-1/2 -translate-x-1/2
-             lg:left-auto lg:right-5 lg:translate-x-0 lg:w-[30rem]"
+             lg:left-auto lg:right-5 lg:translate-x-0 lg:w-[30rem] text-white"
       >
-        <div className=" flex justify-between items-center  p-3 border-b-2 font-semibold">
+        <div className=" flex justify-between items-center  p-3 border-b-2 font-semibold ">
           <div className="flex gap-x-3">
             <img
               src="/profile.jpg"
@@ -113,7 +110,7 @@ const ChatBot = () => {
             />
 
             <div className="flex flex-col text-start ">
-              <span className="text-xl font-bold">Chat with Sham</span>
+              <span className="text-xl font-bold ">Chat with Sham</span>
               <span className="text-sm font-light">
                 Powered by Google Gemini
               </span>
@@ -127,15 +124,11 @@ const ChatBot = () => {
 
         {/* message content */}
         <div className="flex-1 p-3 overflow-y-auto space-y-5 text-sm">
-
-
-        {messages?.map((message, index) => (
-          
-          message.sender==="user" ? 
-            userInputUI(message.text, index): chatbotResponseUI(message.text, index)
-          
-        ))}
-
+          {messages?.map((message, index) =>
+            message.sender === "user"
+              ? userInputUI(message.text, index)
+              : chatbotResponseUI(message.text, index)
+          )}
         </div>
         <div className="p-3 border-t flex gap-2">
           <input

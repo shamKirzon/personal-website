@@ -21,7 +21,7 @@ const App = () => {
         className={`relative min-w-full min-h-screen bg-white dark:bg-zinc-900`}
       >
         <HomePage isLightMode={() => setLightMode((prev) => !prev)}/>
-          <Toaster richColors  position="bottom-right" /> 
+          <Toaster  richColors position="bottom-right" /> 
       </div>
         
       <div className="fixed bottom-0 left-0 w-full h-15 pointer-events-none bg-gradient-to-t  from-white dark:from-zinc-900 to-transparent"></div>

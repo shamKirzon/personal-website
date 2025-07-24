@@ -3,6 +3,6 @@ import { messageService } from "./message.service";
 
 const messageRoute = Router(); 
 
-messageRoute.get("/message", messageService)
+messageRoute.post("/message", messageService)
 
 export default messageRoute

@@ -4,9 +4,8 @@ import { Button } from "./ui/button";
 import { contact, socials } from "../data/GetInTouch-data";
 import * as z from "zod";
 import { useState } from "react";
-
 import { toast } from "sonner";
-import { Separator } from "./ui/separator";
+import axios from "axios";
 
 const GetInTouch = () => {
   const MessageForm = () => {
@@ -32,27 +31,19 @@ const GetInTouch = () => {
     async function handleSend(data: any) {
       const { name, email, message } = data;
 
-      console.log("MY TOAST POPED UP")
-
-      toast("👷 Work in Progress", {
-        description: `Hey ${name.split(" ")[0]}, it's not done yet haha!`,
-        className: "bg-cyan-500 text-yellow-100 border border-yellow-700",
+      const response = await axios.post("/api/message", {
+        data: { name: name, email: email, message: message },
       });
 
-      // const response = await fetch("/api/send-email.ts", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     name: name,
-      //     email: email,
-      //     message: message,
-      //   }),
-      // });
+      if (response.status) {
+        console.log("RESPONSE STATUS: ", response.status);
 
-      // if (response.ok) {
-      // }
+        toast.success(`Thanks, ${name.split(" ")[0]}!`, {
+          description: `I appreciate you taking the time to contact me`,
+        });
+      }
+
+      resetForm();
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -72,7 +63,7 @@ const GetInTouch = () => {
         resetForm();
         setFormErrors({});
         handleSend(data);
-        console.log("ITO AY SA HANDLE SUBMIT KUNG NASAAN SI HANDLE SEND")
+        console.log("ITO AY SA HANDLE SUBMIT KUNG NASAAN SI HANDLE SEND");
       } else {
         const formattedErrors = result.error.format();
         setFormErrors({
@@ -85,10 +76,12 @@ const GetInTouch = () => {
 
     return (
       <form onSubmit={handleSubmit}>
-        <div className="flex flex-col mt-10 bg-zinc-700 dark:bg-zinc-900 border gap-y-5 border-zinc-700 px-3 py-5 rounded-md
+        <div
+          className="flex flex-col mt-10 bg-zinc-700 dark:bg-zinc-900 border gap-y-5 border-zinc-700 px-3 py-5 rounded-md
         md:w-80 lg:w-[27rem]
         
-        ">
+        "
+        >
           <Input
             name="name"
             type="text"
