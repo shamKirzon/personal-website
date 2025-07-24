@@ -8,7 +8,7 @@ export const messageService = async (req: any, res: any) => {
 
  const { data, error } = await resend.emails.send({
   from: `Personal Website <onboarding@resend.dev>`,
-  to: ['delivered@resend.dev'],
+  to: ['shammysuyat@gmail.com'],
   subject: 'Visitor Message',
  html: `
   <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9;">
