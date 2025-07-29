@@ -22,7 +22,6 @@ const ChatBot = () => {
       const response = await axios.post(
         "https://personal-website-mb25.onrender.com/api/chat-bot",
         {
-          //  const response = await axios.post("/api/chat-bot", {
 
           data: inputMessage,
         }
@@ -62,7 +61,8 @@ const ChatBot = () => {
   const chatContent = (): JSX.Element => {
     const chatbotResponseUI = (text: string, index: number): JSX.Element => (
       <div key={index} className="flex flex-col gap-y-3 ">
-        {/* profile, name */}
+
+        
         <div className="flex items-center gap-x-3">
           <img
             src="/profile.jpg"
@@ -122,7 +122,7 @@ const ChatBot = () => {
           </button>
         </div>
 
-        {/* message content */}
+
         <div className="flex-1 p-3 overflow-y-auto space-y-5 text-sm">
           {messages?.map((message, index) =>
             message.sender === "user"

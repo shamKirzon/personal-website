@@ -31,9 +31,12 @@ const GetInTouch = () => {
     async function handleSend(data: any) {
       const { name, email, message } = data;
 
-      const response = await axios.post("https://personal-website-mb25.onrender.com/api/message", {
-        data: { name: name, email: email, message: message },
-      });
+      const response = await axios.post(
+        "https://personal-website-mb25.onrender.com/api/message",
+        {
+          data: { name: name, email: email, message: message },
+        }
+      );
 
       if (response.status) {
         console.log("RESPONSE STATUS: ", response.status);
@@ -135,11 +138,7 @@ const GetInTouch = () => {
   };
 
   return (
-    // parent container
-
     <div className="flex justify-center mt-30">
-      {/* content */}
-      {/* here */}
       <div
         className="flex flex-col w-full max-w-md
           md:items-start
@@ -149,9 +148,7 @@ const GetInTouch = () => {
           Get in Touch
         </h1>
 
-        {/* let's connect and message container */}
         <div className=" md:flex md:justify-between lg:items-center lg:justify-center lg:gap-x-10 w-full">
-          {/* Let's Connect */}
           <div
             className="flex flex-col mt-10  bg-zinc-700 dark:bg-zinc-900 border gap-y-5 border-zinc-700 pl-7 pr-3 py-5 rounded-md 
         
@@ -162,7 +159,6 @@ const GetInTouch = () => {
               Let's Connect
             </h1>
 
-            {/* Long Text */}
             <div className="flex border-l-2 border-l-cyan-500  justify-center items-center ">
               <p className="text-white  pl-5">
                 I'm always open to discussing new projects and opportunities.
@@ -175,7 +171,6 @@ const GetInTouch = () => {
                 <div key={index} className="flex gap-x-2 items-center ">
                   {data.icon && <data.icon className="w-10 h-10 text-white" />}
 
-                  {/* header, text */}
                   <div className="flex flex-col  text-white ">
                     <h3 className="text-[1.129rem] h-6 font-medium">
                       {data.name}
@@ -195,16 +190,13 @@ const GetInTouch = () => {
               ))}
             </div>
 
-            {/* separator */}
             <div className="h-[1px] w-75 bg-white dark:bg-zinc-700 mt-1 md:w-68" />
 
-            {/* socials */}
             <div className="flex flex-col">
               <p className="text-white  text-start">
                 Connect with me on social media
               </p>
 
-              {/* buttons horizontally */}
               <div className="flex flex-row items-center gap-x-3  mt-2">
                 {socials.map((data, index) => (
                   <a
@@ -221,11 +213,10 @@ const GetInTouch = () => {
               </div>
             </div>
           </div>
-          {/* message */}
+
           {MessageForm()}
         </div>
 
-        {/* website owner ship */}
         <div className=" flex bg-white dark:bg-zinc-700 mt-10 h-px w-full  " />
         <span className="mx-auto text-sm mt-1 text-zinc-700 dark:text-zinc-700">
           © 2025 Shammy Kierson Suyat. All rights reserved.

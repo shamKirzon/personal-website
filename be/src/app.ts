@@ -12,7 +12,7 @@ app.use(cors())
 
 
 
-//routes: 
+ 
 app.use("/api", chatbotRoute)
 app.use("/api", messageRoute)
 

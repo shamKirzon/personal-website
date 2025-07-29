@@ -7,7 +7,7 @@ import Project from "./Project";
 import BottomNav from "./BottomNav";
 import ChatBot from "./ChatBot";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, } from "react";
 import GetInTouch from "./GetInTouch";
 
 

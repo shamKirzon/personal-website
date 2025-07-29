@@ -5,7 +5,6 @@ const About = () => {
   const ref = useRef(null);
 
   return (
-    // parent container
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 40, scale: 0.98 }}
@@ -18,7 +17,6 @@ const About = () => {
       viewport={{ once: true, amount: 0.3 }}
       className="flex justify-center mt-24 "
     >
-      {/* header, content */}
       <div
         className="flex flex-col items-center gap-y-4  w-full  max-w-md
       md:items-start

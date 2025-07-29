@@ -41,7 +41,7 @@ const BottomNav = ({ lightMode, ref }: BottomNavProps) => {
       <button onClick={() => scrollTo(ref.projectRef)}>
         <Projects width="30" />
       </button>
-      {/* Divider */}
+      
       <div className="h-6 w-px bg-zinc-700 mx-2" />
 
       <button className="lg:hidden">

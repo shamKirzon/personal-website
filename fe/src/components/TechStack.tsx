@@ -16,7 +16,7 @@ const TechStack = () => {
       transition={{ duration: 0.5 }}
       className="flex flex-col items-center px-4 mt-20"
     >
-      {/* Content container */}
+
       <div className="flex flex-col items-center w-full max-w-md gap-y-7 md:items-start
       md:gap-y-5 
       md:min-w-md md:max-w-2xl md:gap-x-5 lg:max-w-4xl
@@ -24,7 +24,7 @@ const TechStack = () => {
       ">
         <h1 className="text-black text-5xl font-bold mt-2 dark:text-white">Tech Stack</h1>
 
-        {/* tech stack list */}
+        
         <div className="flex flex-wrap justify-center gap-3 md:justify-start">
           {myTechStack.map((obj, index) => (
             <motion.div
@@ -37,14 +37,14 @@ const TechStack = () => {
               }
               transition={{
                 duration: 0.6,
-                delay: index * 0.1, // stagger effect
+                delay: index * 0.1,
                 type: "spring",
                 stiffness: 300,
                 damping: 10,
               }}
               whileHover={{
                 scale: 1.2,
-                rotate: [0, 5, -5, 0], // wiggle on hover
+                rotate: [0, 5, -5, 0], 
                 transition: { duration: 1 },
               }}
               className="flex items-center gap-x-2 bg-zinc-600 text-white px-4 py-2 rounded-md cursor-pointer shadow-md"

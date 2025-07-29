@@ -36,7 +36,7 @@ const Profile = () => {
 
   return (
     <>
-      {/*Parent Container*/}
+
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 40, scale: 0.98 }}
@@ -49,7 +49,7 @@ const Profile = () => {
         viewport={{ once: true, amount: 0.3 }}
         className=" flex justify-center mt-4"
       >
-        {/* Profile, Text Container */}
+
         <div className="flex   flex-col items-center w-full max-w-md md:flex-row md:items-start
          md:min-w-md md:max-w-2xl md:gap-x-5 lg:max-w-4xl lg:items-center ">
           <img
@@ -58,13 +58,13 @@ const Profile = () => {
             className="w-50  object-cover rounded-md md:w-40"
           />
 
-          {/* text */}
+          
           <div className="flex flex-col  items-center md:items-start">
             <h1 className="text-zinc-900 text-3xl font-bold mt-2 dark:text-white">
               Shammy Kierson Suyat
             </h1>
 
-            {/* location */}
+
 
             <div className="flex items-center gap-x-1">
               <Location className="w-5 h-5  text-black dark:text-white" />
@@ -78,7 +78,6 @@ const Profile = () => {
               development.
             </p>
 
-            {/* buttons tablet and web view layout */}
             <div className=" hidden  md:flex w-full md:mt-7 md:gap-x-5 lg:mt-10">
               {profileButtons.map((button, index) => (
                 <button
@@ -105,7 +104,7 @@ const Profile = () => {
             </div>
           </div>
 
-          {/* buttons phone view layout */}
+
           <div className="flex md:hidden  flex-col space-y-3 mt-6 w-full px-4 ">
             {profileButtons.map((button, index) => (
               <button

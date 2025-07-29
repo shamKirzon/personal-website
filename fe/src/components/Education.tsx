@@ -3,13 +3,12 @@ import { motion } from "framer-motion";
 
 const Education = () => {
   return (
-    // parent container
+
     <div className="flex justify-center mt-20">
       <div className="flex flex-col w-full max-w-md gap-y-7  md:items-start
      md:min-w-md md:max-w-2xl md:gap-x-5 lg:max-w-4xl
       
 ">
-        {/* header*/}
         <div className="flex flex-col">
           <h1 className="text-black dark:text-white h-10 text-5xl font-bold mt-2 text-center w-full">
             Education
@@ -26,12 +25,12 @@ const Education = () => {
               transition={{ duration: 0.6, ease: "easeOut" }}
               viewport={{ once: false, amount: 0.3 }}
             >
-              {/* line */}
+
               {data.school === "University of Makati" && (
                 <div className="absolute left-10 top-8 w-0.5 h-[12rem] md:h-[11rem] bg-black dark:bg-white z-0"></div>
               )}
 
-              {/* content */}
+
               <div className="relative flex items-start gap-x-4 py-3 z-10 w-full ">
                  <img
                   src={data.image}

@@ -10,23 +10,21 @@ import {
 
 const Project = () => {
   return (
-    // parent container
+
     <div className="flex justify-center mt-20 px-3 ">
       <div
         className="flex flex-col w-full max-w-md gap-y-15  md:items-start
      md:min-w-md md:max-w-2xl md:gap-x-5 lg:max-w-4xl
       "
       >
-        {/* header*/}
-        <div className="flex flex-col ">
+<div className="flex flex-col ">
           <h1 className="text-black dark:text-white h-10 text-5xl font-bold mt-2 text-center w-full md:text-start">
             Project
           </h1>
         </div>
 
-        {/* content */}
-        <div className="flex flex-col  flex-wrap  gap-y-20 md:flex-row md:gap-x-10 md:justify-between lg:justify-center  ">
-          {/* project container */}
+<div className="flex flex-col  flex-wrap  gap-y-20 md:flex-row md:gap-x-10 md:justify-between lg:justify-center  ">
+
           {project.map((data, index) => (
             <motion.div
               key={index}
@@ -58,14 +56,13 @@ const Project = () => {
                       />
                     </AccordionTrigger>
                     <AccordionContent className="overflow-hidden transition-all data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
-                      {/* description */}
-                      <div className="flex px-4">
+<div className="flex px-4">
                         <p className="text-white leading-5">
                           {data.description}
                         </p>
                       </div>
 
-                      {/* tech stack */}
+
                       <div className="flex flex-wrap p-4 gap-2">
                         {data.technology.map((technology, index) => (
                           <p
@@ -77,7 +74,7 @@ const Project = () => {
                         ))}
                       </div>
 
-                      {/* buttons */}
+
                       {data.buttons.map((button, index) => (
                         <div className="flex justify-center  w-full text-black mt-5">
                           <a
