@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { messageService } from "./message.service";
 
-const messageRoute = Router(); 
+const messageRoute = Router();
 
-messageRoute.post("/message", messageService)
+messageRoute.post("/message", messageService);
 
-export default messageRoute
+export default messageRoute;

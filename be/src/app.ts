@@ -1,21 +1,22 @@
 import chatbotRoute from "./chat-bot/chatbot.route";
-import messageRoute from "./message/message.route"
+import messageRoute from "./message/message.route";
 
-import express from "express"
-import cors from "cors"
+import express from "express";
+import cors from "cors";
 
+const app = express();
+app.use(express.json());
+app.use(cors());
 
+app.use("/api", chatbotRoute);
+app.use("/api", messageRoute);
 
-const app = express(); 
-app.use(express.json()); 
-app.use(cors())
+// health - for uptime robot setup - to avoid server cold start.
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    time: new Date().toISOString(),
+  });
+});
 
-
-
- 
-app.use("/api", chatbotRoute)
-app.use("/api", messageRoute)
-
-
-
-export default app; 
+export default app;
