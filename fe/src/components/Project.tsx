@@ -18,7 +18,7 @@ const Project = () => {
       "
       >
 <div className="flex flex-col ">
-          <h1 className="text-black dark:text-white h-10 text-5xl font-bold mt-2 text-center w-full md:text-start">
+          <h1 className="text-black dark:text-white h-10 text-3xl md:text-5xl font-bold mt-2 text-center w-full md:text-start">
             Project
           </h1>
         </div>
@@ -45,7 +45,7 @@ const Project = () => {
                   <AccordionItem value="item-1">
                     <AccordionTrigger className=" flex items-center text-white w-full pr-4 group ">
                       <div className="w-55 pl-3 pb-6">
-                        <h1 className=" text-start font-bold text-white leading-7 text-[1.8rem]  mt-2">
+                        <h1 className=" text-start font-bold text-white leading-7 text-xl md:text-[1.8rem]  mt-2">
                           {data.name}
                         </h1>
                       </div>

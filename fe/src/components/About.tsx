@@ -22,16 +22,16 @@ const About = () => {
       md:items-start
       md:min-w-md md:max-w-2xl md:gap-x-5 lg:max-w-4xl"
       >
-        <h1 className="text-black text-5xl font-bold mt-2 dark:text-white">
+        <h1 className="text-black text-3xl md:text-5xl font-bold mt-2 dark:text-white">
           About
         </h1>
 
         <p className=" text-center text-black text-lg leading-9  dark:text-white md:text-start">
-          I'm Shammy Kierson Suyat, a Computer Science student living in Taguig
-          City, Philippines. I’m currently focusing on full-stack development
-          and have started exploring how to integrate AI into my projects.
+          I'm Shammy Kierson Suyat, a Computer Science student based in Taguig
+          City, Philippines, focused on building full-stack web applications
+          with a growing specialization in agentic AI architecture
         </p>
-      </div>  
+      </div>
     </motion.div>
   );
 };

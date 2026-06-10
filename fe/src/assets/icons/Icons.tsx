@@ -43,9 +43,9 @@ export const Email = ({ className }: { className: string }) => (
       />
       <path
         stroke="#fff"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
         d="m3 5l9 9l9-9"
       />
     </g>
@@ -89,9 +89,9 @@ export const Projects = ({ width }: Props) => (
   >
     <path
       fill="#fff"
-      fill-rule="evenodd"
+      fillRule="evenodd"
       d="M5.4 2h13.2A3.4 3.4 0 0 1 22 5.4v13.2a3.4 3.4 0 0 1-3.4 3.4H5.4A3.4 3.4 0 0 1 2 18.6V5.4A3.4 3.4 0 0 1 5.4 2M7 5a1 1 0 0 1 1 1v8a1 1 0 1 1-2 0V6a1 1 0 0 1 1-1m5 0a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0V6a1 1 0 0 1 1-1m6 1a1 1 0 1 0-2 0v10a1 1 0 1 0 2 0z"
-      clip-rule="evenodd"
+      clipRule="evenodd"
     />
   </svg>
 );
@@ -120,7 +120,7 @@ export const DarkMode = ({ width }: Props) => (
     height="32"
     viewBox="0 0 24 24"
   >
-    <g fill="#fff" fill-opacity="0">
+    <g fill="#fff" fillOpacity="0">
       <path d="M15.22 6.03l2.53-1.94L14.56 4L13.5 1l-1.06 3l-3.19.09l2.53 1.94l-.91 3.06l2.63-1.81l2.63 1.81z">
         <animate
           id="lineMdMoonLoop0"
@@ -190,11 +190,11 @@ export const DarkMode = ({ width }: Props) => (
     <path
       fill="none"
       stroke="#fff"
-      stroke-dasharray="56"
-      stroke-dashoffset="56"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
+      strokeDasharray="56"
+      strokeDashoffset="56"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
       d="M7 6 C7 12.08 11.92 17 18 17 C18.53 17 19.05 16.96 19.56 16.89 C17.95 19.36 15.17 21 12 21 C7.03 21 3 16.97 3 12 C3 8.83 4.64 6.05 7.11 4.44 C7.04 4.95 7 5.47 7 6 Z"
     >
       <animate

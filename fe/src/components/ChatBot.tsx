@@ -22,9 +22,8 @@ const ChatBot = () => {
       const response = await axios.post(
         "https://personal-website-mb25.onrender.com/api/chat-bot",
         {
-
           data: inputMessage,
-        }
+        },
       );
 
       setMessages((prev) => [
@@ -61,8 +60,6 @@ const ChatBot = () => {
   const chatContent = (): JSX.Element => {
     const chatbotResponseUI = (text: string, index: number): JSX.Element => (
       <div key={index} className="flex flex-col gap-y-3 ">
-
-        
         <div className="flex items-center gap-x-3">
           <img
             src="/profile.jpg"
@@ -96,7 +93,7 @@ const ChatBot = () => {
 
     return (
       <div
-        className="fixed bottom-20 w-89 h-[30rem] bg-zinc-900 rounded-xl shadow-lg z-30 
+        className="fixed bottom-20 w-89 h-[30rem] bg-zinc-900 rounded-xl shadow-lg z-30
              flex flex-col overflow-y-auto border border-zinc-500
              left-1/2 -translate-x-1/2
              lg:left-auto lg:right-5 lg:translate-x-0 lg:w-[30rem] text-white"
@@ -122,12 +119,11 @@ const ChatBot = () => {
           </button>
         </div>
 
-
         <div className="flex-1 p-3 overflow-y-auto space-y-5 text-sm">
           {messages?.map((message, index) =>
             message.sender === "user"
               ? userInputUI(message.text, index)
-              : chatbotResponseUI(message.text, index)
+              : chatbotResponseUI(message.text, index),
           )}
         </div>
         <div className="p-3 border-t flex gap-2">
@@ -158,7 +154,7 @@ const ChatBot = () => {
       <div className="flex lg:fixed lg:bottom-5 lg:right-5 lg:z-50">
         <button onClick={() => SetOpenChat((prev) => !prev)}>
           <div
-            className="lg:p-2 lg:bg-zinc-900 lg:border lg:border-cyan-500 lg:shadow-[0_0_12px_3px_rgba(6,182,212,0.5)] lg:rounded-full 
+            className="lg:p-2 lg:bg-zinc-900 lg:border lg:border-cyan-500 lg:shadow-[0_0_12px_3px_rgba(6,182,212,0.5)] lg:rounded-full
             hover:scale-110 transition-transform duration-200 "
           >
             <ChatRobot className="h-10 text-cyan-400" />

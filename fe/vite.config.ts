@@ -1,7 +1,7 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import path from "path"
-import tailwindcss from "@tailwindcss/vite"
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
+import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -12,13 +12,14 @@ export default defineConfig({
     },
   },
   server: {
-    proxy:{
-       '/api': {
-        target: 'http://localhost:5000', // your backend URL
+    proxy: {
+      "/api": {
+        target: "http://localhost:5000", // your backend URL
         changeOrigin: true,
         secure: false,
       },
     },
-    host: "192.168.55.100"
-  }
-})
+    // host: "192.168.55.100"
+    host: "localhost",
+  },
+});

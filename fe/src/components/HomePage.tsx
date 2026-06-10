@@ -5,7 +5,7 @@ import Education from "./Education";
 import Work from "./Work";
 import Project from "./Project";
 import BottomNav from "./BottomNav";
-import ChatBot from "./ChatBot";
+// import ChatBot from "./ChatBot";
 
 import { useRef, } from "react";
 import GetInTouch from "./GetInTouch";
@@ -27,9 +27,9 @@ const HomePage = ({isLightMode}: Props) => {
  
   return (
     <div className="relative  p-4">
-       <div className="hidden lg:block">
+       {/* <div className="hidden lg:block">
          <ChatBot />
-       </div>
+       </div> */}
 
       <div className="flex  z-20 fixed bottom-5 left-1/2 transform -translate-x-1/2">
           

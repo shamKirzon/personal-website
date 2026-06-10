@@ -35,7 +35,7 @@ const GetInTouch = () => {
         "https://personal-website-mb25.onrender.com/api/message",
         {
           data: { name: name, email: email, message: message },
-        }
+        },
       );
 
       if (response.status) {
@@ -49,7 +49,7 @@ const GetInTouch = () => {
       resetForm();
     }
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
       const formData = new FormData(e.currentTarget);
@@ -66,7 +66,6 @@ const GetInTouch = () => {
         resetForm();
         setFormErrors({});
         handleSend(data);
-        console.log("ITO AY SA HANDLE SUBMIT KUNG NASAAN SI HANDLE SEND");
       } else {
         const formattedErrors = result.error.format();
         setFormErrors({
@@ -82,7 +81,7 @@ const GetInTouch = () => {
         <div
           className="flex flex-col mt-10 bg-zinc-700 dark:bg-zinc-900 border gap-y-5 border-zinc-700 px-3 py-5 rounded-md
         md:w-80 lg:w-[27rem]
-        
+
         "
         >
           <Input
@@ -144,18 +143,18 @@ const GetInTouch = () => {
           md:items-start
          md:min-w-md md:max-w-2xl md:gap-x-5 lg:max-w-4xl "
       >
-        <h1 className="text-black dark:text-white h-10 text-5xl font-bold mt-2 text-center w-full">
+        <h1 className="text-black dark:text-white h-10 text-3xl md:text-5xl font-bold mt-2 text-center w-full">
           Get in Touch
         </h1>
 
         <div className=" md:flex md:justify-between lg:items-center lg:justify-center lg:gap-x-10 w-full">
           <div
-            className="flex flex-col mt-10  bg-zinc-700 dark:bg-zinc-900 border gap-y-5 border-zinc-700 pl-7 pr-3 py-5 rounded-md 
-        
+            className="flex flex-col mt-10  bg-zinc-700 dark:bg-zinc-900 border gap-y-5 border-zinc-700 pl-7 pr-3 py-5 rounded-md
+
             md:w-80 lg:w-[27rem]
         "
           >
-            <h1 className="text-white h-10 text-3xl font-bold  ">
+            <h1 className="text-white h-10 text-2xl md:text-3xl font-bold  ">
               Let's Connect
             </h1>
 
@@ -217,7 +216,7 @@ const GetInTouch = () => {
           {MessageForm()}
         </div>
 
-        <div className=" flex bg-white dark:bg-zinc-700 mt-10 h-px w-full  " />
+        <div className=" flex bg-white dark:bg-zinc-700 mt-20 h-px w-full  " />
         <span className="mx-auto text-sm mt-1 text-zinc-700 dark:text-zinc-700">
           © 2025 Shammy Kierson Suyat. All rights reserved.
         </span>

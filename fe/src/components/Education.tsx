@@ -10,7 +10,7 @@ const Education = () => {
       
 ">
         <div className="flex flex-col">
-          <h1 className="text-black dark:text-white h-10 text-5xl font-bold mt-2 text-center w-full">
+          <h1 className="text-black dark:text-white h-10 text-3xl md:text-5xl font-bold mt-2 text-center w-full">
             Education
           </h1>
         </div>
