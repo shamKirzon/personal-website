@@ -32,7 +32,8 @@ const GetInTouch = () => {
       const { name, email, message } = data;
 
       const response = await axios.post(
-        "https://personal-website-mb25.onrender.com/api/message",
+        `${import.meta.env.VITE_RENDER_API_KEY}/api/message`,
+        // "http://localhost:5000/api/message",
         {
           data: { name: name, email: email, message: message },
         },
