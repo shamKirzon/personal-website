@@ -5,17 +5,16 @@ import Education from "./Education";
 import Work from "./Work";
 import Project from "./Project";
 import BottomNav from "./BottomNav";
-// import ChatBot from "./ChatBot";
+import ChatBot from "./ChatBot";
 
-import { useRef, } from "react";
+import { useRef } from "react";
 import GetInTouch from "./GetInTouch";
 
-
-interface Props{
+interface Props {
   isLightMode: () => void;
 }
 
-const HomePage = ({isLightMode}: Props) => {
+const HomePage = ({ isLightMode }: Props) => {
   const profileRef = useRef<HTMLDivElement | null>(null);
   const aboutRef = useRef<HTMLDivElement | null>(null);
   const techRef = useRef<HTMLDivElement | null>(null);
@@ -24,15 +23,11 @@ const HomePage = ({isLightMode}: Props) => {
   const workRef = useRef<HTMLDivElement | null>(null);
   const getInTouchRef = useRef<HTMLDivElement | null>(null);
 
- 
   return (
     <div className="relative  p-4">
-       {/* <div className="hidden lg:block">
-         <ChatBot />
-       </div> */}
+      <ChatBot />
 
       <div className="flex  z-20 fixed bottom-5 left-1/2 transform -translate-x-1/2">
-          
         <BottomNav
           lightMode={isLightMode}
           ref={{
@@ -42,7 +37,7 @@ const HomePage = ({isLightMode}: Props) => {
             educationRef,
             projectRef,
             workRef,
-             getInTouchRef
+            getInTouchRef,
           }}
         />
       </div>
@@ -65,7 +60,7 @@ const HomePage = ({isLightMode}: Props) => {
       <div ref={workRef}>
         <Work />
       </div>
-      <div className="pb-20" ref={ getInTouchRef}>
+      <div className="pb-20" ref={getInTouchRef}>
         <GetInTouch />
       </div>
     </div>
