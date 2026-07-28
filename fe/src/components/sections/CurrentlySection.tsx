@@ -85,14 +85,20 @@ const CurrentlySection = () => {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden"
           >
-            <ul className="mt-7 flex flex-col gap-9 border-l border-[var(--line-hairline)] pl-6">
+            <motion.ul
+              initial={{ x: -28, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -28, opacity: 0 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-7 flex flex-col gap-9 border-l border-[var(--line-hairline)] pl-6"
+            >
               {previousRoles.map((role) => (
                 <RoleEntry key={role.title} {...role} />
               ))}
-            </ul>
+            </motion.ul>
           </motion.div>
         )}
       </AnimatePresence>
