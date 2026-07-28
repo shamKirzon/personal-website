@@ -38,14 +38,8 @@ const RoleEntry = ({
 
     {tech.length > 0 && (
       <div className="mt-3 flex items-center gap-2.5">
-        {tech.map((item) => (
-          <img
-            key={item.alt}
-            src={item.src}
-            alt={item.alt}
-            title={item.alt}
-            className="h-[18px] w-[18px] object-contain opacity-70"
-          />
+        {tech.map(({ Icon, alt }) => (
+          <Icon key={alt} title={alt} size={18} className="text-[var(--ink)]" />
         ))}
       </div>
     )}
