@@ -6,7 +6,7 @@ const BlogCard = ({
   slug,
   title,
   excerpt,
-  cover,
+  images,
   date,
   isoDate,
   readingTime,
@@ -17,7 +17,7 @@ const BlogCard = ({
     className="group flex h-full flex-col overflow-hidden rounded-xl border border-[var(--line-subtle)] bg-[var(--panel-bg-deep)] shadow-[var(--panel-shadow)] transition-colors hover:border-[var(--line-strong)]"
   >
     <img
-      src={cover}
+      src={images[0]}
       alt={title}
       className="aspect-[16/9] w-full object-cover object-top"
     />
