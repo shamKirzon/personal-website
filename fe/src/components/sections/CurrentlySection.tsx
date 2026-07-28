@@ -19,11 +19,7 @@ const CurrentlySection = () => {
     <section className="mx-auto max-w-[760px] px-5 pt-12">
       <div className="rounded-xl border border-[var(--line-subtle)] bg-[var(--panel-bg-deep)] p-5 shadow-[var(--panel-shadow)]">
         <div className="mb-3 flex items-center gap-2">
-          <motion.span
-            className="h-2 w-2 rounded-full bg-[#22c55e]"
-            animate={{ opacity: [1, 0.55, 1], scale: [1, 1.12, 1] }}
-            transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
-          />
+          <span className="h-2 w-2 rounded-full bg-[#22c55e] shadow-[0_0_6px_2px_rgba(34,197,94,0.6)]" />
           <span className="font-mono text-[12px] font-semibold uppercase tracking-[0.14em] text-[#22c55e]">
             Currently
           </span>
