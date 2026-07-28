@@ -12,7 +12,6 @@ const BackToTopButton = () => {
     const nav = document.getElementById("site-nav");
     if (!nav) return;
 
-    // Visible whenever the navbar has scrolled out of view — hidden once it's back on screen.
     const observer = new IntersectionObserver(
       ([entry]) => setVisible(!entry.isIntersecting),
     );
@@ -22,8 +21,6 @@ const BackToTopButton = () => {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-    // Clear a lingering hash (e.g. /#get-in-touch) so the URL matches where the
-    // page actually is, and so clicking that same anchor link again still works.
     if (location.hash) {
       navigate(location.pathname, { replace: true });
     }

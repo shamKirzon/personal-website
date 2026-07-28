@@ -10,7 +10,6 @@ import {
 
 const DOTS_PER_LAYER = 3;
 
-/** Near layers are bigger, brighter, and drift further under the cursor. */
 const LAYER_TIERS = [
   { depth: 14, size: [1, 1.5] as const, opacity: [0.15, 0.32] as const, tile: [210, 340] as const },
   { depth: 30, size: [1.5, 2] as const, opacity: [0.26, 0.42] as const, tile: [300, 450] as const },
@@ -75,10 +74,8 @@ const StarLayer = ({
 const StarField = () => {
   const prefersReducedMotion = useReducedMotion();
 
-  // Re-rolled once per mount, so every refresh gives a new star layout.
   const layers = useMemo(() => LAYER_TIERS.map(buildLayer), []);
 
-  // Normalised cursor offset from the viewport centre, in the range -0.5 … 0.5.
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
 

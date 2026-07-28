@@ -4,7 +4,6 @@ import { blogPosts } from "@/data/Blog-data";
 import BlogCard from "../ui/BlogCard";
 import TagFilterPill from "../ui/TagFilterPill";
 
-/** Tag list built from the posts themselves, so counts can never drift. */
 const tagCounts = blogPosts
   .flatMap((post) => post.tags)
   .reduce<Record<string, number>>((counts, tag) => {

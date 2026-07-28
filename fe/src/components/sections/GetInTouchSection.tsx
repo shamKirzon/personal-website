@@ -18,7 +18,6 @@ const MessageSchema = z.object({
   message: z.string().min(1),
 });
 
-/** Dark red toast styling for validation errors — overrides the Toaster's richColors default. */
 const errorToastStyle = {
   background: "#7f1d1d",
   color: "#f5f5f5",
@@ -26,7 +25,6 @@ const errorToastStyle = {
   padding: "10px 14px",
 };
 
-/** Dark green toast styling for a successful send — overrides the Toaster's richColors default. */
 const successToastStyle = {
   background: "#14532d",
   color: "#f5f5f5",

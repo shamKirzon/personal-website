@@ -9,7 +9,6 @@ const GAP_REM = 1;
 
 const perViewFor = (width: number) => (width < 640 ? 1 : width < 1024 ? 2 : 3);
 
-/** Builds { value, label, count } options from every project, most-used first. */
 const buildOptions = (values: string[]): FilterOption[] => {
   const counts = values.reduce<Record<string, number>>((acc, value) => {
     acc[value] = (acc[value] ?? 0) + 1;
@@ -50,8 +49,6 @@ const RecentProjects = () => {
     setIndex(0);
   };
 
-  // Year is single-select: picking a new one replaces the previous pick,
-  // clicking the active one clears it.
   const toggleYear = (value: string) => {
     setSelectedYear((prev) => (prev === value ? null : value));
     setIndex(0);

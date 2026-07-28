@@ -13,12 +13,10 @@ const links = [
 
 const Navbar = () => {
   const { pathname } = useLocation();
-  // Lazy-init from the class the index.html FOUC-prevention script already applied.
   const [isLight, setIsLight] = useState(() =>
     document.documentElement.classList.contains("light"),
   );
 
-  // "/" must match exactly; section routes stay active on their detail pages.
   const isActive = (to: string) =>
     to === "/" ? pathname === "/" : to !== "#" && pathname.startsWith(to);
 
@@ -103,8 +101,6 @@ const Navbar = () => {
           >
             EN
           </button>
-
-          <span aria-hidden className="h-4 w-px bg-[var(--line)]" />
         </nav>
       </div>
     </header>
