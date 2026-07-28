@@ -34,9 +34,9 @@ const Navbar = () => {
           <img
             src={logo}
             alt="Shammy logo"
-            className="h-6 w-6 object-contain"
+            className="h-8 w-8 object-contain"
           />
-          <span className="text-[16px] font-extrabold uppercase tracking-tight text-[var(--ink)]">
+          <span className="text-[20px] font-extrabold uppercase tracking-tight text-[var(--ink)]">
             Shammy
           </span>
         </Link>
