@@ -97,8 +97,8 @@ const ChatBot = () => {
           <span className="text-sm font-medium">Shammy Kierson Suyat</span>
         </div>
 
-        <div className="bg-gray-200 p-2 w-fit rounded-md max-w-[75%]">
-          <p className="text-black text-start">{text}</p>
+        <div className="bg-muted p-2 w-fit rounded-md max-w-[75%]">
+          <p className="text-foreground text-start">{text}</p>
         </div>
       </div>
     );
@@ -112,7 +112,7 @@ const ChatBot = () => {
         transition={{ duration: 0.3 }}
         className="flex justify-end"
       >
-        <div className="bg-cyan-500 text-white p-2 rounded-md max-w-[75%]">
+        <div className="bg-primary text-primary-foreground p-2 rounded-md max-w-[75%]">
           <p className="text-sm">{text}</p>
         </div>
       </motion.div>
@@ -136,11 +136,11 @@ const ChatBot = () => {
           <span className="text-sm font-medium">Shammy Kierson Suyat</span>
         </div>
 
-        <div className="bg-gray-200 px-3 py-2 w-fit rounded-full flex items-center gap-x-1">
+        <div className="bg-muted px-3 py-2 w-fit rounded-full flex items-center gap-x-1">
           {[0, 1, 2].map((i) => (
             <motion.span
               key={i}
-              className="w-1.5 h-1.5 bg-gray-500 rounded-full"
+              className="w-1.5 h-1.5 bg-muted-foreground rounded-full"
               animate={{ y: ["0%", "-50%", "0%"] }}
               transition={{
                 duration: 0.6,
@@ -160,12 +160,12 @@ const ChatBot = () => {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.9, y: 20 }}
         transition={{ duration: 0.25, ease: "easeOut" }}
-        className="fixed bottom-20 w-80 h-[26rem] bg-zinc-900 rounded-xl shadow-lg z-30
-             flex flex-col overflow-hidden border border-zinc-500
+        className="fixed bottom-20 w-80 h-[26rem] bg-card rounded-xl shadow-lg z-30
+             flex flex-col overflow-hidden border border-border
              right-5
-             lg:w-[26rem] text-white"
+             lg:w-[26rem] text-foreground"
       >
-        <div className=" flex justify-between items-center  p-3 border-b font-semibold ">
+        <div className="flex justify-between items-center p-3 border-b border-border-subtle font-semibold">
           <div className="flex gap-x-2 items-center">
             <img
               src="/profile.jpg"
@@ -174,17 +174,17 @@ const ChatBot = () => {
             />
 
             <div className="flex flex-col text-start gap-y-0.5">
-              <span className="text-[19px] font-bold leading-none">
+              <span className="text-[22px] font-bold leading-none">
                 Chat with Sham
               </span>
-              <span className="text-xs font-light leading-none text-zinc-400">
+              <span className="text-xs font-light leading-none text-muted-foreground">
                 Powered by Google Gemini
               </span>
             </div>
           </div>
 
           <button onClick={() => SetOpenChat((prev) => !prev)}>
-            <Times className="h-5 fill-white" />
+            <Times className="h-5 fill-current text-muted-foreground" />
           </button>
         </div>
 
@@ -196,11 +196,11 @@ const ChatBot = () => {
           )}
           {isTyping && typingIndicatorUI()}
         </div>
-        <div className="p-3 border-t flex gap-2">
+        <div className="p-3 border-t border-border-subtle flex gap-2">
           <input
             value={inputMessage}
             type="text"
-            className="flex-1 h-10 rounded-md px-2 py-1 text-sm border border-cyan-500"
+            className="flex-1 h-10 rounded-md px-2 py-1 text-sm bg-background border border-border focus:border-primary focus:outline-none text-foreground"
             placeholder="Type your message..."
             onChange={(e) => setInputMessage(e.target.value)}
             onKeyDown={(e) => {
@@ -209,7 +209,7 @@ const ChatBot = () => {
           />
           <button
             onClick={handleSendMessage}
-            className="bg-cyan-500 text-white px-3 rounded-md text-sm"
+            className="bg-primary text-primary-foreground px-3 rounded-md text-sm font-medium"
           >
             Send
           </button>
@@ -224,18 +224,18 @@ const ChatBot = () => {
       <div className="flex fixed bottom-5 right-5 z-50">
         <button onClick={() => SetOpenChat((prev) => !prev)}>
           <motion.div
-            className="p-2 bg-zinc-900 border border-cyan-500 rounded-full
+            className="p-2 bg-card border border-primary rounded-full
             hover:scale-110 transition-transform duration-200 "
             animate={{
               boxShadow: [
-                "0 0 8px 2px rgba(6,182,212,0.4)",
-                "0 0 18px 5px rgba(6,182,212,0.8)",
-                "0 0 8px 2px rgba(6,182,212,0.4)",
+                "0 0 8px 2px rgba(45,212,191,0.4)",
+                "0 0 18px 5px rgba(45,212,191,0.8)",
+                "0 0 8px 2px rgba(45,212,191,0.4)",
               ],
             }}
             transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
           >
-            <ChatRobot className="h-10 text-cyan-400" />
+            <ChatRobot className="h-10 text-primary" />
           </motion.div>
         </button>
       </div>
