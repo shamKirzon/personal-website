@@ -1,31 +1,40 @@
-import HomePage from "./components/HomePage";
+import { Routes, Route, useLocation } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import ProjectDetailPage from "./pages/ProjectDetailPage";
+import BlogPage from "./pages/BlogPage";
+import BlogPostPage from "./pages/BlogPostPage";
+import VisitorsPage from "./pages/VisitorsPage";
+import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
+import StarField from "./components/layout/StarField";
+import BackToTopButton from "./components/ui/BackToTopButton";
 import "./index.css";
-import { useEffect, useState } from "react";
 import { Toaster } from "./components/ui/sonner";
 
+// Kept for reference — not part of the current design.
+// import ChatBot from "./components/ChatBot";
+
 const App = () => {
-  const [screenWidth, setScreenWidth] = useState<number | undefined>(window.innerWidth);
-  const [lightMode, setLightMode] = useState<boolean>(false);
-
-  useEffect(() => {
-    const handleResize = () => setScreenWidth(window.innerWidth);
-    handleResize();
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const { pathname } = useLocation();
 
   return (
-    <>
-      <div
-        className={`relative min-w-full min-h-screen bg-white dark:bg-zinc-900`}
-      >
-        <HomePage isLightMode={() => setLightMode((prev) => !prev)}/>
-          <Toaster  richColors position="bottom-right" /> 
-      </div>
-        
-      <div className="fixed bottom-0 left-0 w-full h-15 pointer-events-none bg-gradient-to-t  from-white dark:from-zinc-900 to-transparent"></div>
-    </>
+    <div className="relative min-h-screen w-full bg-[var(--page-bg)] transition-colors duration-150">
+      <StarField />
+      {/* <ChatBot /> */}
+      <Navbar />
+
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/projects/:slug" element={<ProjectDetailPage />} />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/blog/:slug" element={<BlogPostPage />} />
+        <Route path="/visitors" element={<VisitorsPage />} />
+      </Routes>
+
+      {pathname !== "/visitors" && <Footer />}
+      <BackToTopButton />
+      <Toaster richColors position="bottom-right" />
+    </div>
   );
 };
 

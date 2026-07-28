@@ -13,6 +13,14 @@
     />
 
     <title>Shammy Suyat - Software Developer</title>
+
+    <script>
+      try {
+        if (localStorage.getItem("theme") === "light") {
+          document.documentElement.classList.add("light");
+        }
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

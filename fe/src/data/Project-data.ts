@@ -7,6 +7,7 @@ import { GithubBlack } from "@/assets/icons/Icons";
 
 export const project = [
   {
+    slug: "smart-queue",
     name: "Smart Queue",
     app: "Mobile App",
     description:
@@ -18,6 +19,7 @@ export const project = [
       { name: "PostgreSQL" },
       { name: "Expo" },
     ],
+    year: 2025,
     image: smartQueue,
     buttons: [
       {
@@ -28,6 +30,7 @@ export const project = [
     ],
   },
   {
+    slug: "heronest",
     name: "Heronest",
     app: "Website App",
     description:
@@ -39,6 +42,7 @@ export const project = [
       { name: ".NET" },
       { name: "Postgres" },
     ],
+    year: 2024,
     image: heronest,
     buttons: [
       {
@@ -49,6 +53,7 @@ export const project = [
     ],
   },
   {
+    slug: "pateros-catholic-school",
     name: "Pateros Catholic School",
     app: "Website App",
     description:
@@ -59,6 +64,7 @@ export const project = [
       { name: "PHP" },
       { name: "PostgreSQL" },
     ],
+    year: 2024,
     image: pateros,
     buttons: [
       {
@@ -69,6 +75,7 @@ export const project = [
     ],
   },
   {
+    slug: "library-management-system",
     name: "Library Management System",
     app: "Desktop App",
     description:
@@ -79,6 +86,7 @@ export const project = [
       { name: "JDBC" },
       { name: "MySQL" },
     ],
+    year: 2024,
     image: library,
     buttons: [
       {
@@ -89,11 +97,13 @@ export const project = [
     ],
   },
   {
+    slug: "bath-of-paws",
     name: "Bath of Paws",
     app: "Website App",
     description:
       "A frontend pet website built using basic web development tools, focusing on layout, styling, and interactive elements to enhance user experience.",
     technology: [{ name: "JavaScript" }, { name: "HTML" }, { name: "CSS" }],
+    year: 2024,
     image: bathOfPaws,
     buttons: [
       {
