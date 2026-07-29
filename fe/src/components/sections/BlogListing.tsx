@@ -3,6 +3,7 @@ import { Search } from "lucide-react";
 import { blogPosts } from "@/data/Blog-data";
 import BlogCard from "../ui/BlogCard";
 import TagFilterPill from "../ui/TagFilterPill";
+import { StaggerGroup, StaggerItem } from "../ui/Reveal";
 
 const tagCounts = blogPosts
   .flatMap((post) => post.tags)
@@ -73,11 +74,13 @@ const BlogListing = () => {
           No posts match your filters.
         </p>
       ) : (
-        <div className="mt-6 grid gap-6 sm:grid-cols-2">
+        <StaggerGroup className="mt-6 grid gap-6 sm:grid-cols-2">
           {filteredPosts.map((post) => (
-            <BlogCard key={post.slug} {...post} />
+            <StaggerItem key={post.slug}>
+              <BlogCard {...post} />
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGroup>
       )}
     </>
   );
