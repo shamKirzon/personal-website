@@ -4,6 +4,7 @@ import { ArrowLeft, X } from "lucide-react";
 import { project } from "@/data/Project-data";
 import Pill from "@/components/ui/Pill";
 import { LaptopMockup, PhoneMockup } from "@/components/ui/DeviceMockup";
+import { StaggerGroup, StaggerItem } from "@/components/ui/Reveal";
 
 const ProjectDetailPage = () => {
   const { slug } = useParams();
@@ -85,7 +86,7 @@ const ProjectDetailPage = () => {
             href={button.url}
             target="_blank"
             rel="noreferrer"
-            className="rounded-lg border border-[var(--line)] bg-[var(--panel-bg)] px-5 py-2.5 text-[15px] text-[var(--ink)] transition-colors hover:border-[var(--line-strong)]"
+            className="rounded-lg border border-[var(--line)] bg-[var(--panel-bg)] px-5 py-2.5 text-[15px] text-[var(--ink)] transition-all duration-150 hover:scale-[1.03] hover:border-[var(--line-strong)] active:scale-[0.97]"
           >
             {button.label}
           </a>
@@ -96,11 +97,13 @@ const ProjectDetailPage = () => {
         <p className="mb-6 font-mono text-[12px] uppercase tracking-[0.14em] text-[var(--ink-mid)]">
           Technologies
         </p>
-        <div className="flex flex-wrap gap-2.5">
+        <StaggerGroup className="flex flex-wrap gap-2.5">
           {data.technology.map((tech) => (
-            <Pill key={tech.name}>{tech.name}</Pill>
+            <StaggerItem key={tech.name}>
+              <Pill>{tech.name}</Pill>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGroup>
       </section>
 
       <section className="mt-12">
@@ -127,7 +130,8 @@ const ProjectDetailPage = () => {
           <button
             type="button"
             aria-label="Close preview"
-            className="fixed right-6 top-5 text-[var(--ink-mid)] transition-colors hover:text-[var(--ink)]"
+            onClick={() => setLightboxSrc(null)}
+            className="fixed right-6 top-5 cursor-pointer text-[var(--ink-mid)] transition-all duration-150 hover:scale-110 hover:text-[var(--ink)] active:scale-90"
           >
             <X size={22} strokeWidth={1.75} />
           </button>

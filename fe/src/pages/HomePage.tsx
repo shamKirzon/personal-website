@@ -5,6 +5,7 @@ import CurrentlySection from "@/components/sections/CurrentlySection";
 import RecentProjects from "@/components/sections/RecentProjects";
 import StackSection from "@/components/sections/StackSection";
 import GetInTouchSection from "@/components/sections/GetInTouchSection";
+import { Reveal } from "@/components/ui/Reveal";
 import { scrollToId } from "@/lib/scrollToId";
 
 // Kept for reference — not part of the current design.
@@ -23,10 +24,18 @@ const HomePage = () => {
   return (
     <main className="relative z-10">
       <ProfileSection />
-      <CurrentlySection />
-      <RecentProjects />
-      <StackSection />
-      <GetInTouchSection />
+      <Reveal>
+        <CurrentlySection />
+      </Reveal>
+      <Reveal>
+        <RecentProjects />
+      </Reveal>
+      <Reveal>
+        <StackSection />
+      </Reveal>
+      <Reveal>
+        <GetInTouchSection />
+      </Reveal>
 
       {/* <About /> */}
       {/* <Experience /> */}
