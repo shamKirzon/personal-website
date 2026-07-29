@@ -4,6 +4,7 @@ import heronest from "../assets/images/projects/thumbnail/heronest.png";
 import library from "../assets/images/projects/thumbnail/library-management-system.png";
 import pateros from "../assets/images/projects/thumbnail/pateros-catholic-school.png";
 import bathOfPaws from "../assets/images/projects/thumbnail/bath-of-paws.png";
+import tavApp from "../assets/images/projects/thumbnail/tav-app.png";
 
 // Device View
 import laptopSmartQueue from "../assets/images/projects/device-view/project-laptop-smart-queue.jpg";
@@ -11,6 +12,11 @@ import phoneSmartQueue from "../assets/images/projects/device-view/project-phone
 import laptopHeronest from "../assets/images/projects/device-view/project-laptop-heronest.jpg";
 import laptopPateros from "../assets/images/projects/device-view/project-laptop-pcs.jpg";
 import laptopBathOfPaws from "../assets/images/projects/device-view/project-laptop-bath-of-paws.jpg";
+import laptopTavApp from "../assets/images/projects/device-view/project-laptop-tav.png";
+import phone1TavApp from "../assets/images/projects/device-view/project-phone1-tav.jpg";
+import phone2TavApp from "../assets/images/projects/device-view/project-phone2-tav.jpg";
+import laptopHolaN from "../assets/images/projects/device-view/project-laptop-hola-n.png";
+
 // import laptopLibrary from "../assets/images/projects/device-view/project-phone-smart-queue.jpg";
 
 //Others;
@@ -34,6 +40,79 @@ export interface Project {
 }
 
 export const project: Project[] = [
+  {
+    slug: "hola-n",
+    name: "Hola-N — Eau de Parfum",
+    app: "Website App",
+    description:
+      "A landing page and product catalog showcasing a curated collection of perfumes sold by a small home-based reselling business. Visitors can browse fragrance listings, add items to a persistent cart, and revisit later with their selections intact.",
+    technology: [
+      { name: "TypeScript" },
+      { name: "React" },
+      { name: "Tailwind CSS" },
+      { name: "Vercel" },
+    ],
+    keyFeatures: [
+      "Curated perfume catalog with product details and pricing",
+      "Add-to-cart functionality with local storage persistence",
+      "Cart state survives page reloads and repeat visits",
+      "Responsive landing page design for browsing on any device",
+      "Deployed and publicly accessible via Vercel",
+    ],
+    year: 2026,
+    devices: ["laptop"],
+    image: laptopHolaN,
+    laptopImage: laptopHolaN,
+    buttons: [
+      {
+        label: "Visit Site",
+        icon: GithubBlack,
+        url: "https://hola-n.vercel.app/#top",
+      },
+    ],
+  },
+
+  {
+    slug: "tav-restobar",
+    name: "Tav — Restobar Management System",
+    app: "Web & Mobile App",
+    description:
+      "A full-stack reservation and order management system built for Tavern Asia Resto Bar, Parañaque City. Moves operations from walk-in to a reservation-only model, with QR-based verification and real-time order tracking across web and mobile.",
+    technology: [
+      { name: "TypeScript" },
+      { name: "Node.js" },
+      { name: "PostgreSQL" },
+      { name: "Supabase" },
+      { name: "React Native" },
+      { name: "React" },
+      { name: "Expo" },
+    ],
+    keyFeatures: [
+      "QR-based reservation and order verification for entry and cashier",
+      "Real-time order and reservation status tracking via Supabase",
+      "Role-based web dashboard for admin, cashier, and security staff",
+      "Customer mobile app for reservations, menu browsing, and ordering",
+      "PDF/Excel export for sales and reservation reports",
+    ],
+    year: 2025,
+    devices: ["laptop", "phone"],
+    image: tavApp,
+    phoneImages: [phone1TavApp, phone2TavApp],
+    laptopImage: laptopTavApp,
+    buttons: [
+      {
+        label: "View Soarce - Web",
+        icon: GithubBlack,
+        url: "https://github.com/shamKirzon/tavern-website",
+      },
+      {
+        label: "View Soarce - Mobile",
+        icon: GithubBlack,
+        url: "https://github.com/shamKirzon/tavern-mobile",
+      },
+    ],
+  },
+
   {
     slug: "smart-queue",
     name: "Smart Queue",
@@ -60,7 +139,7 @@ export const project: Project[] = [
     laptopImage: laptopSmartQueue,
     buttons: [
       {
-        label: "Github",
+        label: "View Soarce",
         icon: GithubBlack,
         url: "https://github.com/shamKirzon/smart-queue",
       },
@@ -91,7 +170,7 @@ export const project: Project[] = [
     laptopImage: laptopHeronest,
     buttons: [
       {
-        label: "Github",
+        label: "View Soarce",
         icon: GithubBlack,
         url: "https://github.com/shamKirzon/heronest-be",
       },
@@ -121,7 +200,7 @@ export const project: Project[] = [
     laptopImage: laptopPateros,
     buttons: [
       {
-        label: "Github",
+        label: "View Soarce",
         icon: GithubBlack,
         url: "https://github.com/shamKirzon/enrollment-system-backend",
       },
@@ -150,7 +229,7 @@ export const project: Project[] = [
     image: library,
     buttons: [
       {
-        label: "Github",
+        label: "View Soarce",
         icon: GithubBlack,
         url: "https://github.com/shamKirzon/library-management-system",
       },
@@ -175,7 +254,7 @@ export const project: Project[] = [
     laptopImage: laptopBathOfPaws,
     buttons: [
       {
-        label: "Github",
+        label: "View Soarce",
         icon: GithubBlack,
         url: "https://github.com/shamKirzon/bath-of-paws",
       },
