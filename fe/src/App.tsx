@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { Routes, Route, useLocation, useNavigationType } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import HomePage from "./pages/HomePage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
@@ -20,24 +20,61 @@ import { Toaster } from "./components/ui/sonner";
 // back where you were, while navigating to any other page starts at the top.
 const scrollPositions: Record<string, number> = {};
 
+// "Detail" pages (project/blog post) are one level deeper than their list
+// pages. The page-transition animation only plays when drilling into a
+// deeper page — returning to a shallower one (back link, browser back,
+// or navigating between top-level pages) is instant, no animation.
+const getRouteLevel = (pathname: string) =>
+  pathname.startsWith("/projects/") || pathname.startsWith("/blog/") ? 1 : 0;
+
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+// Variants are functions of `shouldAnimate` so that AnimatePresence can
+// apply the CURRENT transition's intent to the exiting page too — without
+// this, an exiting page would replay whatever transition it used when it
+// was entered, animating its exit even during a "no animation" back nav.
 const pageVariants = {
-  initial: (direction: number) => ({ opacity: 0, x: direction * 16 }),
-  animate: { opacity: 1, x: 0 },
-  exit: (direction: number) => ({ opacity: 0, x: direction * -16 }),
+  initial: (shouldAnimate: boolean) => ({
+    opacity: shouldAnimate ? 0 : 1,
+    x: shouldAnimate ? 16 : 0,
+  }),
+  animate: (shouldAnimate: boolean) => ({
+    opacity: 1,
+    x: 0,
+    transition: shouldAnimate
+      ? { duration: 0.25, ease: EASE }
+      : { duration: 0 },
+  }),
+  exit: (shouldAnimate: boolean) => ({
+    opacity: shouldAnimate ? 0 : 1,
+    x: shouldAnimate ? -16 : 0,
+    transition: shouldAnimate
+      ? { duration: 0.25, ease: EASE }
+      : { duration: 0 },
+  }),
 };
 
 const App = () => {
   const location = useLocation();
-  const navigationType = useNavigationType();
   const { pathname, hash } = location;
   const prefersReducedMotion = useReducedMotion();
-  const direction = navigationType === "POP" ? -1 : 1;
+
+  const currentLevel = getRouteLevel(pathname);
+  const prevLevelRef = useRef(currentLevel);
+  const shouldAnimate = currentLevel > prevLevelRef.current && !prefersReducedMotion;
+
+  useEffect(() => {
+    prevLevelRef.current = currentLevel;
+  }, [pathname, currentLevel]);
 
   useEffect(() => {
     window.history.scrollRestoration = "manual";
   }, []);
 
   useEffect(() => {
+    // Only reacts to actual page navigation, not hash changes on the same
+    // page — those are handled separately (anchor scroll on HomePage, or
+    // BackToTopButton's own smooth scroll when it clears a hash).
     if (hash) return;
 
     const frame = requestAnimationFrame(() => {
@@ -49,7 +86,8 @@ const App = () => {
       cancelAnimationFrame(frame);
       scrollPositions[pathname] = window.scrollY;
     };
-  }, [pathname, hash]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
 
   return (
     <div className="relative min-h-screen w-full overflow-x-clip bg-[var(--page-bg)] transition-colors duration-150">
@@ -57,19 +95,14 @@ const App = () => {
       {/* <ChatBot /> */}
       <Navbar />
 
-      <AnimatePresence mode="wait" initial={false} custom={direction}>
+      <AnimatePresence mode="wait" initial={false} custom={shouldAnimate}>
         <motion.div
           key={pathname}
-          custom={direction}
+          custom={shouldAnimate}
           variants={pageVariants}
           initial="initial"
           animate="animate"
           exit="exit"
-          transition={
-            prefersReducedMotion
-              ? { duration: 0 }
-              : { duration: 0.25, ease: [0.16, 1, 0.3, 1] }
-          }
         >
           <Routes location={location}>
             <Route path="/" element={<HomePage />} />
