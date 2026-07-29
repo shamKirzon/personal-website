@@ -84,7 +84,7 @@ const RecentProjects = () => {
         Recent Projects
       </p>
 
-      <div className="relative z-10 mb-6 flex flex-col gap-3 sm:flex-row">
+      <div className="relative z-20 mb-6 flex flex-col gap-3 sm:flex-row">
         <input
           type="text"
           value={query}
