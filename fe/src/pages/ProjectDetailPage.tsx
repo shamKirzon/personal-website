@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, X } from "lucide-react";
 import { project } from "@/data/Project-data";
 import Pill from "@/components/ui/Pill";
+import { LaptopMockup, PhoneMockup } from "@/components/ui/DeviceMockup";
 
 const ProjectDetailPage = () => {
   const { slug } = useParams();
@@ -29,8 +30,13 @@ const ProjectDetailPage = () => {
     );
   }
 
+  const showLaptop = data.devices.includes("laptop");
+  const showPhone = data.devices.includes("phone");
+  const laptopSrc = data.laptopImage ?? data.image;
+  const phoneImages = data.phoneImages ?? [data.image];
+
   return (
-    <main className="relative z-10 mx-auto max-w-[760px] px-5 pt-8">
+    <main className="relative z-10 mx-auto max-w-[760px] px-5 pt-8 pb-16">
       <Link
         to="/"
         className="mb-10 inline-flex items-center gap-2 text-[15px] text-[var(--ink-mid)] transition-colors hover:text-[var(--ink)]"
@@ -38,6 +44,26 @@ const ProjectDetailPage = () => {
         <ArrowLeft size={16} strokeWidth={1.75} />
         Back to projects
       </Link>
+
+      <div className="mb-12 flex h-[200px] items-end justify-center gap-3 sm:h-[260px] sm:gap-4">
+        {showLaptop && (
+          <LaptopMockup
+            src={laptopSrc}
+            alt={data.name}
+            onClick={() => setLightboxSrc(laptopSrc)}
+          />
+        )}
+
+        {showPhone &&
+          phoneImages.map((src, index) => (
+            <PhoneMockup
+              key={index}
+              src={src}
+              alt={`${data.name} — screen ${index + 1}`}
+              onClick={() => setLightboxSrc(src)}
+            />
+          ))}
+      </div>
 
       <p className="mb-3 font-mono text-[12px] uppercase tracking-[0.14em] text-[#22c55e]">
         {data.app}
@@ -49,7 +75,7 @@ const ProjectDetailPage = () => {
         {data.description}
       </p>
 
-      <div className="mb-14 flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-3">
         {data.buttons.map((button) => (
           <a
             key={button.url}
@@ -63,7 +89,7 @@ const ProjectDetailPage = () => {
         ))}
       </div>
 
-      <section className="border-t border-[var(--line-hairline)] py-12">
+      <section className="mt-12">
         <p className="mb-6 font-mono text-[12px] uppercase tracking-[0.14em] text-[var(--ink-mid)]">
           Technologies
         </p>
@@ -74,21 +100,20 @@ const ProjectDetailPage = () => {
         </div>
       </section>
 
-      <section className="border-t border-[var(--line-hairline)] py-12">
+      <section className="mt-12">
         <p className="mb-6 font-mono text-[12px] uppercase tracking-[0.14em] text-[var(--ink-mid)]">
-          Preview
+          Key Features
         </p>
-        <button
-          type="button"
-          onClick={() => setLightboxSrc(data.image)}
-          className="w-full cursor-zoom-in overflow-hidden rounded-xl border border-[var(--line-subtle)] transition-colors hover:border-[var(--line-strong)]"
-        >
-          <img
-            src={data.image}
-            alt={data.name}
-            className="aspect-video w-full object-cover object-top"
-          />
-        </button>
+        <ul className="flex max-w-[560px] flex-col gap-2.5 pl-5">
+          {data.keyFeatures.map((feature) => (
+            <li
+              key={feature}
+              className="list-disc text-[16px] leading-relaxed text-[var(--ink-mid)]"
+            >
+              {feature}
+            </li>
+          ))}
+        </ul>
       </section>
 
       {lightboxSrc && (
