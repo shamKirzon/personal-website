@@ -1,7 +1,7 @@
 import myProfile from "@/assets/images/profile.jpg";
 
 const ProfileSection = () => (
-  <section className="mx-auto max-w-[760px] px-5 pt-8">
+  <section className="mx-auto max-w-[760px] px-5 sm:px-10 pt-8">
     <div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
       <img
         src={myProfile}

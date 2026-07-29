@@ -19,6 +19,7 @@ const BlogCard = ({
     <img
       src={images[0]}
       alt={title}
+      loading="lazy"
       className="aspect-[16/9] w-full object-cover object-top"
     />
 
@@ -35,6 +36,7 @@ const BlogCard = ({
         <img
           src={blogAuthor.avatar}
           alt={blogAuthor.name}
+          loading="lazy"
           className="h-5 w-5 rounded-full object-cover"
         />
         <span className="text-[var(--ink-soft)]">{blogAuthor.name}</span>

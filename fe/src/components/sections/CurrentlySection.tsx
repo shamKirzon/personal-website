@@ -16,7 +16,7 @@ const CurrentlySection = () => {
   const [showPreviousRoles, setShowPreviousRoles] = useState(false);
 
   return (
-    <section className="mx-auto max-w-[760px] px-5 pt-12">
+    <section className="mx-auto max-w-[760px] px-5 sm:px-10 pt-12">
       <div className="rounded-xl border border-[var(--line-subtle)] bg-[var(--panel-bg-deep)] p-5 shadow-[var(--panel-shadow)]">
         <div className="mb-3 flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-[#22c55e] shadow-[0_0_6px_2px_rgba(34,197,94,0.6)]" />

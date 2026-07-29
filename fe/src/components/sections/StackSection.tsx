@@ -2,7 +2,7 @@ import { myTechStack } from "@/data/TechStack-data";
 import Pill from "../ui/Pill";
 
 const StackSection = () => (
-  <section className="mx-auto max-w-[760px] px-5 pt-16">
+  <section className="mx-auto max-w-[760px] px-5 sm:px-10 pt-16">
     <p className="mb-6 font-mono text-[12px] uppercase tracking-[0.14em] text-[var(--ink-mid)]">
       Stack
     </p>

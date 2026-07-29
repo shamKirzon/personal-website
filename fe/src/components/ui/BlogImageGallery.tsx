@@ -19,6 +19,7 @@ const ImageBox = ({ src, alt }: { src: string; alt: string }) => (
     <img
       src={src}
       alt={alt}
+      loading="lazy"
       className="absolute inset-0 h-full w-full object-contain object-center"
     />
   </div>

@@ -18,7 +18,7 @@ const App = () => {
   const { pathname } = useLocation();
 
   return (
-    <div className="relative min-h-screen w-full bg-[var(--page-bg)] transition-colors duration-150">
+    <div className="relative min-h-screen w-full overflow-x-clip bg-[var(--page-bg)] transition-colors duration-150">
       <StarField />
       {/* <ChatBot /> */}
       <Navbar />

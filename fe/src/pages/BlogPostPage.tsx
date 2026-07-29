@@ -24,7 +24,7 @@ const BlogPostPage = () => {
 
   if (!post) {
     return (
-      <main className="relative z-10 mx-auto flex max-w-[760px] flex-col items-center gap-4 px-5 py-24">
+      <main className="relative z-10 mx-auto flex max-w-[760px] flex-col items-center gap-4 px-5 sm:px-10 py-24">
         <p className="text-[17px] text-[var(--ink)]">Post not found.</p>
         <Link to="/blog" className="text-[15px] text-[#22c55e]">
           Back to blog
@@ -78,7 +78,7 @@ const BlogPostPage = () => {
   ];
 
   return (
-    <main className="relative z-10 mx-auto max-w-[760px] px-5 pt-8 pb-16">
+    <main className="relative z-10 mx-auto max-w-[760px] px-5 sm:px-10 pt-8 pb-16">
       <ReadingProgressBar />
 
       <Link
@@ -93,14 +93,14 @@ const BlogPostPage = () => {
         <BlogImageGallery images={post.images} alt={post.title} />
       </div>
 
-      <div className="mt-8 flex items-start justify-between gap-4">
-        <h1 className="text-[28px] font-extrabold leading-tight tracking-tight text-[var(--ink)]">
+      <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <h1 className="text-[24px] font-extrabold leading-tight tracking-tight text-[var(--ink)] sm:text-[28px]">
           {post.title}
         </h1>
 
-        <div className="flex shrink-0 flex-col items-end gap-2">
+        <div className="flex shrink-0 flex-col gap-2 sm:items-end">
           <span className="text-[13px] text-[var(--ink-faint)]">Share</span>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1 sm:gap-3">
             <TooltipProvider>
               {shareLinks.map(({ label, Icon, onClick }) => {
                 const button = (
@@ -108,7 +108,7 @@ const BlogPostPage = () => {
                     type="button"
                     aria-label={label}
                     onClick={onClick}
-                    className="text-[var(--ink)] transition-colors hover:text-[var(--ink-mid)]"
+                    className="grid h-11 w-11 place-items-center text-[var(--ink)] transition-colors hover:text-[var(--ink-mid)] sm:h-auto sm:w-auto"
                   >
                     <Icon size={18} />
                   </button>

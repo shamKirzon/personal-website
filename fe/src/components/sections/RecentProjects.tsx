@@ -79,7 +79,7 @@ const RecentProjects = () => {
   const clampedIndex = Math.min(index, maxIndex);
 
   return (
-    <section className="mx-auto max-w-[760px] px-5 pt-16">
+    <section className="mx-auto max-w-[760px] px-5 sm:px-10 pt-16">
       <p className="mb-4 font-mono text-[12px] uppercase tracking-[0.14em] text-[var(--ink-mid)]">
         Recent Projects
       </p>
@@ -157,7 +157,7 @@ const RecentProjects = () => {
           label="Previous project"
           disabled={clampedIndex === 0}
           onClick={() => setIndex((prev) => Math.max(0, prev - 1))}
-          className="absolute right-full top-1/2 z-10 mr-3 -translate-y-1/2"
+          className="absolute left-1 top-1/2 z-10 -translate-y-1/2 lg:left-auto lg:right-full lg:mr-3"
         >
           <ArrowLeft size={17} strokeWidth={1.75} />
         </IconButton>
@@ -166,7 +166,7 @@ const RecentProjects = () => {
           label="Next project"
           disabled={clampedIndex >= maxIndex}
           onClick={() => setIndex((prev) => Math.min(maxIndex, prev + 1))}
-          className="absolute left-full top-1/2 z-10 ml-3 -translate-y-1/2"
+          className="absolute right-1 top-1/2 z-10 -translate-y-1/2 lg:right-auto lg:left-full lg:ml-3"
         >
           <ArrowRight size={17} strokeWidth={1.75} />
         </IconButton>

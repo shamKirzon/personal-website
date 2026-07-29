@@ -21,7 +21,7 @@ const ProjectDetailPage = () => {
 
   if (!data) {
     return (
-      <main className="relative z-10 mx-auto flex max-w-[760px] flex-col items-center gap-4 px-5 py-24">
+      <main className="relative z-10 mx-auto flex max-w-[760px] flex-col items-center gap-4 px-5 sm:px-10 py-24">
         <p className="text-[17px] text-[var(--ink)]">Project not found.</p>
         <Link to="/" className="text-[15px] text-[#22c55e]">
           Back to projects
@@ -36,7 +36,7 @@ const ProjectDetailPage = () => {
   const phoneImages = data.phoneImages ?? [data.image];
 
   return (
-    <main className="relative z-10 mx-auto max-w-[760px] px-5 pt-8 pb-16">
+    <main className="relative z-10 mx-auto max-w-[760px] px-5 sm:px-10 pt-8 pb-16">
       <Link
         to="/"
         className="mb-10 inline-flex items-center gap-2 text-[15px] text-[var(--ink-mid)] transition-colors hover:text-[var(--ink)]"
@@ -45,7 +45,7 @@ const ProjectDetailPage = () => {
         Back to projects
       </Link>
 
-      <div className="mb-12 flex h-[200px] items-end justify-center gap-3 sm:h-[260px] sm:gap-4">
+      <div className="mb-12 flex flex-col items-center gap-8 sm:h-[260px] sm:flex-row sm:items-end sm:justify-center sm:gap-4">
         {showLaptop && (
           <LaptopMockup
             src={laptopSrc}
@@ -54,21 +54,24 @@ const ProjectDetailPage = () => {
           />
         )}
 
-        {showPhone &&
-          phoneImages.map((src, index) => (
-            <PhoneMockup
-              key={index}
-              src={src}
-              alt={`${data.name} — screen ${index + 1}`}
-              onClick={() => setLightboxSrc(src)}
-            />
-          ))}
+        {showPhone && (
+          <div className="flex flex-wrap items-end justify-center gap-3 sm:contents">
+            {phoneImages.map((src, index) => (
+              <PhoneMockup
+                key={index}
+                src={src}
+                alt={`${data.name} — screen ${index + 1}`}
+                onClick={() => setLightboxSrc(src)}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       <p className="mb-3 font-mono text-[12px] uppercase tracking-[0.14em] text-[#22c55e]">
         {data.app}
       </p>
-      <h1 className="mb-4 text-[28px] font-extrabold leading-tight tracking-tight text-[var(--ink)]">
+      <h1 className="mb-4 text-[24px] font-extrabold sm:text-[28px] leading-tight tracking-tight text-[var(--ink)]">
         {data.name}
       </h1>
       <p className="mb-8 max-w-[560px] text-[16px] leading-relaxed text-[var(--ink-mid)]">
@@ -84,7 +87,7 @@ const ProjectDetailPage = () => {
             rel="noreferrer"
             className="rounded-lg border border-[var(--line)] bg-[var(--panel-bg)] px-5 py-2.5 text-[15px] text-[var(--ink)] transition-colors hover:border-[var(--line-strong)]"
           >
-            View Source
+            {button.label}
           </a>
         ))}
       </div>

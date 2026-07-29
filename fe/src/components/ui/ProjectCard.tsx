@@ -26,6 +26,7 @@ const ProjectCard = ({
     <img
       src={image}
       alt={name}
+      loading="lazy"
       className="aspect-[16/10] w-full object-cover object-top"
     />
 

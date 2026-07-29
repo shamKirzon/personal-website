@@ -85,7 +85,7 @@ const GetInTouchSection = () => {
   };
 
   return (
-    <section id="get-in-touch" className="mx-auto max-w-[760px] px-5 pt-16 pb-16">
+    <section id="get-in-touch" className="mx-auto max-w-[760px] px-5 sm:px-10 pt-16 pb-16">
       <p className="mb-4 font-mono text-[12px] uppercase tracking-[0.14em] text-[var(--ink-mid)]">
         Get In Touch
       </p>
