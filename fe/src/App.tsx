@@ -16,23 +16,17 @@ import { Toaster } from "./components/ui/sonner";
 // Kept for reference — not part of the current design.
 // import ChatBot from "./components/ChatBot";
 
-// Remembers scroll position per pathname so returning to the homepage lands
-// back where you were, while navigating to any other page starts at the top.
 const scrollPositions: Record<string, number> = {};
 
-// "Detail" pages (project/blog post) are one level deeper than their list
-// pages. The page-transition animation only plays when drilling into a
-// deeper page — returning to a shallower one (back link, browser back,
-// or navigating between top-level pages) is instant, no animation.
+// Detail pages sit one level deeper than their list pages; the transition
+// only plays when drilling deeper, never when going back.
 const getRouteLevel = (pathname: string) =>
   pathname.startsWith("/projects/") || pathname.startsWith("/blog/") ? 1 : 0;
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-// Variants are functions of `shouldAnimate` so that AnimatePresence can
-// apply the CURRENT transition's intent to the exiting page too — without
-// this, an exiting page would replay whatever transition it used when it
-// was entered, animating its exit even during a "no animation" back nav.
+// Variants take `shouldAnimate` via `custom` so the exiting page uses the
+// current navigation's intent instead of replaying the one it entered with.
 const pageVariants = {
   initial: (shouldAnimate: boolean) => ({
     opacity: shouldAnimate ? 0 : 1,
@@ -72,9 +66,8 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    // Only reacts to actual page navigation, not hash changes on the same
-    // page — those are handled separately (anchor scroll on HomePage, or
-    // BackToTopButton's own smooth scroll when it clears a hash).
+    // Hash changes scroll themselves (HomePage anchors, BackToTopButton);
+    // stepping in here would cancel their smooth scroll.
     if (hash) return;
 
     const frame = requestAnimationFrame(() => {
