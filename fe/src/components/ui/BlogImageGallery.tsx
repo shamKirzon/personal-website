@@ -16,7 +16,7 @@ interface BlogImageGalleryProps {
 const DOT_THRESHOLD = 6;
 
 const arrowClass =
-  "border-[var(--line-subtle)] bg-[var(--panel-bg)] text-[var(--ink-soft)] shadow-[var(--panel-shadow)] hover:border-[var(--line-strong)] hover:bg-[var(--panel-bg)] hover:text-[var(--ink)]";
+  "cursor-pointer border-[var(--line-subtle)] bg-[var(--panel-bg)] text-[var(--ink-soft)] shadow-[var(--panel-shadow)] transition-transform duration-150 hover:scale-110 hover:border-[var(--line-strong)] hover:bg-[var(--panel-bg)] hover:text-[var(--ink)] active:scale-90";
 
 const ImageBox = ({ src, alt }: { src: string; alt: string }) => (
   <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl border border-[var(--line-subtle)] bg-[var(--surface-muted)]">
@@ -73,7 +73,7 @@ const BlogImageGallery = ({ images, alt }: BlogImageGalleryProps) => {
                 type="button"
                 aria-label={`Go to image ${index + 1}`}
                 onClick={() => api?.scrollTo(index)}
-                className={`h-1.5 rounded-full transition-all ${
+                className={`h-1.5 cursor-pointer rounded-full transition-all duration-200 hover:scale-125 active:scale-90 ${
                   index === activeIndex
                     ? "w-5 bg-[var(--ink)]"
                     : "w-1.5 bg-[var(--line-strong)]"

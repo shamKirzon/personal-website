@@ -103,7 +103,7 @@ const BlogPostPage = () => {
                     type="button"
                     aria-label={label}
                     onClick={onClick}
-                    className="grid h-11 w-11 place-items-center text-[var(--ink)] transition-colors hover:text-[var(--ink-mid)] sm:h-auto sm:w-auto"
+                    className="grid h-11 w-11 cursor-pointer place-items-center text-[var(--ink)] transition-all duration-150 hover:scale-110 hover:text-[var(--ink-mid)] active:scale-90 sm:h-auto sm:w-auto"
                   >
                     <Icon size={18} />
                   </button>
