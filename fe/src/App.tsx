@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
@@ -14,8 +15,31 @@ import { Toaster } from "./components/ui/sonner";
 // Kept for reference — not part of the current design.
 // import ChatBot from "./components/ChatBot";
 
+// Remembers scroll position per pathname so returning to the homepage lands
+// back where you were, while navigating to any other page starts at the top.
+const scrollPositions: Record<string, number> = {};
+
 const App = () => {
-  const { pathname } = useLocation();
+  const location = useLocation();
+  const { pathname, hash } = location;
+
+  useEffect(() => {
+    window.history.scrollRestoration = "manual";
+  }, []);
+
+  useEffect(() => {
+    if (hash) return;
+
+    const frame = requestAnimationFrame(() => {
+      const savedPosition = pathname === "/" ? scrollPositions[pathname] : undefined;
+      window.scrollTo({ top: savedPosition ?? 0 });
+    });
+
+    return () => {
+      cancelAnimationFrame(frame);
+      scrollPositions[pathname] = window.scrollY;
+    };
+  }, [pathname, hash]);
 
   return (
     <div className="relative min-h-screen w-full overflow-x-clip bg-[var(--page-bg)] transition-colors duration-150">

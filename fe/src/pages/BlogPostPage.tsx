@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Calendar, Clock, Link2 } from "lucide-react";
 import { SiX, SiFacebook } from "react-icons/si";
@@ -17,10 +16,6 @@ import {
 const BlogPostPage = () => {
   const { slug } = useParams();
   const post = blogPosts.find((item) => item.slug === slug);
-
-  useEffect(() => {
-    window.scrollTo({ top: 0 });
-  }, [slug]);
 
   if (!post) {
     return (
