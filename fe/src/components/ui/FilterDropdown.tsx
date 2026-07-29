@@ -56,7 +56,7 @@ const FilterDropdown = ({
   );
 
   return (
-    <div ref={rootRef} className="relative">
+    <div ref={rootRef} className="relative w-full sm:w-auto">
       <button
         type="button"
         onClick={() => onOpenChange(!isOpen)}
@@ -77,7 +77,7 @@ const FilterDropdown = ({
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 z-20 mt-2 w-64 overflow-hidden rounded-lg border border-[var(--line)] bg-[var(--panel-bg)] shadow-xl">
+        <div className="absolute left-0 z-20 mt-2 w-full overflow-hidden rounded-lg border border-[var(--line)] bg-[var(--panel-bg)] shadow-xl sm:w-64">
           <div className="flex items-center gap-2 border-b border-[var(--line-subtle)] px-3">
             <Search
               size={15}

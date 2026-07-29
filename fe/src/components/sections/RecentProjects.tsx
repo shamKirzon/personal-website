@@ -84,7 +84,7 @@ const RecentProjects = () => {
         Recent Projects
       </p>
 
-      <div className="relative z-20 mb-6 flex flex-col gap-3 sm:flex-row">
+      <div className="relative z-20 mb-6 flex flex-col gap-3 md:flex-row">
         <input
           type="text"
           value={query}
@@ -92,8 +92,8 @@ const RecentProjects = () => {
             setQuery(event.target.value);
             setIndex(0);
           }}
-          placeholder="Filter projects..."
-          className="h-11 flex-1 rounded-lg border border-[var(--line-subtle)] bg-[var(--surface-muted)] px-4 text-[15px] text-[var(--ink)] outline-none transition-colors placeholder:text-[var(--ink-faint)] focus:border-[var(--line-strong)]"
+          placeholder="Filter or search projects..."
+          className="h-11 w-full min-w-0 rounded-lg border border-[var(--line-subtle)] bg-[var(--surface-muted)] px-4 text-[15px] text-[var(--ink)] outline-none transition-colors placeholder:text-[var(--ink-faint)] focus:border-[var(--line-strong)] md:flex-1"
         />
 
         <div className="flex gap-3">
