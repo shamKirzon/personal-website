@@ -22,7 +22,7 @@ const ThemeToggle = ({ isLight, onToggle, className = "" }: ThemeToggleProps) =>
     type="button"
     onClick={onToggle}
     aria-label="Toggle theme"
-    className={`grid h-11 w-11 shrink-0 place-items-center text-[var(--ink-mid)] transition-colors hover:text-[var(--ink)] md:h-9 md:w-9 ${className}`}
+    className={`grid h-11 w-11 shrink-0 cursor-pointer place-items-center text-[var(--ink-mid)] transition-all duration-150 hover:scale-[1.08] hover:text-[var(--ink)] active:scale-[0.92] md:h-9 md:w-9 ${className}`}
   >
     <span className="relative block h-[17px] w-[17px] overflow-hidden">
       <AnimatePresence mode="popLayout" initial={false}>
@@ -102,17 +102,31 @@ const Navbar = () => {
         <nav className="hidden items-center gap-5 md:flex">
           <ul className="flex items-center gap-5">
             {links.map((link) => (
-              <li key={link.label}>
+              <li key={link.label} className="relative">
                 <Link
                   to={link.to}
-                  className={`text-[15px] transition-colors ${
+                  className={`group relative inline-block py-1 text-[15px] transition-colors ${
                     isActive(link.to)
                       ? "font-medium text-[var(--ink)]"
                       : "text-[var(--ink-faint)] hover:text-[var(--ink-soft)]"
                   }`}
                 >
                   {link.label}
+                  {!isActive(link.to) && (
+                    <span
+                      aria-hidden
+                      className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-[var(--ink-soft)] transition-transform duration-200 ease-out group-hover:scale-x-100"
+                    />
+                  )}
                 </Link>
+                {isActive(link.to) && (
+                  <motion.span
+                    layoutId="nav-active-indicator"
+                    aria-hidden
+                    className="absolute inset-x-0 -bottom-0.5 h-px bg-[var(--ink)]"
+                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                  />
+                )}
               </li>
             ))}
           </ul>
@@ -124,7 +138,7 @@ const Navbar = () => {
           <button
             type="button"
             aria-label="Change language"
-            className="text-[15px] text-[var(--ink-mid)] transition-colors hover:text-[var(--ink)]"
+            className="cursor-pointer text-[15px] text-[var(--ink-mid)] transition-all duration-150 hover:scale-[1.05] hover:text-[var(--ink)] active:scale-[0.95]"
           >
             EN
           </button>
@@ -135,7 +149,7 @@ const Navbar = () => {
           onClick={() => setMenuOpen(true)}
           aria-label="Open menu"
           aria-expanded={menuOpen}
-          className="-mr-2 grid h-11 w-11 shrink-0 place-items-center text-[var(--ink-mid)] transition-colors hover:text-[var(--ink)] md:hidden"
+          className="-mr-2 grid h-11 w-11 shrink-0 cursor-pointer place-items-center text-[var(--ink-mid)] transition-all duration-150 hover:text-[var(--ink)] active:scale-[0.9] md:hidden"
         >
           <Menu size={22} strokeWidth={1.75} />
         </button>
@@ -165,7 +179,7 @@ const Navbar = () => {
                   type="button"
                   onClick={() => setMenuOpen(false)}
                   aria-label="Close menu"
-                  className="-mr-2 grid h-11 w-11 place-items-center text-[var(--ink-mid)] transition-colors hover:text-[var(--ink)]"
+                  className="-mr-2 grid h-11 w-11 cursor-pointer place-items-center text-[var(--ink-mid)] transition-all duration-150 hover:text-[var(--ink)] active:scale-[0.9]"
                 >
                   <X size={22} strokeWidth={1.75} />
                 </button>
@@ -198,7 +212,7 @@ const Navbar = () => {
                 <button
                   type="button"
                   aria-label="Change language"
-                  className="grid h-11 min-w-11 place-items-center px-2 text-[15px] text-[var(--ink-mid)] transition-colors hover:text-[var(--ink)]"
+                  className="grid h-11 min-w-11 cursor-pointer place-items-center px-2 text-[15px] text-[var(--ink-mid)] transition-all duration-150 hover:text-[var(--ink)] active:scale-[0.9]"
                 >
                   EN
                 </button>
