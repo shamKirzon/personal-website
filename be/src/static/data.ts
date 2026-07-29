@@ -1,6 +1,6 @@
 export const data: string[] = [
-  "Shammy Kierson Suyat is 19 years old.",
-  "Shammy is currently single.",
+  "Shammy Kierson Suyat is 21 years old.",
+  "Shammy is currently taken.",
   "Shammy lives in the Philippines.",
   "Shammy specializes in Application Development.",
   "Shammy's favorite programming language is TypeScript.",
@@ -16,6 +16,6 @@ export const data: string[] = [
   "Shammy used to play the guitar and sing as hobbies.",
   "Shammy often prefers staying at home rather than going out.",
   "Shammy is more productive at night than in the morning.",
-  "Shammy speaks both English and Filipino", 
-  "Shammmy's height is 5'9"
+  "Shammy speaks both English and Filipino",
+  "Shammmy's height is 5'9",
 ];
