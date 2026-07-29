@@ -1,6 +1,16 @@
-export const myTechStack = [
+export interface LocalizedText {
+  en: string;
+  fil: string;
+}
+
+export interface TechStackGroup {
+  category: LocalizedText;
+  items: { title: string }[];
+}
+
+export const myTechStack: TechStackGroup[] = [
   {
-    category: "Frontend",
+    category: { en: "Frontend", fil: "Frontend" },
     items: [
       { title: "JavaScript" },
       { title: "TypeScript" },
@@ -11,7 +21,7 @@ export const myTechStack = [
     ],
   },
   {
-    category: "Backend",
+    category: { en: "Backend", fil: "Backend" },
     items: [
       { title: "Node" },
       { title: "Express" },
@@ -22,7 +32,7 @@ export const myTechStack = [
     ],
   },
   {
-    category: "DevOps & Tools",
+    category: { en: "DevOps & Tools", fil: "DevOps at Mga Kasangkapan" },
     items: [{ title: "GitHub" }, { title: "Vercel" }, { title: "Firebase" }],
   },
 ];

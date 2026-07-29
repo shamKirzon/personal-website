@@ -5,11 +5,13 @@ import { project } from "@/data/Project-data";
 import Pill from "@/components/ui/Pill";
 import { LaptopMockup, PhoneMockup } from "@/components/ui/DeviceMockup";
 import { StaggerGroup, itemVariants } from "@/components/ui/Reveal";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const ProjectDetailPage = () => {
   const { slug } = useParams();
   const data = project.find((item) => item.slug === slug);
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
+  const { language, t } = useLanguage();
 
   useEffect(() => {
     if (!lightboxSrc) return;
@@ -25,7 +27,7 @@ const ProjectDetailPage = () => {
       <main className="relative z-10 mx-auto flex max-w-[760px] flex-col items-center gap-4 px-5 sm:px-10 py-24">
         <p className="text-[17px] text-[var(--ink)]">Project not found.</p>
         <Link to="/" className="text-[15px] text-[#22c55e]">
-          Back to projects
+          {t.projectDetail.backLink}
         </Link>
       </main>
     );
@@ -43,7 +45,7 @@ const ProjectDetailPage = () => {
         className="mb-10 inline-flex items-center gap-2 text-[15px] text-[var(--ink-mid)] transition-colors hover:text-[var(--ink)]"
       >
         <ArrowLeft size={16} strokeWidth={1.75} />
-        Back to projects
+        {t.projectDetail.backLink}
       </Link>
 
       <div className="mb-12 flex flex-col items-center gap-8 sm:h-[260px] sm:flex-row sm:items-end sm:justify-center sm:gap-4">
@@ -70,13 +72,13 @@ const ProjectDetailPage = () => {
       </div>
 
       <p className="mb-3 font-mono text-[12px] uppercase tracking-[0.14em] text-[#22c55e]">
-        {data.app}
+        {data.app[language]}
       </p>
       <h1 className="mb-4 text-[24px] font-extrabold sm:text-[28px] leading-tight tracking-tight text-[var(--ink)]">
         {data.name}
       </h1>
       <p className="mb-8 max-w-[560px] text-[16px] leading-relaxed text-[var(--ink-mid)]">
-        {data.description}
+        {data.description[language]}
       </p>
 
       <div className="flex flex-wrap gap-3">
@@ -88,14 +90,14 @@ const ProjectDetailPage = () => {
             rel="noreferrer"
             className="rounded-lg border border-[var(--line)] bg-[var(--panel-bg)] px-5 py-2.5 text-[15px] text-[var(--ink)] transition-all duration-150 hover:scale-[1.03] hover:border-[var(--line-strong)] active:scale-[0.97]"
           >
-            {button.label}
+            {button.label[language]}
           </a>
         ))}
       </div>
 
       <section className="mt-12">
         <p className="mb-6 font-mono text-[12px] uppercase tracking-[0.14em] text-[var(--ink-mid)]">
-          Technologies
+          {t.projectDetail.technologies}
         </p>
         <StaggerGroup className="flex flex-wrap gap-2.5">
           {data.technology.map((tech) => (
@@ -108,10 +110,10 @@ const ProjectDetailPage = () => {
 
       <section className="mt-12">
         <p className="mb-6 font-mono text-[12px] uppercase tracking-[0.14em] text-[var(--ink-mid)]">
-          Key Features
+          {t.projectDetail.keyFeatures}
         </p>
         <ul className="flex max-w-[560px] flex-col gap-2.5 pl-5">
-          {data.keyFeatures.map((feature) => (
+          {data.keyFeatures[language].map((feature) => (
             <li
               key={feature}
               className="list-disc text-[16px] leading-relaxed text-[var(--ink-mid)]"

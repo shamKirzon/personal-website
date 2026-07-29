@@ -3,13 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, Moon, Sun, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import logo from "@/assets/images/personal-website-logo.webp";
-
-const links = [
-  { label: "Home", to: "/" },
-  { label: "Blog", to: "/blog" },
-  { label: "Visitors", to: "/visitors" },
-  { label: "Contact", to: "/#get-in-touch" },
-];
+import { useLanguage } from "@/i18n/LanguageContext";
+import { applyTheme, getStoredTheme, type Language } from "@/lib/preferences";
 
 interface ThemeToggleProps {
   isLight: boolean;
@@ -45,21 +40,56 @@ const ThemeToggle = ({ isLight, onToggle, className = "" }: ThemeToggleProps) =>
   </button>
 );
 
+interface LanguageToggleProps {
+  language: Language;
+  onToggle: () => void;
+  className?: string;
+}
+
+const LanguageToggle = ({ language, onToggle, className = "" }: LanguageToggleProps) => (
+  <button
+    type="button"
+    onClick={onToggle}
+    aria-label="Change language"
+    className={`grid h-11 shrink-0 cursor-pointer place-items-center text-[var(--ink-mid)] transition-all duration-150 hover:scale-[1.05] hover:text-[var(--ink)] active:scale-[0.95] md:h-9 ${className}`}
+  >
+    <span className="relative block h-[17px] w-8 overflow-hidden">
+      <AnimatePresence mode="popLayout" initial={false}>
+        <motion.span
+          key={language}
+          initial={{ y: 16, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -16, opacity: 0 }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute inset-0 flex items-center justify-center text-[15px]"
+        >
+          {language === "en" ? "EN" : "FIL"}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  </button>
+);
+
 const Navbar = () => {
   const location = useLocation();
   const { pathname } = location;
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isLight, setIsLight] = useState(() =>
-    document.documentElement.classList.contains("light"),
-  );
+  const [isLight, setIsLight] = useState(() => getStoredTheme() === "light");
+  const { language, toggleLanguage, t } = useLanguage();
+
+  const links = [
+    { label: t.nav.home, to: "/" },
+    { label: t.nav.blog, to: "/blog" },
+    { label: t.nav.visitors, to: "/visitors" },
+    { label: t.nav.contact, to: "/#get-in-touch" },
+  ];
 
   const isActive = (to: string) =>
     to === "/" ? pathname === "/" : to !== "#" && pathname.startsWith(to);
 
   const toggleTheme = () => {
     const next = !isLight;
-    document.documentElement.classList.toggle("light", next);
-    localStorage.setItem("theme", next ? "light" : "dark");
+    applyTheme(next ? "light" : "dark");
     setIsLight(next);
   };
 
@@ -102,7 +132,7 @@ const Navbar = () => {
         <nav className="hidden items-center gap-5 md:flex">
           <ul className="flex items-center gap-5">
             {links.map((link) => (
-              <li key={link.label} className="relative">
+              <li key={link.to} className="relative">
                 <Link
                   to={link.to}
                   className={`group relative inline-block py-1 text-[15px] transition-colors ${
@@ -135,13 +165,7 @@ const Navbar = () => {
 
           <ThemeToggle isLight={isLight} onToggle={toggleTheme} />
 
-          <button
-            type="button"
-            aria-label="Change language"
-            className="cursor-pointer text-[15px] text-[var(--ink-mid)] transition-all duration-150 hover:scale-[1.05] hover:text-[var(--ink)] active:scale-[0.95]"
-          >
-            EN
-          </button>
+          <LanguageToggle language={language} onToggle={toggleLanguage} />
         </nav>
 
         <button
@@ -187,7 +211,7 @@ const Navbar = () => {
 
               <ul className="mt-4 flex flex-col">
                 {links.map((link) => (
-                  <li key={link.label}>
+                  <li key={link.to}>
                     <Link
                       to={link.to}
                       onClick={() => setMenuOpen(false)}
@@ -209,13 +233,7 @@ const Navbar = () => {
                   onToggle={toggleTheme}
                   className="-ml-2"
                 />
-                <button
-                  type="button"
-                  aria-label="Change language"
-                  className="grid h-11 min-w-11 cursor-pointer place-items-center px-2 text-[15px] text-[var(--ink-mid)] transition-all duration-150 hover:text-[var(--ink)] active:scale-[0.9]"
-                >
-                  EN
-                </button>
+                <LanguageToggle language={language} onToggle={toggleLanguage} />
               </div>
             </motion.div>
           </>

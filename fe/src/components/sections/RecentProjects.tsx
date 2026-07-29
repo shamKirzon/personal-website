@@ -6,6 +6,7 @@ import { project } from "@/data/Project-data";
 import ProjectCard from "../ui/ProjectCard";
 import IconButton from "../ui/IconButton";
 import FilterDropdown, { type FilterOption } from "../ui/FilterDropdown";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const GAP_REM = 1;
 const DESKTOP_PER_VIEW = 3;
@@ -42,6 +43,7 @@ const RecentProjects = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [showHint, setShowHint] = useState(false);
   const hasPlayedHint = useRef(false);
+  const { language, t } = useLanguage();
 
   const toggleTech = (value: string) => {
     setSelectedTechs((prev) =>
@@ -59,7 +61,12 @@ const RecentProjects = () => {
     const search = query.trim().toLowerCase();
 
     return project.filter((item) => {
-      const haystack = [item.name, item.app, item.description, ...item.technology.map((t) => t.name)]
+      const haystack = [
+        item.name,
+        item.app[language],
+        item.description[language],
+        ...item.technology.map((tech) => tech.name),
+      ]
         .join(" ")
         .toLowerCase();
       const matchesQuery = search === "" || haystack.includes(search);
@@ -74,19 +81,18 @@ const RecentProjects = () => {
 
       return matchesQuery && matchesTech && matchesYear;
     });
-  }, [query, selectedTechs, selectedYear]);
+  }, [query, selectedTechs, selectedYear, language]);
 
   const hasResults = filtered.length > 0;
   const maxIndex = Math.max(0, filtered.length - DESKTOP_PER_VIEW);
   const clampedIndex = Math.min(index, maxIndex);
 
-  // Reset the swipeable carousel to the first result whenever the filtered set changes.
   useEffect(() => {
     setActiveIndex(0);
     trackRef.current?.scrollTo({ left: 0 });
   }, [query, selectedTechs, selectedYear]);
 
-  // Play a one-time swipe hint the first time the carousel scrolls into view this session.
+  // Swipe hint, once per session on first scroll into view.
   useEffect(() => {
     if (!hasResults) return;
     if (sessionStorage.getItem(HINT_SESSION_KEY)) return;
@@ -110,7 +116,6 @@ const RecentProjects = () => {
     return () => observer.disconnect();
   }, [hasResults]);
 
-  // Track which card is centered, for the dots/counter indicator.
   useEffect(() => {
     if (!hasResults) return;
     const node = trackRef.current;
@@ -164,7 +169,7 @@ const RecentProjects = () => {
   return (
     <section className="mx-auto max-w-[760px] px-5 sm:px-10 pt-16">
       <p className="mb-4 font-mono text-[12px] uppercase tracking-[0.14em] text-[var(--ink-mid)]">
-        Recent Projects
+        {t.recentProjects.label}
       </p>
 
       <div className="relative z-20 mb-6 flex flex-col gap-3 md:flex-row">
@@ -175,13 +180,13 @@ const RecentProjects = () => {
             setQuery(event.target.value);
             setIndex(0);
           }}
-          placeholder="Filter or search projects..."
+          placeholder={t.recentProjects.searchPlaceholder}
           className="h-11 w-full min-w-0 rounded-lg border border-[var(--line-subtle)] bg-[var(--surface-muted)] px-4 text-[15px] text-[var(--ink)] outline-none transition-colors placeholder:text-[var(--ink-faint)] focus:border-[var(--line-strong)] md:flex-1"
         />
 
         <div className="flex gap-3">
           <FilterDropdown
-            label="Tech"
+            label={t.recentProjects.techFilter}
             options={techOptions}
             selected={selectedTechs}
             onToggle={toggleTech}
@@ -189,7 +194,7 @@ const RecentProjects = () => {
             onOpenChange={(open) => setOpenFilter(open ? "tech" : null)}
           />
           <FilterDropdown
-            label="Year"
+            label={t.recentProjects.yearFilter}
             options={yearOptions}
             selected={selectedYear ? [selectedYear] : []}
             onToggle={toggleYear}
@@ -202,11 +207,11 @@ const RecentProjects = () => {
       <div className="relative">
         {!hasResults ? (
           <p className="py-10 text-center text-[15px] text-[var(--ink-faint)]">
-            No projects match these filters.
+            {t.recentProjects.noResults}
           </p>
         ) : (
           <>
-            {/* Desktop: static height-matched row, paged by arrows only. */}
+            {/* Desktop: static row, paged by arrows. */}
             <div className="hidden lg:block">
               <div className="overflow-hidden">
                 <div
@@ -257,7 +262,7 @@ const RecentProjects = () => {
               </IconButton>
             </div>
 
-            {/* Mobile & tablet: swipeable, snap-scrolling carousel. */}
+            {/* Mobile & tablet: swipeable carousel. */}
             <div className="lg:hidden">
               <motion.div
                 ref={trackRef}

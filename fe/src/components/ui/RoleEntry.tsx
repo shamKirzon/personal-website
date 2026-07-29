@@ -1,4 +1,5 @@
 import type { PreviousRole } from "@/data/PreviousRoles-data";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const RoleEntry = ({
   title,
@@ -7,7 +8,10 @@ const RoleEntry = ({
   location,
   description,
   tech,
-}: PreviousRole) => (
+}: PreviousRole) => {
+  const { language } = useLanguage();
+
+  return (
   <li className="relative">
     <span
       aria-hidden
@@ -17,9 +21,11 @@ const RoleEntry = ({
     <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
       <div className="min-w-0">
         <h3 className="text-[22px] font-bold leading-tight tracking-tight text-[var(--ink)]">
-          {title}
+          {title[language]}
         </h3>
-        <p className="mt-1 text-[15px] text-[var(--ink-mid)]">{period}</p>
+        <p className="mt-1 text-[15px] text-[var(--ink-mid)]">
+          {period[language]}
+        </p>
       </div>
 
       <div className="flex shrink-0 flex-col gap-0.5 sm:items-end">
@@ -33,7 +39,7 @@ const RoleEntry = ({
     </div>
 
     <p className="mt-3 max-w-[560px] text-[15px] leading-relaxed text-[var(--ink-mid)]">
-      {description}
+      {description[language]}
     </p>
 
     {tech.length > 0 && (
@@ -44,6 +50,7 @@ const RoleEntry = ({
       </div>
     )}
   </li>
-);
+  );
+};
 
 export default RoleEntry;

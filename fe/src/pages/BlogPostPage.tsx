@@ -12,17 +12,19 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const BlogPostPage = () => {
   const { slug } = useParams();
   const post = blogPosts.find((item) => item.slug === slug);
+  const { language, t } = useLanguage();
 
   if (!post) {
     return (
       <main className="relative z-10 mx-auto flex max-w-[760px] flex-col items-center gap-4 px-5 sm:px-10 py-24">
         <p className="text-[17px] text-[var(--ink)]">Post not found.</p>
         <Link to="/blog" className="text-[15px] text-[#22c55e]">
-          Back to blog
+          {t.blogPost.backLink}
         </Link>
       </main>
     );
@@ -37,7 +39,7 @@ const BlogPostPage = () => {
       Icon: SiX,
       onClick: () =>
         window.open(
-          `https://twitter.com/intent/tweet?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(post.title)}`,
+          `https://twitter.com/intent/tweet?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(post.title[language])}`,
           "_blank",
           "noreferrer",
         ),
@@ -67,7 +69,7 @@ const BlogPostPage = () => {
       Icon: Link2,
       onClick: async () => {
         await navigator.clipboard.writeText(pageUrl);
-        toast.success("Link copied to clipboard");
+        toast.success(t.blogPost.copiedToast);
       },
     },
   ];
@@ -81,20 +83,22 @@ const BlogPostPage = () => {
         className="inline-flex items-center gap-2 text-[15px] text-[var(--ink-mid)] transition-colors hover:text-[var(--ink)]"
       >
         <ArrowLeft size={16} strokeWidth={1.75} />
-        Back to blog
+        {t.blogPost.backLink}
       </Link>
 
       <div className="mt-8">
-        <BlogImageGallery images={post.images} alt={post.title} />
+        <BlogImageGallery images={post.images} alt={post.title[language]} />
       </div>
 
       <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <h1 className="text-[24px] font-extrabold leading-tight tracking-tight text-[var(--ink)] sm:text-[28px]">
-          {post.title}
+          {post.title[language]}
         </h1>
 
         <div className="flex shrink-0 flex-col gap-2 sm:items-end">
-          <span className="text-[13px] text-[var(--ink-faint)]">Share</span>
+          <span className="text-[13px] text-[var(--ink-faint)]">
+            {t.blogPost.share}
+          </span>
           <div className="flex items-center gap-1 sm:gap-3">
             <TooltipProvider>
               {shareLinks.map(({ label, Icon, onClick }) => {
@@ -116,7 +120,7 @@ const BlogPostPage = () => {
                 return (
                   <Tooltip key={label}>
                     <TooltipTrigger asChild>{button}</TooltipTrigger>
-                    <TooltipContent>Copy Link</TooltipContent>
+                    <TooltipContent>{t.blogPost.copyLink}</TooltipContent>
                   </Tooltip>
                 );
               })}
@@ -135,12 +139,12 @@ const BlogPostPage = () => {
         <span aria-hidden>·</span>
         <span className="flex items-center gap-1.5">
           <Calendar size={14} strokeWidth={1.75} />
-          <time dateTime={post.isoDate}>{post.date}</time>
+          <time dateTime={post.isoDate}>{post.date[language]}</time>
         </span>
         <span aria-hidden>·</span>
         <span className="flex items-center gap-1.5">
           <Clock size={14} strokeWidth={1.75} />
-          {post.readingTime}
+          {post.readingTime[language]}
         </span>
       </div>
 
@@ -156,7 +160,7 @@ const BlogPostPage = () => {
       </div>
 
       <article className="mt-8 flex flex-col gap-5">
-        {post.content.map((block, index) => {
+        {post.content[language].map((block, index) => {
           if (block.type === "heading") {
             return (
               <h2

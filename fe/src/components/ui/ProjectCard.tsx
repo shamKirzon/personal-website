@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
+import type { LocalizedText } from "@/data/Project-data";
 
 interface ProjectCardProps {
   slug: string;
   name: string;
-  app: string;
-  description: string;
+  app: LocalizedText;
+  description: LocalizedText;
   image: string;
   technology: { name: string }[];
   year: number;
@@ -18,7 +20,10 @@ const ProjectCard = ({
   image,
   technology,
   year,
-}: ProjectCardProps) => (
+}: ProjectCardProps) => {
+  const { language } = useLanguage();
+
+  return (
   <Link
     to={`/projects/${slug}`}
     className="group flex h-full flex-col overflow-hidden rounded-xl border border-[var(--line-subtle)] bg-[var(--panel-bg)] shadow-[var(--panel-shadow)] transition-all duration-200 ease-out hover:-translate-y-1.5 hover:border-[var(--line-strong)] hover:shadow-xl"
@@ -45,7 +50,7 @@ const ProjectCard = ({
       </div>
 
       <p className="line-clamp-2 text-[13px] leading-snug text-[var(--ink-mid)]">
-        {description}
+        {description[language]}
       </p>
 
       <div className="mt-auto flex flex-wrap gap-1.5 pt-2">
@@ -63,6 +68,7 @@ const ProjectCard = ({
       </div>
     </div>
   </Link>
-);
+  );
+};
 
 export default ProjectCard;

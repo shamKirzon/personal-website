@@ -5,6 +5,7 @@ import { FaLinkedin } from "react-icons/fa";
 import { toast } from "sonner";
 import * as z from "zod";
 import axios from "axios";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const socialLinks = [
   { Icon: SiFacebook, label: "Facebook", url: "https://www.facebook.com/shammykirzon" },
@@ -39,6 +40,7 @@ const GetInTouchSection = () => {
   const [isSending, setIsSending] = useState(false);
   const [justSent, setJustSent] = useState(false);
   const [shake, setShake] = useState(false);
+  const { t } = useLanguage();
 
   const resetForm = () => {
     setName("");
@@ -56,9 +58,9 @@ const GetInTouchSection = () => {
 
     const isIncomplete = !name.trim() || !email.trim() || !message.trim();
     if (isIncomplete) {
-      toast.error("Incomplete Input", {
+      toast.error(t.getInTouch.toastIncompleteTitle, {
         id: "contact-form-error",
-        description: "Please fill out all fields and try again.",
+        description: t.getInTouch.toastIncompleteDesc,
         style: errorToastStyle,
       });
       triggerShake();
@@ -67,9 +69,9 @@ const GetInTouchSection = () => {
 
     const result = MessageSchema.safeParse({ name, email, message });
     if (!result.success) {
-      toast.error("Invalid Input", {
+      toast.error(t.getInTouch.toastInvalidTitle, {
         id: "contact-form-error",
-        description: "Please enter a valid email and try again.",
+        description: t.getInTouch.toastInvalidDesc,
         style: errorToastStyle,
       });
       triggerShake();
@@ -83,8 +85,8 @@ const GetInTouchSection = () => {
       await axios.post(`${import.meta.env.VITE_RENDER_API_KEY}/api/message`, {
         data: { name, email, message },
       });
-      toast.success(`Thanks, ${name.split(" ")[0]}!`, {
-        description: "I appreciate you taking the time to contact me",
+      toast.success(`${t.getInTouch.toastSuccessTitle}, ${name.split(" ")[0]}!`, {
+        description: t.getInTouch.toastSuccessDesc,
         style: successToastStyle,
       });
       resetForm();
@@ -98,18 +100,17 @@ const GetInTouchSection = () => {
   return (
     <section id="get-in-touch" className="mx-auto max-w-[760px] px-5 sm:px-10 pt-16 pb-16">
       <p className="mb-4 font-mono text-[12px] uppercase tracking-[0.14em] text-[var(--ink-mid)]">
-        Get In Touch
+        {t.getInTouch.label}
       </p>
 
       <div className="grid gap-4 md:grid-cols-2">
         <div className="rounded-xl border border-[var(--line-subtle)] bg-[var(--panel-bg-deep)] p-5 shadow-[var(--panel-shadow)]">
           <h3 className="text-[20px] font-semibold text-[var(--ink)]">
-            Let's Connect
+            {t.getInTouch.connectTitle}
           </h3>
 
           <p className="mt-4 border-l border-[var(--line)] pl-3 text-[15px] leading-relaxed text-[var(--ink-mid)]">
-            I'm always open to discussing new projects and opportunities.
-            Feel free to send me a message!
+            {t.getInTouch.connectIntro}
           </p>
 
           <div className="mt-5 flex flex-col gap-4">
@@ -120,7 +121,9 @@ const GetInTouchSection = () => {
                 className="mt-0.5 shrink-0 text-[var(--ink)]"
               />
               <div>
-                <p className="text-[15px] font-medium text-[var(--ink)]">Email</p>
+                <p className="text-[15px] font-medium text-[var(--ink)]">
+                  {t.getInTouch.emailLabel}
+                </p>
                 <a
                   href="mailto:shammysuyat@gmail.com"
                   className="text-[14px] text-[var(--ink-soft)] hover:text-[var(--ink)] hover:underline"
@@ -137,9 +140,11 @@ const GetInTouchSection = () => {
                 className="mt-0.5 shrink-0 text-[var(--ink)]"
               />
               <div>
-                <p className="text-[15px] font-medium text-[var(--ink)]">Location</p>
+                <p className="text-[15px] font-medium text-[var(--ink)]">
+                  {t.getInTouch.locationLabel}
+                </p>
                 <p className="text-[14px] text-[var(--ink-mid)]">
-                  Taguig City, Philippines
+                  {t.getInTouch.locationValue}
                 </p>
               </div>
             </div>
@@ -147,7 +152,7 @@ const GetInTouchSection = () => {
 
           <div className="mt-5 border-t border-[var(--line-hairline)] pt-5">
             <p className="mb-3 text-[14px] text-[var(--ink-mid)]">
-              Connect with me on social media
+              {t.getInTouch.socialLabel}
             </p>
             <div className="flex items-center gap-4">
               {socialLinks.map(({ Icon, label, url }) => (
@@ -177,7 +182,7 @@ const GetInTouchSection = () => {
             type="text"
             value={name}
             onChange={(event) => setName(event.target.value)}
-            placeholder="Your Name"
+            placeholder={t.getInTouch.namePlaceholder}
             className="h-11 w-full rounded-lg border border-[var(--line-subtle)] bg-[var(--surface-muted)] px-4 text-[15px] text-[var(--ink)] outline-none transition-all duration-150 placeholder:text-[var(--ink-faint)] focus:border-[var(--line-strong)] focus:shadow-[0_0_0_3px_var(--overlay-soft)]"
           />
 
@@ -185,14 +190,14 @@ const GetInTouchSection = () => {
             type="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            placeholder="Your Email"
+            placeholder={t.getInTouch.emailPlaceholder}
             className="h-11 w-full rounded-lg border border-[var(--line-subtle)] bg-[var(--surface-muted)] px-4 text-[15px] text-[var(--ink)] outline-none transition-all duration-150 placeholder:text-[var(--ink-faint)] focus:border-[var(--line-strong)] focus:shadow-[0_0_0_3px_var(--overlay-soft)]"
           />
 
           <textarea
             value={message}
             onChange={(event) => setMessage(event.target.value)}
-            placeholder="Your Message"
+            placeholder={t.getInTouch.messagePlaceholder}
             rows={5}
             className="w-full resize-none rounded-lg border border-[var(--line-subtle)] bg-[var(--surface-muted)] px-4 py-3 text-[15px] text-[var(--ink)] outline-none transition-all duration-150 placeholder:text-[var(--ink-faint)] focus:border-[var(--line-strong)] focus:shadow-[0_0_0_3px_var(--overlay-soft)]"
           />
@@ -209,15 +214,15 @@ const GetInTouchSection = () => {
             {isSending ? (
               <>
                 <Loader2 size={16} className="animate-spin" />
-                Sending...
+                {t.getInTouch.sendingButton}
               </>
             ) : justSent ? (
               <>
                 <Check size={16} className="animate-in zoom-in duration-300" />
-                Sent!
+                {t.getInTouch.sentButton}
               </>
             ) : (
-              "Send Message"
+              t.getInTouch.sendButton
             )}
           </button>
         </form>

@@ -3,6 +3,7 @@ import { ChevronDown } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { previousRoles } from "@/data/PreviousRoles-data";
 import RoleEntry from "../ui/RoleEntry";
+import { useLanguage } from "@/i18n/LanguageContext";
 import { SiTypescript, SiReact, SiNodedotjs, SiTailwindcss } from "react-icons/si";
 
 const stackIcons = [
@@ -14,6 +15,7 @@ const stackIcons = [
 
 const CurrentlySection = () => {
   const [showPreviousRoles, setShowPreviousRoles] = useState(false);
+  const { t } = useLanguage();
 
   return (
     <section className="mx-auto max-w-[760px] px-5 sm:px-10 pt-12">
@@ -21,17 +23,17 @@ const CurrentlySection = () => {
         <div className="mb-3 flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-[#22c55e] shadow-[0_0_6px_2px_rgba(34,197,94,0.6)]" />
           <span className="font-mono text-[12px] font-semibold uppercase tracking-[0.14em] text-[#22c55e]">
-            Currently
+            {t.currently.label}
           </span>
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div className="min-w-0">
             <h2 className="text-[24px] font-extrabold leading-tight tracking-tight text-[var(--ink)]">
-              Computer Science Student
+              {t.currently.role}
             </h2>
             <p className="mt-0.5 font-mono text-[13px] uppercase tracking-[0.1em] text-[var(--ink-mid)]">
-              2023 - Present
+              {t.currently.period}
             </p>
           </div>
 
@@ -46,9 +48,7 @@ const CurrentlySection = () => {
         </div>
 
         <p className="mt-3 max-w-[560px] text-[15px] leading-relaxed text-[var(--ink-mid)]">
-          Building full-stack web applications with React, Node.js and
-          PostgreSQL, while growing a specialization in agentic AI
-          application architecture.
+          {t.currently.bio}
         </p>
 
         <div className="mt-3 flex items-center gap-2.5">
@@ -71,7 +71,7 @@ const CurrentlySection = () => {
             showPreviousRoles ? "rotate-180" : ""
           }`}
         />
-        Previous roles
+        {t.currently.previousRoles}
       </button>
 
       <AnimatePresence initial={false}>
@@ -92,7 +92,7 @@ const CurrentlySection = () => {
               className="mt-7 flex flex-col gap-9 border-l border-[var(--line-hairline)] pl-6"
             >
               {previousRoles.map((role) => (
-                <RoleEntry key={role.title} {...role} />
+                <RoleEntry key={role.title.en} {...role} />
               ))}
             </motion.ul>
           </motion.div>

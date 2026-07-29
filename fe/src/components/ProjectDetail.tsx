@@ -57,13 +57,13 @@ const ProjectDetail = () => {
         </Link>
 
         <p className="font-mono text-xs tracking-widest uppercase text-primary mb-4">
-          {data.app}
+          {data.app.en}
         </p>
         <h1 className="text-foreground text-3xl md:text-4xl font-semibold mb-4">
           {data.name}
         </h1>
         <p className="text-muted-foreground text-[18px] leading-7 max-w-md mx-auto mb-8">
-          {data.description}
+          {data.description.en}
         </p>
 
         <div className="flex gap-3 justify-center">
@@ -99,7 +99,7 @@ const ProjectDetail = () => {
         </h2>
         <div className="grid md:grid-cols-2 gap-8 items-start">
           <p className="text-muted-foreground text-[18px] leading-7">
-            {data.description}
+            {data.description.en}
           </p>
           {data.image ? (
             <img

@@ -1,6 +1,10 @@
 import myProfile from "@/assets/images/profile.jpg";
+import { useLanguage } from "@/i18n/LanguageContext";
 
-const ProfileSection = () => (
+const ProfileSection = () => {
+  const { t } = useLanguage();
+
+  return (
   <section className="mx-auto max-w-[760px] px-5 sm:px-10 pt-8">
     <div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
       <img
@@ -15,9 +19,7 @@ const ProfileSection = () => (
         </h1>
 
         <p className="mb-3 text-[16px] leading-relaxed text-[var(--ink-mid)]">
-          Software developer specializing in full-stack development and agentic
-          AI application architecture. I care about the details that make a
-          product feel right.
+          {t.profile.bio}
         </p>
 
         <p className="flex items-center gap-2 text-[16px] text-[var(--ink-soft)]">
@@ -34,11 +36,12 @@ const ProfileSection = () => (
             <circle cx="3" cy="17" r="1.1" fill="#FCD116" />
             <circle cx="14.5" cy="10" r="1.1" fill="#FCD116" />
           </svg>
-          Taguig City, Philippines
+          {t.getInTouch.locationValue}
         </p>
       </div>
     </div>
   </section>
-);
+  );
+};
 
 export default ProfileSection;

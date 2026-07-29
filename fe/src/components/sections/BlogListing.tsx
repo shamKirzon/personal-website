@@ -4,6 +4,7 @@ import { blogPosts } from "@/data/Blog-data";
 import BlogCard from "../ui/BlogCard";
 import TagFilterPill from "../ui/TagFilterPill";
 import { StaggerGroup, StaggerItem } from "../ui/Reveal";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const tagCounts = blogPosts
   .flatMap((post) => post.tags)
@@ -17,6 +18,7 @@ const tags = Object.entries(tagCounts).sort((a, b) => b[1] - a[1]);
 const BlogListing = () => {
   const [query, setQuery] = useState("");
   const [activeTags, setActiveTags] = useState<string[]>([]);
+  const { language, t } = useLanguage();
 
   const toggleTag = (tag: string) =>
     setActiveTags((prev) =>
@@ -28,7 +30,7 @@ const BlogListing = () => {
   const filteredPosts = blogPosts.filter((post) => {
     const matchesQuery =
       search === "" ||
-      [post.title, post.excerpt, ...post.tags]
+      [post.title[language], post.excerpt[language], ...post.tags]
         .join(" ")
         .toLowerCase()
         .includes(search);
@@ -52,7 +54,7 @@ const BlogListing = () => {
           type="text"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="Search posts..."
+          placeholder={t.blogListing.searchPlaceholder}
           className="h-12 w-full rounded-lg border border-[var(--line-subtle)] bg-[var(--panel-bg-deep)] pl-11 pr-4 text-[15px] text-[var(--ink)] outline-none transition-colors placeholder:text-[var(--ink-faint)] focus:border-[var(--line-strong)]"
         />
       </div>
@@ -71,7 +73,7 @@ const BlogListing = () => {
 
       {filteredPosts.length === 0 ? (
         <p className="py-16 text-center text-[15px] text-[var(--ink-faint)]">
-          No posts match your filters.
+          {t.blogListing.noResults}
         </p>
       ) : (
         <StaggerGroup className="mt-6 grid gap-6 sm:grid-cols-2">

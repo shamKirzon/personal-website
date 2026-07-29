@@ -14,10 +14,14 @@
 
     <title>Shammy Suyat - Software Developer</title>
 
+    <!-- Restores saved preferences before first paint to avoid a flash. -->
     <script>
       try {
         if (localStorage.getItem("theme") === "light") {
           document.documentElement.classList.add("light");
+        }
+        if (localStorage.getItem("language") === "fil") {
+          document.documentElement.lang = "fil";
         }
       } catch (e) {}
     </script>
