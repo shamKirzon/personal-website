@@ -61,7 +61,7 @@ const FilterDropdown = ({
         type="button"
         onClick={() => onOpenChange(!isOpen)}
         aria-expanded={isOpen}
-        className={`flex h-11 w-full items-center justify-center gap-2 rounded-lg border px-3 text-[15px] transition-colors sm:w-auto ${
+        className={`flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-lg border px-3 text-[15px] transition-all duration-150 hover:scale-[1.02] active:scale-[0.97] sm:w-auto ${
           selected.length > 0
             ? "border-[var(--line-strong)] bg-[var(--overlay-strong)] text-[var(--ink)]"
             : "border-[var(--line-subtle)] bg-[var(--panel-bg)] text-[var(--ink)] shadow-[var(--panel-shadow)] hover:border-[var(--line-strong)]"
@@ -108,7 +108,7 @@ const FilterDropdown = ({
                       type="button"
                       onClick={() => onToggle(option.value)}
                       aria-pressed={isChecked}
-                      className={`flex w-full items-center gap-3 px-3.5 py-2 text-left transition-colors ${
+                      className={`flex w-full cursor-pointer items-center gap-3 px-3.5 py-2 text-left transition-colors ${
                         isChecked
                           ? "bg-[var(--overlay-strong)]"
                           : "hover:bg-[var(--overlay-soft)]"

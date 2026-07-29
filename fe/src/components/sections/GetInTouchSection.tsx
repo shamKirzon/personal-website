@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mail, MapPin } from "lucide-react";
+import { Check, Loader2, Mail, MapPin } from "lucide-react";
 import { SiFacebook, SiGithub } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa";
 import { toast } from "sonner";
@@ -37,11 +37,18 @@ const GetInTouchSection = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const [justSent, setJustSent] = useState(false);
+  const [shake, setShake] = useState(false);
 
   const resetForm = () => {
     setName("");
     setEmail("");
     setMessage("");
+  };
+
+  const triggerShake = () => {
+    setShake(false);
+    requestAnimationFrame(() => setShake(true));
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -54,6 +61,7 @@ const GetInTouchSection = () => {
         description: "Please fill out all fields and try again.",
         style: errorToastStyle,
       });
+      triggerShake();
       return;
     }
 
@@ -64,6 +72,7 @@ const GetInTouchSection = () => {
         description: "Please enter a valid email and try again.",
         style: errorToastStyle,
       });
+      triggerShake();
       return;
     }
 
@@ -79,6 +88,8 @@ const GetInTouchSection = () => {
         style: successToastStyle,
       });
       resetForm();
+      setJustSent(true);
+      window.setTimeout(() => setJustSent(false), 1800);
     } finally {
       setIsSending(false);
     }
@@ -157,14 +168,17 @@ const GetInTouchSection = () => {
 
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-3 rounded-xl border border-[var(--line-subtle)] bg-[var(--panel-bg-deep)] p-5 shadow-[var(--panel-shadow)]"
+          onAnimationEnd={() => setShake(false)}
+          className={`flex flex-col gap-3 rounded-xl border border-[var(--line-subtle)] bg-[var(--panel-bg-deep)] p-5 shadow-[var(--panel-shadow)] ${
+            shake ? "animate-shake" : ""
+          }`}
         >
           <input
             type="text"
             value={name}
             onChange={(event) => setName(event.target.value)}
             placeholder="Your Name"
-            className="h-11 w-full rounded-lg border border-[var(--line-subtle)] bg-[var(--surface-muted)] px-4 text-[15px] text-[var(--ink)] outline-none transition-colors placeholder:text-[var(--ink-faint)] focus:border-[var(--line-strong)]"
+            className="h-11 w-full rounded-lg border border-[var(--line-subtle)] bg-[var(--surface-muted)] px-4 text-[15px] text-[var(--ink)] outline-none transition-all duration-150 placeholder:text-[var(--ink-faint)] focus:border-[var(--line-strong)] focus:shadow-[0_0_0_3px_var(--overlay-soft)]"
           />
 
           <input
@@ -172,7 +186,7 @@ const GetInTouchSection = () => {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             placeholder="Your Email"
-            className="h-11 w-full rounded-lg border border-[var(--line-subtle)] bg-[var(--surface-muted)] px-4 text-[15px] text-[var(--ink)] outline-none transition-colors placeholder:text-[var(--ink-faint)] focus:border-[var(--line-strong)]"
+            className="h-11 w-full rounded-lg border border-[var(--line-subtle)] bg-[var(--surface-muted)] px-4 text-[15px] text-[var(--ink)] outline-none transition-all duration-150 placeholder:text-[var(--ink-faint)] focus:border-[var(--line-strong)] focus:shadow-[0_0_0_3px_var(--overlay-soft)]"
           />
 
           <textarea
@@ -180,15 +194,31 @@ const GetInTouchSection = () => {
             onChange={(event) => setMessage(event.target.value)}
             placeholder="Your Message"
             rows={5}
-            className="w-full resize-none rounded-lg border border-[var(--line-subtle)] bg-[var(--surface-muted)] px-4 py-3 text-[15px] text-[var(--ink)] outline-none transition-colors placeholder:text-[var(--ink-faint)] focus:border-[var(--line-strong)]"
+            className="w-full resize-none rounded-lg border border-[var(--line-subtle)] bg-[var(--surface-muted)] px-4 py-3 text-[15px] text-[var(--ink)] outline-none transition-all duration-150 placeholder:text-[var(--ink-faint)] focus:border-[var(--line-strong)] focus:shadow-[0_0_0_3px_var(--overlay-soft)]"
           />
 
           <button
             type="submit"
             disabled={isSending}
-            className="mt-auto h-11 rounded-lg bg-[var(--cta-bg)] text-[15px] font-semibold text-[var(--cta-ink)] transition-all duration-150 hover:scale-[1.02] hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100"
+            className={`mt-auto flex h-11 cursor-pointer items-center justify-center gap-2 rounded-lg text-[15px] font-semibold transition-all duration-150 hover:scale-[1.02] hover:opacity-90 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100 ${
+              justSent
+                ? "bg-[#22c55e] text-white"
+                : "bg-[var(--cta-bg)] text-[var(--cta-ink)]"
+            }`}
           >
-            {isSending ? "Sending..." : "Send Message"}
+            {isSending ? (
+              <>
+                <Loader2 size={16} className="animate-spin" />
+                Sending...
+              </>
+            ) : justSent ? (
+              <>
+                <Check size={16} className="animate-in zoom-in duration-300" />
+                Sent!
+              </>
+            ) : (
+              "Send Message"
+            )}
           </button>
         </form>
       </div>

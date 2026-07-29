@@ -315,7 +315,7 @@ const RecentProjects = () => {
                           type="button"
                           aria-label={`Go to ${item.name}`}
                           onClick={() => scrollToIndex(dotIndex)}
-                          className={`h-1.5 rounded-full transition-all ${
+                          className={`h-1.5 cursor-pointer rounded-full transition-all duration-200 hover:scale-125 active:scale-90 ${
                             dotIndex === activeIndex
                               ? "w-5 bg-[var(--ink)]"
                               : "w-1.5 bg-[var(--line-strong)]"

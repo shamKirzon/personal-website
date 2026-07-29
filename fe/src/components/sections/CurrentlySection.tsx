@@ -62,7 +62,7 @@ const CurrentlySection = () => {
         type="button"
         onClick={() => setShowPreviousRoles((prev) => !prev)}
         aria-expanded={showPreviousRoles}
-        className="mt-6 flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--panel-bg)] px-4 py-2 text-[14px] text-[var(--ink)] transition-all duration-150 hover:scale-[1.02] hover:border-[var(--line-strong)] hover:bg-[var(--hover-bg)] hover:font-semibold hover:text-[var(--ink)]"
+        className="mt-6 flex cursor-pointer items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--panel-bg)] px-4 py-2 text-[14px] text-[var(--ink)] transition-all duration-150 hover:scale-[1.02] hover:border-[var(--line-strong)] hover:bg-[var(--hover-bg)] hover:font-semibold hover:text-[var(--ink)] active:scale-[0.97]"
       >
         <ChevronDown
           size={14}
