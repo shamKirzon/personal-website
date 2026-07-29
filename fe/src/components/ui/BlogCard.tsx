@@ -14,14 +14,16 @@ const BlogCard = ({
 }: BlogPost) => (
   <Link
     to={`/blog/${slug}`}
-    className="group flex h-full flex-col overflow-hidden rounded-xl border border-[var(--line-subtle)] bg-[var(--panel-bg-deep)] shadow-[var(--panel-shadow)] transition-colors hover:border-[var(--line-strong)]"
+    className="group flex h-full flex-col overflow-hidden rounded-xl border border-[var(--line-subtle)] bg-[var(--panel-bg-deep)] shadow-[var(--panel-shadow)] transition-all duration-200 ease-out hover:-translate-y-1.5 hover:border-[var(--line-strong)] hover:shadow-xl"
   >
-    <img
-      src={images[0]}
-      alt={title}
-      loading="lazy"
-      className="aspect-[16/9] w-full object-cover object-top"
-    />
+    <div className="overflow-hidden">
+      <img
+        src={images[0]}
+        alt={title}
+        loading="lazy"
+        className="aspect-[16/9] w-full object-cover object-top transition-transform duration-300 ease-out group-hover:scale-105"
+      />
+    </div>
 
     <div className="flex flex-1 flex-col p-5">
       <h2 className="line-clamp-2 text-[19px] font-bold leading-snug text-[var(--ink)]">

@@ -21,14 +21,16 @@ const ProjectCard = ({
 }: ProjectCardProps) => (
   <Link
     to={`/projects/${slug}`}
-    className="group flex h-full flex-col overflow-hidden rounded-xl border border-[var(--line-subtle)] bg-[var(--panel-bg)] shadow-[var(--panel-shadow)] transition-colors hover:border-[var(--line-strong)]"
+    className="group flex h-full flex-col overflow-hidden rounded-xl border border-[var(--line-subtle)] bg-[var(--panel-bg)] shadow-[var(--panel-shadow)] transition-all duration-200 ease-out hover:-translate-y-1.5 hover:border-[var(--line-strong)] hover:shadow-xl"
   >
-    <img
-      src={image}
-      alt={name}
-      loading="lazy"
-      className="aspect-[16/10] w-full object-cover object-top"
-    />
+    <div className="overflow-hidden">
+      <img
+        src={image}
+        alt={name}
+        loading="lazy"
+        className="aspect-[16/10] w-full object-cover object-top transition-transform duration-300 ease-out group-hover:scale-105"
+      />
+    </div>
 
     <div className="flex flex-1 flex-col gap-2 p-4">
       <div className="flex items-start justify-between gap-2">
