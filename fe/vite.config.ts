@@ -12,9 +12,16 @@ export default defineConfig({
     },
   },
   server: {
+    // Only the routes the be/ Express server owns are proxied. /api/visitors
+    // is a Vercel serverless function and must not be forwarded here.
     proxy: {
-      "/api": {
-        target: "http://localhost:5000", // your backend URL
+      "/api/chat-bot": {
+        target: "http://localhost:5000",
+        changeOrigin: true,
+        secure: false,
+      },
+      "/api/message": {
+        target: "http://localhost:5000",
         changeOrigin: true,
         secure: false,
       },

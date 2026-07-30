@@ -168,9 +168,27 @@
   40%, 60% { transform: translateX(4px); }
 }
 
+@keyframes visitor-ping {
+  0% {
+    transform: scale(0.4);
+    opacity: 0.7;
+  }
+  70% {
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
 @layer utilities {
   .animate-shake {
     animation: shake 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .animate-visitor-ping {
+    animation: visitor-ping 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
   }
 }
 

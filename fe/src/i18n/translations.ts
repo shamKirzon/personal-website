@@ -42,6 +42,23 @@ export interface UiText {
   blogListing: { searchPlaceholder: string; noResults: string };
   blogPost: { backLink: string; share: string; copyLink: string; copiedToast: string };
   visitors: { title: string; subtitle: string };
+  visitorsMap: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    consentHeading: string;
+    consentBodyStart: string;
+    consentBodyEmphasis: string;
+    consentBodyEnd: string;
+    consentAccept: string;
+    consentDecline: string;
+    declinedNote: string;
+    statVisitors: string;
+    statLive: string;
+    statCities: string;
+    recentLabel: string;
+    mapAriaLabel: string;
+  };
   footer: { rights: string };
 }
 
@@ -119,6 +136,26 @@ export const uiText: Record<"en" | "fil", UiText> = {
       title: "Coming soon",
       subtitle: "This page isn't ready yet.",
     },
+    visitorsMap: {
+      eyebrow: "Visitors",
+      title: "Where you're all from",
+      lead: "A live view of where visitors are connecting from. No sign-in — pulled quietly from edge location data the moment you arrive.",
+      consentHeading: "Mind sharing where you're visiting from?",
+      consentBodyStart:
+        "I'd love to show a live map of where visitors drop in from. If you're okay with it, I'll grab just your ",
+      consentBodyEmphasis: "city and country",
+      consentBodyEnd:
+        " — nothing else. No names, no accounts, no tracking, and it's only ever used to light up this map on my personal site.",
+      consentAccept: "Sure, add me to the map",
+      consentDecline: "No thanks",
+      declinedNote: "No problem — here's where everyone else is.",
+      statVisitors: "visitors mapped",
+      statLive: "here right now",
+      statCities: "cities",
+      recentLabel: "Recent arrivals",
+      mapAriaLabel:
+        "Dotted map of the Philippines showing where visitors are connecting from. Recent locations are listed below.",
+    },
     footer: {
       rights: "All rights reserved",
     },
@@ -195,6 +232,26 @@ export const uiText: Record<"en" | "fil", UiText> = {
     visitors: {
       title: "Malapit na",
       subtitle: "Hindi pa handa ang pahinang ito.",
+    },
+    visitorsMap: {
+      eyebrow: "Mga Bisita",
+      title: "Kung Saan Kayo Galing",
+      lead: "Live na tanawin kung saan nagmumula ang mga bumibisita. Walang sign-in — tahimik lang na kinukuha mula sa edge location data pagdating mo.",
+      consentHeading: "Puwede bang malaman kung saan ka bumibisita?",
+      consentBodyStart:
+        "Gusto kong magpakita ng live na mapa kung saan galing ang mga bisita. Kung okay lang sa iyo, kukunin ko lang ang iyong ",
+      consentBodyEmphasis: "lungsod at bansa",
+      consentBodyEnd:
+        " — wala nang iba. Walang pangalan, walang account, walang tracking, at ginagamit lang ito para buhayin ang mapang ito sa personal kong site.",
+      consentAccept: "Sige, isama mo ako sa mapa",
+      consentDecline: "Huwag na lang",
+      declinedNote: "Walang problema — narito kung saan galing ang iba.",
+      statVisitors: "bisitang naitala",
+      statLive: "nandito ngayon",
+      statCities: "lungsod",
+      recentLabel: "Mga Kararating",
+      mapAriaLabel:
+        "Tuldok-tuldok na mapa ng Pilipinas na nagpapakita kung saan nagmumula ang mga bisita. Nakalista sa ibaba ang mga kamakailang lokasyon.",
     },
     footer: {
       rights: "Nakalaan ang lahat ng karapatan",
