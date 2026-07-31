@@ -8,7 +8,7 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 const VISITORS_KEY = "visitors";
 const MAX_VISITORS = 40;
-const RETENTION_MS = 24 * 60 * 60 * 1000;
+const RETENTION_MS = 7 * 24 * 60 * 60 * 1000;
 const LIVE_WINDOW_MS = 10 * 60 * 1000;
 const DEDUPE_TTL_SECONDS = 30 * 60;
 
@@ -33,11 +33,18 @@ const toPublicVisitor = (visitor: StoredVisitor, now: number) => ({
   lat: visitor.lat,
   lng: visitor.lng,
   isLive: now - visitor.arrivedAt < LIVE_WINDOW_MS,
+  // Arrival time only — not identifying on its own, and needed for the
+  // "8 hours ago" labels in the recent-arrivals list.
+  arrivedAt: visitor.arrivedAt,
 });
 
 const firstHeader = (value: string | string[] | undefined) =>
   Array.isArray(value) ? value[0] : value;
 
+// `isDebugSource: true` marks geo that came from a local-dev escape hatch
+// rather than a real visitor's IP. Real dedupe (by IP) is meaningless for
+// these — every local request shares one machine, so it would just block
+// repeat testing — so the POST handler skips dedupe entirely for this case.
 const readGeo = (req: VercelRequest) => {
   // Vercel's edge network sets these on every request; no external geo API.
   const city = firstHeader(req.headers["x-vercel-ip-city"]);
@@ -51,6 +58,7 @@ const readGeo = (req: VercelRequest) => {
       country,
       lat: Number(lat),
       lng: Number(lng),
+      isDebugSource: false,
     };
   }
 
@@ -65,6 +73,7 @@ const readGeo = (req: VercelRequest) => {
         country: String(debugCountry),
         lat: Number(debugLat),
         lng: Number(debugLng),
+        isDebugSource: true,
       };
     }
 
@@ -78,6 +87,7 @@ const readGeo = (req: VercelRequest) => {
         country: DEV_FALLBACK_COUNTRY,
         lat: Number(DEV_FALLBACK_LAT),
         lng: Number(DEV_FALLBACK_LNG),
+        isDebugSource: true,
       };
     }
   }
@@ -130,10 +140,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(204).end();
       }
 
-      const isNewArrival = await getRedis().set(`dedupe:${hashIp(req)}`, 1, {
-        ex: DEDUPE_TTL_SECONDS,
-        nx: true,
-      });
+      // Real dedupe only applies to real visitors — debug/fallback geo has no
+      // meaningful IP to dedupe by (every local request looks identical).
+      const isNewArrival =
+        geo.isDebugSource ||
+        (await getRedis().set(`dedupe:${hashIp(req)}`, 1, {
+          ex: DEDUPE_TTL_SECONDS,
+          nx: true,
+        }));
 
       if (!isNewArrival) {
         // Already counted recently — echo back their existing entry so the
@@ -149,7 +163,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       const visitor: StoredVisitor = {
         id: randomUUID(),
-        ...geo,
+        city: geo.city,
+        country: geo.country,
+        lat: geo.lat,
+        lng: geo.lng,
         arrivedAt: now,
       };
 

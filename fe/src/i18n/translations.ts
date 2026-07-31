@@ -51,12 +51,23 @@ export interface UiText {
     consentBodyEmphasis: string;
     consentBodyEnd: string;
     consentAccept: string;
+    consentAdding: string;
     consentDecline: string;
     declinedNote: string;
+    reOptIn: string;
+    addedToastTitle: string;
+    addedToastDesc: string;
+    unknownToastTitle: string;
+    unknownToastDesc: string;
     statVisitors: string;
     statLive: string;
     statCities: string;
     recentLabel: string;
+    recentEmpty: string;
+    timeJustNow: string;
+    timeMinutesAgo: string;
+    timeHoursAgo: string;
+    timeDaysAgo: string;
     mapAriaLabel: string;
   };
   footer: { rights: string };
@@ -147,12 +158,24 @@ export const uiText: Record<"en" | "fil", UiText> = {
       consentBodyEnd:
         " — nothing else. No names, no accounts, no tracking, and it's only ever used to light up this map on my personal site.",
       consentAccept: "Sure, add me to the map",
+      consentAdding: "Adding you…",
       consentDecline: "No thanks",
       declinedNote: "No problem — here's where everyone else is.",
+      reOptIn: "Changed your mind? Add me to the map",
+      addedToastTitle: "You're on the map",
+      addedToastDesc: "Showing as {location}",
+      unknownToastTitle: "Couldn't place you",
+      unknownToastDesc:
+        "Your location wasn't available, so the map just shows everyone else.",
       statVisitors: "visitors mapped",
       statLive: "here right now",
       statCities: "cities",
       recentLabel: "Recent arrivals",
+      recentEmpty: "No arrivals yet this week.",
+      timeJustNow: "just now",
+      timeMinutesAgo: "{n}m ago",
+      timeHoursAgo: "{n}h ago",
+      timeDaysAgo: "{n}d ago",
       mapAriaLabel:
         "Dotted map of the Philippines showing where visitors are connecting from. Recent locations are listed below.",
     },
@@ -244,12 +267,24 @@ export const uiText: Record<"en" | "fil", UiText> = {
       consentBodyEnd:
         " — wala nang iba. Walang pangalan, walang account, walang tracking, at ginagamit lang ito para buhayin ang mapang ito sa personal kong site.",
       consentAccept: "Sige, isama mo ako sa mapa",
+      consentAdding: "Idinaragdag ka…",
       consentDecline: "Huwag na lang",
       declinedNote: "Walang problema — narito kung saan galing ang iba.",
+      reOptIn: "Nagbago ang isip mo? Isama mo ako sa mapa",
+      addedToastTitle: "Nasa mapa ka na",
+      addedToastDesc: "Ipinapakita bilang {location}",
+      unknownToastTitle: "Hindi ka matukoy",
+      unknownToastDesc:
+        "Hindi available ang lokasyon mo, kaya ang mapa ay nagpapakita lang ng iba.",
       statVisitors: "bisitang naitala",
       statLive: "nandito ngayon",
       statCities: "lungsod",
       recentLabel: "Mga Kararating",
+      recentEmpty: "Wala pang dumarating ngayong linggo.",
+      timeJustNow: "ngayon lang",
+      timeMinutesAgo: "{n}m ang nakalipas",
+      timeHoursAgo: "{n}h ang nakalipas",
+      timeDaysAgo: "{n}d ang nakalipas",
       mapAriaLabel:
         "Tuldok-tuldok na mapa ng Pilipinas na nagpapakita kung saan nagmumula ang mga bisita. Nakalista sa ibaba ang mga kamakailang lokasyon.",
     },

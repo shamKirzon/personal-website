@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useReducedMotion } from "motion/react";
+import { toast } from "sonner";
 import {
   fetchVisitors,
   resolveMyLocation,
@@ -13,6 +14,8 @@ import {
   projectToEdgePercent,
   projectToPercent,
 } from "@/lib/philippines-map";
+import { formatRelativeTime } from "@/lib/relative-time";
+import Skeleton from "@/components/ui/Skeleton";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 type Consent = "pending" | "granted" | "declined";
@@ -20,6 +23,8 @@ type Consent = "pending" | "granted" | "declined";
 const CONSENT_KEY = "visitor-map-consent";
 const LIST_SIZE = 5;
 const POLL_INTERVAL = 12000;
+// Relative labels drift as time passes, so re-render them on a slow tick.
+const CLOCK_INTERVAL = 60000;
 
 const readConsent = (): Consent => {
   try {
@@ -74,33 +79,61 @@ const VisitorsSection = () => {
   const [consent, setConsent] = useState<Consent>(readConsent);
   const [visitors, setVisitors] = useState<Visitor[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isJoining, setIsJoining] = useState(false);
+  const [, setClockTick] = useState(0);
 
   const hasDecided = consent !== "pending";
 
+  /** Registers this visitor, then refreshes the shared list. */
+  const join = useCallback(async () => {
+    setIsJoining(true);
+    try {
+      const me = await resolveMyLocation();
+
+      if (me) {
+        toast.success(t.visitorsMap.addedToastTitle, {
+          description: t.visitorsMap.addedToastDesc.replace(
+            "{location}",
+            `${me.city}, ${me.country}`,
+          ),
+        });
+      } else {
+        toast(t.visitorsMap.unknownToastTitle, {
+          description: t.visitorsMap.unknownToastDesc,
+        });
+      }
+
+      setConsent("granted");
+      storeConsent("granted");
+
+      const everyone = await fetchVisitors();
+      setVisitors(everyone);
+      setIsLoading(false);
+    } finally {
+      setIsJoining(false);
+    }
+  }, [t]);
+
+  const decline = () => {
+    setConsent("declined");
+    storeConsent("declined");
+  };
+
+  // Initial load. Registration is handled by `join`, so this only reads.
   useEffect(() => {
     if (!hasDecided) return;
 
     let cancelled = false;
-
-    const load = async () => {
-      // Register first so the list that comes back already includes us.
-      if (consent === "granted") {
-        await resolveMyLocation();
-        if (cancelled) return;
-      }
-
-      const everyone = await fetchVisitors();
+    fetchVisitors().then((everyone) => {
       if (cancelled) return;
-
       setVisitors(everyone);
       setIsLoading(false);
-    };
+    });
 
-    load();
     return () => {
       cancelled = true;
     };
-  }, [hasDecided, consent]);
+  }, [hasDecided]);
 
   useEffect(() => {
     if (!hasDecided || isLoading) return;
@@ -112,6 +145,15 @@ const VisitorsSection = () => {
 
     return () => window.clearInterval(timer);
   }, [hasDecided, isLoading]);
+
+  useEffect(() => {
+    if (!hasDecided) return;
+    const timer = window.setInterval(
+      () => setClockTick((tick) => tick + 1),
+      CLOCK_INTERVAL,
+    );
+    return () => window.clearInterval(timer);
+  }, [hasDecided]);
 
   const stats = useMemo(() => {
     const cities = new Set(visitors.map((v) => `${v.city}|${v.country}`));
@@ -144,16 +186,13 @@ const VisitorsSection = () => {
     });
   }, [visitors]);
 
-  const decide = (choice: Consent) => {
-    setConsent(choice);
-    storeConsent(choice);
-  };
-
   const statItems = [
     { value: stats.total, label: t.visitorsMap.statVisitors },
     { value: stats.live, label: t.visitorsMap.statLive },
     { value: stats.cities, label: t.visitorsMap.statCities },
   ];
+
+  const recent = visitors.slice(0, LIST_SIZE);
 
   return (
     <section className="mx-auto max-w-[760px] px-5 sm:px-10 pt-8 pb-16">
@@ -183,15 +222,19 @@ const VisitorsSection = () => {
           <div className="mt-5 flex flex-col gap-2.5 sm:flex-row">
             <button
               type="button"
-              onClick={() => decide("granted")}
-              className="h-11 cursor-pointer rounded-lg bg-[var(--cta-bg)] px-5 text-[15px] font-semibold text-[var(--cta-ink)] transition-all duration-150 hover:scale-[1.02] hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--primary)] active:scale-[0.97]"
+              onClick={join}
+              disabled={isJoining}
+              className="h-11 cursor-pointer rounded-lg bg-[var(--cta-bg)] px-5 text-[15px] font-semibold text-[var(--cta-ink)] transition-all duration-150 hover:scale-[1.02] hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--primary)] active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100"
             >
-              {t.visitorsMap.consentAccept}
+              {isJoining
+                ? t.visitorsMap.consentAdding
+                : t.visitorsMap.consentAccept}
             </button>
             <button
               type="button"
-              onClick={() => decide("declined")}
-              className="h-11 cursor-pointer rounded-lg border border-[var(--line)] px-5 text-[15px] text-[var(--ink-mid)] transition-all duration-150 hover:border-[var(--line-strong)] hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--primary)] active:scale-[0.97]"
+              onClick={decline}
+              disabled={isJoining}
+              className="h-11 cursor-pointer rounded-lg border border-[var(--line)] px-5 text-[15px] text-[var(--ink-mid)] transition-all duration-150 hover:border-[var(--line-strong)] hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--primary)] active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-70"
             >
               {t.visitorsMap.consentDecline}
             </button>
@@ -200,9 +243,21 @@ const VisitorsSection = () => {
       ) : (
         <>
           {consent === "declined" && (
-            <p className="mt-5 text-[14px] text-[var(--ink-faint)]">
-              {t.visitorsMap.declinedNote}
-            </p>
+            <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2">
+              <p className="text-[14px] text-[var(--ink-faint)]">
+                {t.visitorsMap.declinedNote}
+              </p>
+              <button
+                type="button"
+                onClick={join}
+                disabled={isJoining}
+                className="cursor-pointer rounded text-[14px] font-medium text-[var(--primary)] underline-offset-4 transition-opacity duration-150 hover:underline hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--primary)] disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {isJoining
+                  ? t.visitorsMap.consentAdding
+                  : t.visitorsMap.reOptIn}
+              </button>
+            </div>
           )}
 
           <div
@@ -242,9 +297,13 @@ const VisitorsSection = () => {
           <div className="mt-8 flex flex-wrap justify-center gap-x-8 gap-y-4 border-t border-[var(--line-hairline)] pt-6">
             {statItems.map((item) => (
               <div key={item.label} className="text-center">
-                <p className="text-[20px] font-bold text-[var(--ink)]">
-                  {item.value}
-                </p>
+                {isLoading ? (
+                  <Skeleton className="mx-auto h-[20px] w-8" />
+                ) : (
+                  <p className="text-[20px] font-bold text-[var(--ink)]">
+                    {item.value}
+                  </p>
+                )}
                 <p className="mt-0.5 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--ink-faint)]">
                   {item.label}
                 </p>
@@ -256,20 +315,45 @@ const VisitorsSection = () => {
             <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--ink-faint)]">
               {t.visitorsMap.recentLabel}
             </p>
-            <ul className="flex flex-col">
-              {visitors.slice(0, LIST_SIZE).map((visitor) => (
-                <li
-                  key={visitor.id}
-                  className="flex items-center gap-2.5 border-b border-[var(--line-hairline)] py-2 text-[14px] text-[var(--ink-soft)] last:border-b-0"
-                >
-                  <span
-                    aria-hidden
-                    className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--primary)]"
-                  />
-                  {visitor.city}, {visitor.country}
-                </li>
-              ))}
-            </ul>
+
+            {isLoading ? (
+              <ul className="flex flex-col">
+                {Array.from({ length: LIST_SIZE }).map((_, index) => (
+                  <li
+                    key={index}
+                    className="flex items-center gap-2.5 border-b border-[var(--line-hairline)] py-2 last:border-b-0"
+                  >
+                    <Skeleton className="h-1.5 w-1.5 shrink-0 rounded-full" />
+                    <Skeleton className="h-[14px] flex-1" />
+                    <Skeleton className="h-[12px] w-12 shrink-0" />
+                  </li>
+                ))}
+              </ul>
+            ) : recent.length === 0 ? (
+              <p className="py-2 text-[14px] text-[var(--ink-faint)]">
+                {t.visitorsMap.recentEmpty}
+              </p>
+            ) : (
+              <ul className="flex flex-col">
+                {recent.map((visitor) => (
+                  <li
+                    key={visitor.id}
+                    className="flex items-center gap-2.5 border-b border-[var(--line-hairline)] py-2 text-[14px] text-[var(--ink-soft)] last:border-b-0"
+                  >
+                    <span
+                      aria-hidden
+                      className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--primary)]"
+                    />
+                    <span className="flex-1 truncate">
+                      {visitor.city}, {visitor.country}
+                    </span>
+                    <span className="shrink-0 font-mono text-[12px] text-[var(--ink-faint)]">
+                      {formatRelativeTime(visitor.arrivedAt, t.visitorsMap)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </>
       )}

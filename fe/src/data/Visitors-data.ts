@@ -15,6 +15,8 @@ export interface Visitor {
   lat: number;
   lng: number;
   isLive: boolean;
+  /** Unix ms of arrival, used for the relative-time labels. */
+  arrivedAt: number;
 }
 
 const ENDPOINT = "/api/visitors";
