@@ -25,6 +25,14 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
+      // Served by `vercel dev --listen 3001` (kept separate from Vite's own
+      // dev server — routing the whole frontend through vercel dev breaks
+      // Vite's on-the-fly module serving; see vercel.json's SPA rewrite).
+      "/api/visitors": {
+        target: "http://localhost:3001",
+        changeOrigin: true,
+        secure: false,
+      },
     },
     // host: "192.168.55.100"
     host: "localhost",
