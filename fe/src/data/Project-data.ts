@@ -1,4 +1,3 @@
-// Thumbnail
 import smartQueue from "../assets/images/projects/thumbnail/smart-queue.png";
 import heronest from "../assets/images/projects/thumbnail/heronest.png";
 import library from "../assets/images/projects/thumbnail/library-management-system.png";
@@ -6,7 +5,6 @@ import pateros from "../assets/images/projects/thumbnail/pateros-catholic-school
 import bathOfPaws from "../assets/images/projects/thumbnail/bath-of-paws.png";
 import tavApp from "../assets/images/projects/thumbnail/tav-app.png";
 
-// Device View
 import laptopSmartQueue from "../assets/images/projects/device-view/project-laptop-smart-queue.jpg";
 import phoneSmartQueue from "../assets/images/projects/device-view/project-phone-smart-queue.jpg";
 import laptopHeronest from "../assets/images/projects/device-view/project-laptop-heronest.jpg";
@@ -17,9 +15,6 @@ import phone1TavApp from "../assets/images/projects/device-view/project-phone1-t
 import phone2TavApp from "../assets/images/projects/device-view/project-phone2-tav.jpg";
 import laptopHolaN from "../assets/images/projects/device-view/project-laptop-hola-n.png";
 
-// import laptopLibrary from "../assets/images/projects/device-view/project-phone-smart-queue.jpg";
-
-//Others;
 import { GithubBlack } from "@/assets/icons/Icons";
 
 export type ProjectDevice = "laptop" | "phone";

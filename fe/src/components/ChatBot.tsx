@@ -36,7 +36,6 @@ const ChatBot = () => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_RENDER_API_KEY}/api/chat-bot`,
-        // "http://localhost:5000/api/chat-bot",
         {
           data: message,
         },

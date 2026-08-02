@@ -2,10 +2,6 @@ import { createHash, randomUUID } from "node:crypto";
 import { Redis } from "@upstash/redis";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
-// PRIVACY: only city + country + that city's centroid is ever stored or
-// returned. The requester's IP is hashed for short-lived dedupe and is never
-// persisted in readable form or attached to a visitor record.
-
 const VISITORS_KEY = "visitors";
 const MAX_VISITORS = 40;
 const RETENTION_MS = 7 * 24 * 60 * 60 * 1000;
@@ -21,8 +17,6 @@ interface StoredVisitor {
   arrivedAt: number;
 }
 
-// Created lazily: Redis.fromEnv() throws when the env vars are missing, and at
-// module scope that would crash the function before it can answer with a 503.
 let client: Redis | null = null;
 const getRedis = () => (client ??= Redis.fromEnv());
 
@@ -33,20 +27,13 @@ const toPublicVisitor = (visitor: StoredVisitor, now: number) => ({
   lat: visitor.lat,
   lng: visitor.lng,
   isLive: now - visitor.arrivedAt < LIVE_WINDOW_MS,
-  // Arrival time only — not identifying on its own, and needed for the
-  // "8 hours ago" labels in the recent-arrivals list.
   arrivedAt: visitor.arrivedAt,
 });
 
 const firstHeader = (value: string | string[] | undefined) =>
   Array.isArray(value) ? value[0] : value;
 
-// `isDebugSource: true` marks geo that came from a local-dev escape hatch
-// rather than a real visitor's IP. Real dedupe (by IP) is meaningless for
-// these — every local request shares one machine, so it would just block
-// repeat testing — so the POST handler skips dedupe entirely for this case.
 const readGeo = (req: VercelRequest) => {
-  // Vercel's edge network sets these on every request; no external geo API.
   const city = firstHeader(req.headers["x-vercel-ip-city"]);
   const country = firstHeader(req.headers["x-vercel-ip-country"]);
   const lat = firstHeader(req.headers["x-vercel-ip-latitude"]);
@@ -62,10 +49,7 @@ const readGeo = (req: VercelRequest) => {
     };
   }
 
-  // Geo headers only exist on Vercel's real edge network, so below are two
-  // local-dev escape hatches. Both are unreachable in production.
   if (process.env.VERCEL_ENV !== "production") {
-    // 1. Query overrides, for testing the API directly with curl.
     const { debugCity, debugCountry, debugLat, debugLng } = req.query;
     if (debugCity && debugCountry && debugLat && debugLng) {
       return {
@@ -77,11 +61,18 @@ const readGeo = (req: VercelRequest) => {
       };
     }
 
-    // 2. A fixed fallback from .env, so the real UI works under `vercel dev`
-    //    (the frontend can't pass query params).
-    const { DEV_FALLBACK_CITY, DEV_FALLBACK_COUNTRY, DEV_FALLBACK_LAT, DEV_FALLBACK_LNG } =
-      process.env;
-    if (DEV_FALLBACK_CITY && DEV_FALLBACK_COUNTRY && DEV_FALLBACK_LAT && DEV_FALLBACK_LNG) {
+    const {
+      DEV_FALLBACK_CITY,
+      DEV_FALLBACK_COUNTRY,
+      DEV_FALLBACK_LAT,
+      DEV_FALLBACK_LNG,
+    } = process.env;
+    if (
+      DEV_FALLBACK_CITY &&
+      DEV_FALLBACK_COUNTRY &&
+      DEV_FALLBACK_LAT &&
+      DEV_FALLBACK_LNG
+    ) {
       return {
         city: DEV_FALLBACK_CITY,
         country: DEV_FALLBACK_COUNTRY,
@@ -140,8 +131,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(204).end();
       }
 
-      // Real dedupe only applies to real visitors — debug/fallback geo has no
-      // meaningful IP to dedupe by (every local request looks identical).
       const isNewArrival =
         geo.isDebugSource ||
         (await getRedis().set(`dedupe:${hashIp(req)}`, 1, {
@@ -150,8 +139,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }));
 
       if (!isNewArrival) {
-        // Already counted recently — echo back their existing entry so the
-        // map still lights up for them, without adding a duplicate.
         const existing = (await readVisitors(now)).find(
           (visitor) =>
             visitor.city === geo.city && visitor.country === geo.country,
