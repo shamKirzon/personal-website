@@ -26,9 +26,11 @@ const POLL_INTERVAL = 12000;
 // Relative labels drift as time passes, so re-render them on a slow tick.
 const CLOCK_INTERVAL = 60000;
 
+// localStorage (not sessionStorage) so the choice survives switching tabs —
+// sessionStorage is scoped per-tab and would otherwise reset on every switch.
 const readConsent = (): Consent => {
   try {
-    const stored = sessionStorage.getItem(CONSENT_KEY);
+    const stored = localStorage.getItem(CONSENT_KEY);
     return stored === "granted" || stored === "declined" ? stored : "pending";
   } catch {
     return "pending";
@@ -37,7 +39,7 @@ const readConsent = (): Consent => {
 
 const storeConsent = (consent: Consent) => {
   try {
-    sessionStorage.setItem(CONSENT_KEY, consent);
+    localStorage.setItem(CONSENT_KEY, consent);
   } catch {
     /* empty */
   }
@@ -83,6 +85,22 @@ const VisitorsSection = () => {
   const [, setClockTick] = useState(0);
 
   const hasDecided = consent !== "pending";
+
+  // Keeps this tab's consent state in sync if the choice changes in another
+  // tab — the native cross-tab equivalent of an onChanged listener.
+  useEffect(() => {
+    const onStorage = (event: StorageEvent) => {
+      if (event.key !== CONSENT_KEY) return;
+      setConsent(
+        event.newValue === "granted" || event.newValue === "declined"
+          ? event.newValue
+          : "pending",
+      );
+    };
+
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
 
   /** Registers this visitor, then refreshes the shared list. */
   const join = useCallback(async () => {
