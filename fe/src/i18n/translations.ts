@@ -156,7 +156,7 @@ export const uiText: Record<"en" | "fil", UiText> = {
         "I'd love to show a live map of where visitors drop in from. If you're okay with it, I'll grab just your ",
       consentBodyEmphasis: "city and country",
       consentBodyEnd:
-        " — nothing else. No names, no accounts, no tracking, and it's only ever used to light up this map on my personal site.",
+        " — nothing else. Your browser may ask to share your location; I only ever keep the city and country it resolves to, never your exact position. No names, no accounts, no tracking, and it's only ever used to light up this map on my personal site.",
       consentAccept: "Sure, add me to the map",
       consentAdding: "Adding you…",
       consentDecline: "No thanks",
@@ -265,7 +265,7 @@ export const uiText: Record<"en" | "fil", UiText> = {
         "Gusto kong magpakita ng live na mapa kung saan galing ang mga bisita. Kung okay lang sa iyo, kukunin ko lang ang iyong ",
       consentBodyEmphasis: "lungsod at bansa",
       consentBodyEnd:
-        " — wala nang iba. Walang pangalan, walang account, walang tracking, at ginagamit lang ito para buhayin ang mapang ito sa personal kong site.",
+        " — wala nang iba. Maaaring humingi ang browser mo ng pahintulot sa lokasyon; ang lungsod at bansa lang ang itinatago ko, hindi ang eksaktong kinaroroonan mo. Walang pangalan, walang account, walang tracking, at ginagamit lang ito para buhayin ang mapang ito sa personal kong site.",
       consentAccept: "Sige, isama mo ako sa mapa",
       consentAdding: "Idinaragdag ka…",
       consentDecline: "Huwag na lang",

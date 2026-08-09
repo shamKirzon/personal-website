@@ -33,6 +33,26 @@ export const fetchVisitors = async (): Promise<Visitor[]> => {
 };
 
 /**
+ * Precise position from the browser (GPS on phones, WiFi positioning on
+ * laptops). Resolves to null if unsupported, denied, or too slow — the
+ * server then falls back to far less precise IP-based geolocation.
+ */
+const getBrowserCoords = (): Promise<{ lat: number; lng: number } | null> =>
+  new Promise((resolve) => {
+    if (!navigator.geolocation) return resolve(null);
+
+    navigator.geolocation.getCurrentPosition(
+      (position) =>
+        resolve({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        }),
+      () => resolve(null),
+      { timeout: 6000, maximumAge: 0 },
+    );
+  });
+
+/**
  * Registers this visitor and returns their location. Only ever called after
  * explicit consent — see the consent gate in VisitorsSection.
  *
@@ -41,7 +61,16 @@ export const fetchVisitors = async (): Promise<Visitor[]> => {
  */
 export const resolveMyLocation = async (): Promise<Visitor | null> => {
   try {
-    const response = await fetch(ENDPOINT, { method: "POST" });
+    const coords = await getBrowserCoords();
+
+    const response = await fetch(ENDPOINT, {
+      method: "POST",
+      ...(coords && {
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(coords),
+      }),
+    });
+
     if (response.status !== 200) return null;
     return (await response.json()) as Visitor;
   } catch {

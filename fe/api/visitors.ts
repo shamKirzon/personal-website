@@ -33,7 +33,69 @@ const toPublicVisitor = (visitor: StoredVisitor, now: number) => ({
 const firstHeader = (value: string | string[] | undefined) =>
   Array.isArray(value) ? value[0] : value;
 
-const readGeo = (req: VercelRequest) => {
+const NOMINATIM_UA =
+  "shammy-personal-website/1.0 (+https://shammy-suyat.vercel.app)";
+
+// ~1km grid, so a precise browser position never gets stored as-is.
+const COARSEN = 100;
+const coarsen = (n: number) => Math.round(n * COARSEN) / COARSEN;
+
+const reverseGeocode = async (lat: number, lng: number) => {
+  try {
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=10&accept-language=en`,
+      {
+        headers: { "User-Agent": NOMINATIM_UA },
+        signal: AbortSignal.timeout(4000),
+      },
+    );
+    if (!response.ok) return null;
+
+    const data = await response.json();
+    const city =
+      data.address?.city ??
+      data.address?.town ??
+      data.address?.municipality ??
+      data.address?.village ??
+      data.address?.county;
+    const country = data.address?.country_code?.toUpperCase();
+
+    return city && country ? { city: String(city), country } : null;
+  } catch {
+    return null;
+  }
+};
+
+const readBodyCoords = (req: VercelRequest) => {
+  const lat = Number(req.body?.lat);
+  const lng = Number(req.body?.lng);
+
+  const isValid =
+    Number.isFinite(lat) &&
+    Number.isFinite(lng) &&
+    Math.abs(lat) <= 90 &&
+    Math.abs(lng) <= 180;
+
+  return isValid ? { lat, lng } : null;
+};
+
+const readGeo = async (req: VercelRequest) => {
+  // Precise browser position, when the visitor allowed it. Only used to look
+  // up a city name — the raw position is coarsened before it goes anywhere.
+  const coords = readBodyCoords(req);
+  if (coords) {
+    const place = await reverseGeocode(coords.lat, coords.lng);
+    if (place) {
+      return {
+        city: place.city,
+        country: place.country,
+        lat: coarsen(coords.lat),
+        lng: coarsen(coords.lng),
+        isDebugSource: false,
+      };
+    }
+  }
+
   const city = firstHeader(req.headers["x-vercel-ip-city"]);
   const country = firstHeader(req.headers["x-vercel-ip-country"]);
   const lat = firstHeader(req.headers["x-vercel-ip-latitude"]);
@@ -126,7 +188,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     if (req.method === "POST") {
-      const geo = readGeo(req);
+      const geo = await readGeo(req);
       if (!geo || Number.isNaN(geo.lat) || Number.isNaN(geo.lng)) {
         return res.status(204).end();
       }
