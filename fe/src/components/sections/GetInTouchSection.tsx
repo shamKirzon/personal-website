@@ -39,18 +39,12 @@ const GetInTouchSection = () => {
   const [message, setMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [justSent, setJustSent] = useState(false);
-  const [shake, setShake] = useState(false);
   const { t } = useLanguage();
 
   const resetForm = () => {
     setName("");
     setEmail("");
     setMessage("");
-  };
-
-  const triggerShake = () => {
-    setShake(false);
-    requestAnimationFrame(() => setShake(true));
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -63,7 +57,6 @@ const GetInTouchSection = () => {
         description: t.getInTouch.toastIncompleteDesc,
         style: errorToastStyle,
       });
-      triggerShake();
       return;
     }
 
@@ -74,7 +67,6 @@ const GetInTouchSection = () => {
         description: t.getInTouch.toastInvalidDesc,
         style: errorToastStyle,
       });
-      triggerShake();
       return;
     }
 
@@ -173,10 +165,7 @@ const GetInTouchSection = () => {
 
         <form
           onSubmit={handleSubmit}
-          onAnimationEnd={() => setShake(false)}
-          className={`flex flex-col gap-3 rounded-xl border border-[var(--line-subtle)] bg-[var(--panel-bg-deep)] p-5 shadow-[var(--panel-shadow)] ${
-            shake ? "animate-shake" : ""
-          }`}
+          className="flex flex-col gap-3 rounded-xl border border-[var(--line-subtle)] bg-[var(--panel-bg-deep)] p-5 shadow-[var(--panel-shadow)]"
         >
           <input
             type="text"
@@ -218,7 +207,7 @@ const GetInTouchSection = () => {
               </>
             ) : justSent ? (
               <>
-                <Check size={16} className="animate-in zoom-in duration-300" />
+                <Check size={16} />
                 {t.getInTouch.sentButton}
               </>
             ) : (

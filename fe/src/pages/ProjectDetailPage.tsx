@@ -4,7 +4,7 @@ import { ArrowLeft, X } from "lucide-react";
 import { project } from "@/data/Project-data";
 import Pill from "@/components/ui/Pill";
 import { LaptopMockup, PhoneMockup } from "@/components/ui/DeviceMockup";
-import { StaggerGroup, itemVariants } from "@/components/ui/Reveal";
+import { StaggerGroup } from "@/components/ui/Reveal";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const ProjectDetailPage = () => {
@@ -101,9 +101,7 @@ const ProjectDetailPage = () => {
         </p>
         <StaggerGroup className="flex flex-wrap gap-2.5">
           {data.technology.map((tech) => (
-            <Pill key={tech.name} variants={itemVariants}>
-              {tech.name}
-            </Pill>
+            <Pill key={tech.name}>{tech.name}</Pill>
           ))}
         </StaggerGroup>
       </section>

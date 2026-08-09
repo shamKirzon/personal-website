@@ -1,6 +1,6 @@
 import { myTechStack } from "@/data/TechStack-data";
 import Pill from "../ui/Pill";
-import { StaggerGroup, itemVariants } from "../ui/Reveal";
+import { StaggerGroup } from "../ui/Reveal";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const StackSection = () => {
@@ -20,9 +20,7 @@ const StackSection = () => {
           </p>
           <StaggerGroup className="flex flex-wrap gap-2.5">
             {group.items.map((item) => (
-              <Pill key={item.title} variants={itemVariants}>
-                {item.title}
-              </Pill>
+              <Pill key={item.title}>{item.title}</Pill>
             ))}
           </StaggerGroup>
         </div>

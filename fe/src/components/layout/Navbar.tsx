@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, Moon, Sun, X } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
 import logo from "@/assets/images/personal-website-logo.webp";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { applyTheme, getStoredTheme, type Language } from "@/lib/preferences";
@@ -19,24 +18,11 @@ const ThemeToggle = ({ isLight, onToggle, className = "" }: ThemeToggleProps) =>
     aria-label="Toggle theme"
     className={`grid h-11 w-11 shrink-0 cursor-pointer place-items-center text-[var(--ink-mid)] transition-all duration-150 hover:scale-[1.08] hover:text-[var(--ink)] active:scale-[0.92] md:h-9 md:w-9 ${className}`}
   >
-    <span className="relative block h-[17px] w-[17px] overflow-hidden">
-      <AnimatePresence mode="popLayout" initial={false}>
-        <motion.span
-          key={isLight ? "sun" : "moon"}
-          initial={{ y: 16, rotate: 90, opacity: 0 }}
-          animate={{ y: 0, rotate: 0, opacity: 1 }}
-          exit={{ y: -16, rotate: -90, opacity: 0 }}
-          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute inset-0 flex items-center justify-center"
-        >
-          {isLight ? (
-            <Sun size={17} strokeWidth={1.5} />
-          ) : (
-            <Moon size={17} strokeWidth={1.5} />
-          )}
-        </motion.span>
-      </AnimatePresence>
-    </span>
+    {isLight ? (
+      <Sun size={17} strokeWidth={1.5} />
+    ) : (
+      <Moon size={17} strokeWidth={1.5} />
+    )}
   </button>
 );
 
@@ -51,22 +37,9 @@ const LanguageToggle = ({ language, onToggle, className = "" }: LanguageTogglePr
     type="button"
     onClick={onToggle}
     aria-label="Change language"
-    className={`grid h-11 shrink-0 cursor-pointer place-items-center text-[var(--ink-mid)] transition-all duration-150 hover:scale-[1.05] hover:text-[var(--ink)] active:scale-[0.95] md:h-9 ${className}`}
+    className={`grid h-11 w-8 shrink-0 cursor-pointer place-items-center text-[15px] text-[var(--ink-mid)] transition-all duration-150 hover:scale-[1.05] hover:text-[var(--ink)] active:scale-[0.95] md:h-9 ${className}`}
   >
-    <span className="relative block h-[17px] w-8 overflow-hidden">
-      <AnimatePresence mode="popLayout" initial={false}>
-        <motion.span
-          key={language}
-          initial={{ y: 16, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -16, opacity: 0 }}
-          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute inset-0 flex items-center justify-center text-[15px]"
-        >
-          {language === "en" ? "EN" : "FIL"}
-        </motion.span>
-      </AnimatePresence>
-    </span>
+    {language === "en" ? "EN" : "FIL"}
   </button>
 );
 
@@ -150,11 +123,9 @@ const Navbar = () => {
                   )}
                 </Link>
                 {isActive(link.to) && (
-                  <motion.span
-                    layoutId="nav-active-indicator"
+                  <span
                     aria-hidden
                     className="absolute inset-x-0 -bottom-0.5 h-px bg-[var(--ink)]"
-                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
                   />
                 )}
               </li>
@@ -179,66 +150,54 @@ const Navbar = () => {
         </button>
       </div>
 
-      <AnimatePresence>
-        {menuOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              onClick={() => setMenuOpen(false)}
-              className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm md:hidden"
-            />
+      {menuOpen && (
+        <>
+          <div
+            onClick={() => setMenuOpen(false)}
+            className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm md:hidden"
+          />
 
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="fixed right-0 top-0 z-[70] flex h-full w-[78%] max-w-xs flex-col border-l border-[var(--line-subtle)] bg-[var(--page-bg)] px-5 py-5 md:hidden"
-            >
-              <div className="flex justify-end">
-                <button
-                  type="button"
-                  onClick={() => setMenuOpen(false)}
-                  aria-label="Close menu"
-                  className="-mr-2 grid h-11 w-11 cursor-pointer place-items-center text-[var(--ink-mid)] transition-all duration-150 hover:text-[var(--ink)] active:scale-[0.9]"
-                >
-                  <X size={22} strokeWidth={1.75} />
-                </button>
-              </div>
+          <div className="fixed right-0 top-0 z-[70] flex h-full w-[78%] max-w-xs flex-col border-l border-[var(--line-subtle)] bg-[var(--page-bg)] px-5 py-5 md:hidden">
+            <div className="flex justify-end">
+              <button
+                type="button"
+                onClick={() => setMenuOpen(false)}
+                aria-label="Close menu"
+                className="-mr-2 grid h-11 w-11 cursor-pointer place-items-center text-[var(--ink-mid)] transition-all duration-150 hover:text-[var(--ink)] active:scale-[0.9]"
+              >
+                <X size={22} strokeWidth={1.75} />
+              </button>
+            </div>
 
-              <ul className="mt-4 flex flex-col">
-                {links.map((link) => (
-                  <li key={link.to}>
-                    <Link
-                      to={link.to}
-                      onClick={() => setMenuOpen(false)}
-                      className={`flex min-h-[44px] items-center text-[17px] transition-colors ${
-                        isActive(link.to)
-                          ? "font-medium text-[var(--ink)]"
-                          : "text-[var(--ink-mid)] hover:text-[var(--ink)]"
-                      }`}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+            <ul className="mt-4 flex flex-col">
+              {links.map((link) => (
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    onClick={() => setMenuOpen(false)}
+                    className={`flex min-h-[44px] items-center text-[17px] transition-colors ${
+                      isActive(link.to)
+                        ? "font-medium text-[var(--ink)]"
+                        : "text-[var(--ink-mid)] hover:text-[var(--ink)]"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
 
-              <div className="mt-auto flex items-center gap-2 border-t border-[var(--line-subtle)] pt-4">
-                <ThemeToggle
-                  isLight={isLight}
-                  onToggle={toggleTheme}
-                  className="-ml-2"
-                />
-                <LanguageToggle language={language} onToggle={toggleLanguage} />
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+            <div className="mt-auto flex items-center gap-2 border-t border-[var(--line-subtle)] pt-4">
+              <ThemeToggle
+                isLight={isLight}
+                onToggle={toggleTheme}
+                className="-ml-2"
+              />
+              <LanguageToggle language={language} onToggle={toggleLanguage} />
+            </div>
+          </div>
+        </>
+      )}
     </header>
   );
 };

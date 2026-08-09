@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
 import { previousRoles } from "@/data/PreviousRoles-data";
 import RoleEntry from "../ui/RoleEntry";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -67,37 +66,18 @@ const CurrentlySection = () => {
         <ChevronDown
           size={14}
           strokeWidth={2}
-          className={`text-[var(--ink-mid)] transition-transform duration-300 ${
-            showPreviousRoles ? "rotate-180" : ""
-          }`}
+          className={`text-[var(--ink-mid)] ${showPreviousRoles ? "rotate-180" : ""}`}
         />
         {t.currently.previousRoles}
       </button>
 
-      <AnimatePresence initial={false}>
-        {showPreviousRoles && (
-          <motion.div
-            key="previous-roles"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden"
-          >
-            <motion.ul
-              initial={{ x: -28, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: -28, opacity: 0 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-7 flex flex-col gap-9 border-l border-[var(--line-hairline)] pl-6"
-            >
-              {previousRoles.map((role) => (
-                <RoleEntry key={role.title.en} {...role} />
-              ))}
-            </motion.ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {showPreviousRoles && (
+        <ul className="mt-7 flex flex-col gap-9 border-l border-[var(--line-hairline)] pl-6">
+          {previousRoles.map((role) => (
+            <RoleEntry key={role.title.en} {...role} />
+          ))}
+        </ul>
+      )}
     </section>
   );
 };

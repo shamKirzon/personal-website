@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useReducedMotion } from "motion/react";
 import { toast } from "sonner";
 import {
   fetchVisitors,
@@ -49,21 +48,16 @@ const Signal = ({
   x,
   y,
   label,
-  animate,
 }: {
   x: number;
   y: number;
   label?: string;
-  animate: boolean;
 }) => (
   <span
     className="absolute -translate-x-1/2 -translate-y-1/2"
     style={{ left: `${x}%`, top: `${y}%` }}
   >
     <span className="relative flex items-center justify-center">
-      {animate && (
-        <span className="animate-visitor-ping absolute h-3.5 w-3.5 rounded-full bg-[var(--primary)]" />
-      )}
       <span className="relative h-[5px] w-[5px] rounded-full bg-[var(--primary)] shadow-[0_0_8px_var(--accent-border-soft)]" />
       {label && (
         <span className="absolute left-1/2 top-3 -translate-x-1/2 whitespace-nowrap rounded border border-[var(--line)] bg-[var(--panel-bg)] px-1.5 py-0.5 font-mono text-[10px] text-[var(--ink-soft)]">
@@ -76,8 +70,6 @@ const Signal = ({
 
 const VisitorsSection = () => {
   const { t } = useLanguage();
-  const prefersReducedMotion = useReducedMotion();
-
   const [consent, setConsent] = useState<Consent>(readConsent);
   const [visitors, setVisitors] = useState<Visitor[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -306,7 +298,6 @@ const VisitorsSection = () => {
                   x={marker.x}
                   y={marker.y}
                   label={marker.label}
-                  animate={!prefersReducedMotion}
                 />
               ))}
             </div>

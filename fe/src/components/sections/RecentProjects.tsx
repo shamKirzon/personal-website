@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { KeyboardEvent as ReactKeyboardEvent } from "react";
-import { motion } from "motion/react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { project } from "@/data/Project-data";
 import ProjectCard from "../ui/ProjectCard";
@@ -11,7 +10,6 @@ import { useLanguage } from "@/i18n/LanguageContext";
 const GAP_REM = 1;
 const DESKTOP_PER_VIEW = 3;
 const DOT_THRESHOLD = 6;
-const HINT_SESSION_KEY = "recent-projects-carousel-hint-shown";
 
 const buildOptions = (values: string[]): FilterOption[] => {
   const counts = values.reduce<Record<string, number>>((acc, value) => {
@@ -41,8 +39,6 @@ const RecentProjects = () => {
 
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [showHint, setShowHint] = useState(false);
-  const hasPlayedHint = useRef(false);
   const { language, t } = useLanguage();
 
   const toggleTech = (value: string) => {
@@ -91,30 +87,6 @@ const RecentProjects = () => {
     setActiveIndex(0);
     trackRef.current?.scrollTo({ left: 0 });
   }, [query, selectedTechs, selectedYear]);
-
-  // Swipe hint, once per session on first scroll into view.
-  useEffect(() => {
-    if (!hasResults) return;
-    if (sessionStorage.getItem(HINT_SESSION_KEY)) return;
-
-    const node = trackRef.current;
-    if (!node) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasPlayedHint.current && node.children.length > 1) {
-          hasPlayedHint.current = true;
-          setShowHint(true);
-          sessionStorage.setItem(HINT_SESSION_KEY, "1");
-          window.setTimeout(() => setShowHint(false), 900);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.6 },
-    );
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, [hasResults]);
 
   useEffect(() => {
     if (!hasResults) return;
@@ -215,7 +187,7 @@ const RecentProjects = () => {
             <div className="hidden lg:block">
               <div className="overflow-hidden">
                 <div
-                  className="flex transition-transform duration-500 ease-out"
+                  className="flex"
                   style={{
                     gap: `${GAP_REM}rem`,
                     transform: `translateX(calc(${-clampedIndex} * (100% + ${GAP_REM}rem) / ${DESKTOP_PER_VIEW}))`,
@@ -264,15 +236,13 @@ const RecentProjects = () => {
 
             {/* Mobile & tablet: swipeable carousel. */}
             <div className="lg:hidden">
-              <motion.div
+              <div
                 ref={trackRef}
                 role="region"
                 aria-roledescription="carousel"
                 aria-label="Recent projects"
                 tabIndex={0}
                 onKeyDown={onTrackKeyDown}
-                animate={showHint ? { x: [0, -18, 0] } : { x: 0 }}
-                transition={{ duration: 0.7, ease: "easeInOut" }}
                 className="scrollbar-hide flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-[9%] py-1 outline-none sm:px-[19%]"
               >
                 {filtered.map((item, itemIndex) => (
@@ -298,7 +268,7 @@ const RecentProjects = () => {
                     />
                   </div>
                 ))}
-              </motion.div>
+              </div>
 
               {filtered.length > 1 && activeIndex === filtered.length - 1 && (
                 <IconButton

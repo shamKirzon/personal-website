@@ -1,12 +1,4 @@
-import { useEffect, useMemo } from "react";
-import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-  useTransform,
-  type MotionValue,
-} from "motion/react";
+import { useMemo } from "react";
 
 const DOTS_PER_LAYER = 3;
 
@@ -48,52 +40,8 @@ const buildLayer = (tier: (typeof LAYER_TIERS)[number]): LayerConfig => {
   };
 };
 
-interface StarLayerProps extends LayerConfig {
-  pointerX: MotionValue<number>;
-  pointerY: MotionValue<number>;
-}
-
-const StarLayer = ({
-  depth,
-  backgroundImage,
-  backgroundSize,
-  pointerX,
-  pointerY,
-}: StarLayerProps) => {
-  const x = useTransform(pointerX, (value) => value * depth);
-  const y = useTransform(pointerY, (value) => value * depth);
-
-  return (
-    <motion.div
-      className="absolute -inset-20"
-      style={{ x, y, backgroundImage, backgroundSize }}
-    />
-  );
-};
-
 const StarField = () => {
-  const prefersReducedMotion = useReducedMotion();
-
   const layers = useMemo(() => LAYER_TIERS.map(buildLayer), []);
-
-  const pointerX = useMotionValue(0);
-  const pointerY = useMotionValue(0);
-
-  const springConfig = { stiffness: 55, damping: 20, mass: 0.6 };
-  const smoothX = useSpring(pointerX, springConfig);
-  const smoothY = useSpring(pointerY, springConfig);
-
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-
-    const handlePointerMove = (event: PointerEvent) => {
-      pointerX.set(event.clientX / window.innerWidth - 0.5);
-      pointerY.set(event.clientY / window.innerHeight - 0.5);
-    };
-
-    window.addEventListener("pointermove", handlePointerMove);
-    return () => window.removeEventListener("pointermove", handlePointerMove);
-  }, [prefersReducedMotion, pointerX, pointerY]);
 
   return (
     <div
@@ -101,13 +49,13 @@ const StarField = () => {
       className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
     >
       {layers.map((layer) => (
-        <StarLayer
+        <div
           key={layer.depth}
-          depth={layer.depth}
-          backgroundImage={layer.backgroundImage}
-          backgroundSize={layer.backgroundSize}
-          pointerX={smoothX}
-          pointerY={smoothY}
+          className="absolute -inset-20"
+          style={{
+            backgroundImage: layer.backgroundImage,
+            backgroundSize: layer.backgroundSize,
+          }}
         />
       ))}
     </div>
