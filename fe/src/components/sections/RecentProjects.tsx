@@ -184,10 +184,23 @@ const RecentProjects = () => {
         ) : (
           <>
             {/* Desktop: static row, paged by arrows. */}
-            <div className="hidden lg:block">
+            <div
+              className="hidden lg:block outline-none"
+              tabIndex={0}
+              onKeyDown={(event) => {
+                if (event.key === "ArrowLeft") {
+                  event.preventDefault();
+                  setIndex((prev) => Math.max(0, prev - 1));
+                }
+                if (event.key === "ArrowRight") {
+                  event.preventDefault();
+                  setIndex((prev) => Math.min(maxIndex, prev + 1));
+                }
+              }}
+            >
               <div className="overflow-hidden">
                 <div
-                  className="flex"
+                  className="flex transition-transform duration-500 ease-out"
                   style={{
                     gap: `${GAP_REM}rem`,
                     transform: `translateX(calc(${-clampedIndex} * (100% + ${GAP_REM}rem) / ${DESKTOP_PER_VIEW}))`,
