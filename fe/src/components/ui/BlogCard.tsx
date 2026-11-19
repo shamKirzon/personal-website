@@ -18,7 +18,7 @@ const BlogCard = ({
   return (
   <Link
     to={`/blog/${slug}`}
-    className="group flex h-full flex-col overflow-hidden rounded-xl border border-[var(--line-subtle)] bg-[var(--panel-bg-deep)] shadow-[var(--panel-shadow)] transition-all duration-200 ease-out hover:-translate-y-1.5 hover:border-[var(--line-strong)] hover:shadow-xl"
+    className="group flex h-full flex-col overflow-hidden rounded-xl border border-[var(--line-subtle)] bg-[var(--panel-bg-deep)] shadow-[var(--panel-shadow)] transition-[transform,border-color,box-shadow] duration-200 ease-out hover:-translate-y-[3px] hover:border-[var(--line-strong)] hover:shadow-[var(--card-hover-shadow)] motion-reduce:hover:translate-y-0"
   >
     <div className="overflow-hidden">
       <img
@@ -30,7 +30,7 @@ const BlogCard = ({
     </div>
 
     <div className="flex flex-1 flex-col p-5">
-      <h2 className="line-clamp-2 text-[19px] font-bold leading-snug text-[var(--ink)]">
+      <h2 data-plain className="line-clamp-2 text-[19px] font-bold leading-snug text-[var(--ink)]">
         {title[language]}
       </h2>
 

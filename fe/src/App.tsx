@@ -7,7 +7,6 @@ import BlogPostPage from "./pages/BlogPostPage";
 import VisitorsPage from "./pages/VisitorsPage";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
-import StarField from "./components/layout/StarField";
 import BackToTopButton from "./components/ui/BackToTopButton";
 import "./index.css";
 import { Toaster } from "./components/ui/sonner";
@@ -44,7 +43,6 @@ const App = () => {
 
   return (
     <div className="relative min-h-screen w-full overflow-x-clip bg-[var(--page-bg)] transition-colors duration-150">
-      <StarField />
       {/* <ChatBot /> */}
       <Navbar />
 

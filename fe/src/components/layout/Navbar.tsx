@@ -1,30 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, Moon, Sun, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import logo from "@/assets/images/personal-website-logo.webp";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { applyTheme, getStoredTheme, type Language } from "@/lib/preferences";
-
-interface ThemeToggleProps {
-  isLight: boolean;
-  onToggle: () => void;
-  className?: string;
-}
-
-const ThemeToggle = ({ isLight, onToggle, className = "" }: ThemeToggleProps) => (
-  <button
-    type="button"
-    onClick={onToggle}
-    aria-label="Toggle theme"
-    className={`grid h-11 w-11 shrink-0 cursor-pointer place-items-center text-[var(--ink-mid)] transition-all duration-150 hover:scale-[1.08] hover:text-[var(--ink)] active:scale-[0.92] md:h-9 md:w-9 ${className}`}
-  >
-    {isLight ? (
-      <Sun size={17} strokeWidth={1.5} />
-    ) : (
-      <Moon size={17} strokeWidth={1.5} />
-    )}
-  </button>
-);
+import type { Language } from "@/lib/preferences";
+import ThemeSwitch from "@/components/ui/ThemeSwitch";
+import { useThemePreference } from "@/hooks/useThemePreference";
+import { usePresence } from "@/hooks/usePresence";
 
 interface LanguageToggleProps {
   language: Language;
@@ -37,7 +19,7 @@ const LanguageToggle = ({ language, onToggle, className = "" }: LanguageTogglePr
     type="button"
     onClick={onToggle}
     aria-label="Change language"
-    className={`grid h-11 w-8 shrink-0 cursor-pointer place-items-center text-[15px] text-[var(--ink-mid)] transition-all duration-150 hover:scale-[1.05] hover:text-[var(--ink)] active:scale-[0.95] md:h-9 ${className}`}
+    className={`grid h-11 w-8 shrink-0 cursor-pointer place-items-center text-[15px] text-[var(--ink-mid)] transition-[color,background-color,border-color,box-shadow,transform,opacity] duration-150 hover:scale-[1.05] hover:text-[var(--ink)] active:scale-[0.95] md:h-9 ${className}`}
   >
     {language === "en" ? "EN" : "FIL"}
   </button>
@@ -47,7 +29,12 @@ const Navbar = () => {
   const location = useLocation();
   const { pathname } = location;
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isLight, setIsLight] = useState(() => getStoredTheme() === "light");
+  const { mounted: menuMounted, visible: menuVisible } = usePresence(menuOpen, 320);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const hasOpenedRef = useRef(false);
+  const [themePreference, setThemePreference] = useThemePreference();
   const { language, toggleLanguage, t } = useLanguage();
 
   const links = [
@@ -59,12 +46,6 @@ const Navbar = () => {
 
   const isActive = (to: string) =>
     to === "/" ? pathname === "/" : to !== "#" && pathname.startsWith(to);
-
-  const toggleTheme = () => {
-    const next = !isLight;
-    applyTheme(next ? "light" : "dark");
-    setIsLight(next);
-  };
 
   useEffect(() => {
     setMenuOpen(false);
@@ -85,10 +66,37 @@ const Navbar = () => {
     };
   }, [menuOpen]);
 
+  // Move focus into the panel when it opens and back to the trigger on close.
+  useEffect(() => {
+    if (menuOpen) {
+      hasOpenedRef.current = true;
+      closeButtonRef.current?.focus();
+    } else if (hasOpenedRef.current) {
+      menuButtonRef.current?.focus();
+    }
+  }, [menuOpen, menuMounted]);
+
+  const trapFocus = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== "Tab" || !panelRef.current) return;
+    const focusable = panelRef.current.querySelectorAll<HTMLElement>(
+      "a[href], button:not([disabled])",
+    );
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
+
   return (
     <header
       id="site-nav"
-      className={`relative w-full ${menuOpen ? "z-[60]" : "z-10"}`}
+      className={`relative w-full ${menuMounted ? "z-[60]" : "z-10"}`}
     >
       <div className="mx-auto flex h-20 max-w-[760px] items-center justify-between px-5 sm:px-10">
         <Link to="/" className="flex min-w-0 items-center gap-1.5">
@@ -97,7 +105,7 @@ const Navbar = () => {
             alt="Shammy logo"
             className="h-8 w-8 shrink-0 object-contain"
           />
-          <span className="truncate text-[20px] font-extrabold uppercase tracking-tight text-[var(--ink)]">
+          <span className="font-pixel truncate text-[20px] uppercase tracking-tight text-[var(--ink)]">
             Shammy
           </span>
         </Link>
@@ -134,44 +142,63 @@ const Navbar = () => {
 
           <span aria-hidden className="h-4 w-px bg-[var(--line)]" />
 
-          <ThemeToggle isLight={isLight} onToggle={toggleTheme} />
+          <ThemeSwitch value={themePreference} onChange={setThemePreference} />
 
           <LanguageToggle language={language} onToggle={toggleLanguage} />
         </nav>
 
         <button
+          ref={menuButtonRef}
           type="button"
           onClick={() => setMenuOpen(true)}
           aria-label="Open menu"
           aria-expanded={menuOpen}
-          className="-mr-2 grid h-11 w-11 shrink-0 cursor-pointer place-items-center text-[var(--ink-mid)] transition-all duration-150 hover:text-[var(--ink)] active:scale-[0.9] md:hidden"
+          className="-mr-2 grid h-11 w-11 shrink-0 cursor-pointer place-items-center text-[var(--ink-mid)] transition-[color,background-color,border-color,box-shadow,transform,opacity] duration-150 hover:text-[var(--ink)] active:scale-[0.9] md:hidden"
         >
           <Menu size={22} strokeWidth={1.75} />
         </button>
       </div>
 
-      {menuOpen && (
+      {menuMounted && (
         <>
           <div
             onClick={() => setMenuOpen(false)}
-            className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm md:hidden"
+            className={`fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm transition-opacity duration-300 ease-out md:hidden ${
+              menuVisible ? "opacity-100" : "opacity-0"
+            }`}
           />
 
-          <div className="fixed right-0 top-0 z-[70] flex h-full w-[78%] max-w-xs flex-col border-l border-[var(--line-subtle)] bg-[var(--page-bg)] px-5 py-5 md:hidden">
+          <div
+            ref={panelRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu"
+            onKeyDown={trapFocus}
+            className={`fixed right-0 top-0 z-[70] flex h-full w-[78%] max-w-xs flex-col overscroll-contain border-l border-[var(--line-subtle)] bg-[var(--page-bg)] px-5 py-5 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden ${
+              menuVisible ? "translate-x-0" : "translate-x-full"
+            }`}
+          >
             <div className="flex justify-end">
               <button
+                ref={closeButtonRef}
                 type="button"
                 onClick={() => setMenuOpen(false)}
                 aria-label="Close menu"
-                className="-mr-2 grid h-11 w-11 cursor-pointer place-items-center text-[var(--ink-mid)] transition-all duration-150 hover:text-[var(--ink)] active:scale-[0.9]"
+                className="-mr-2 grid h-11 w-11 cursor-pointer place-items-center text-[var(--ink-mid)] transition-[color,transform] duration-150 hover:text-[var(--ink)] active:scale-[0.9]"
               >
                 <X size={22} strokeWidth={1.75} />
               </button>
             </div>
 
             <ul className="mt-4 flex flex-col">
-              {links.map((link) => (
-                <li key={link.to}>
+              {links.map((link, index) => (
+                <li
+                  key={link.to}
+                  style={{ transitionDelay: menuVisible ? `${120 + index * 45}ms` : "0ms" }}
+                  className={`transition-[opacity,transform] duration-300 ease-out ${
+                    menuVisible ? "translate-x-0 opacity-100" : "translate-x-3 opacity-0"
+                  }`}
+                >
                   <Link
                     to={link.to}
                     onClick={() => setMenuOpen(false)}
@@ -187,12 +214,8 @@ const Navbar = () => {
               ))}
             </ul>
 
-            <div className="mt-auto flex items-center gap-2 border-t border-[var(--line-subtle)] pt-4">
-              <ThemeToggle
-                isLight={isLight}
-                onToggle={toggleTheme}
-                className="-ml-2"
-              />
+            <div className="mt-auto flex items-center gap-3 border-t border-[var(--line-subtle)] pt-4">
+              <ThemeSwitch value={themePreference} onChange={setThemePreference} />
               <LanguageToggle language={language} onToggle={toggleLanguage} />
             </div>
           </div>

@@ -16,6 +16,16 @@ export interface UiText {
     noResults: string;
   };
   stack: { label: string };
+  certifications: {
+    label: string;
+    subtitle: string;
+    view: string;
+    close: string;
+    /** "{host}" is replaced with the site name, e.g. "credly.com". */
+    verifyOn: string;
+    types: { certification: string; course: string; badge: string };
+    statuses: { earned: string; "in-progress": string };
+  };
   getInTouch: {
     label: string;
     connectTitle: string;
@@ -100,6 +110,15 @@ export const uiText: Record<"en" | "fil", UiText> = {
     },
     stack: {
       label: "Stack",
+    },
+    certifications: {
+      label: "Certifications",
+      subtitle: "Credentials I've earned, each verifiable at its source.",
+      view: "View",
+      close: "Close",
+      verifyOn: "Verify on {host}",
+      types: { certification: "Certification", course: "Course", badge: "Badge" },
+      statuses: { earned: "Earned", "in-progress": "In progress" },
     },
     getInTouch: {
       label: "Get In Touch",
@@ -209,6 +228,15 @@ export const uiText: Record<"en" | "fil", UiText> = {
     },
     stack: {
       label: "Stack",
+    },
+    certifications: {
+      label: "Mga Sertipikasyon",
+      subtitle: "Mga kredensyal na nakuha ko, bawat isa ay mabe-verify sa pinagmulan nito.",
+      view: "Tingnan",
+      close: "Isara",
+      verifyOn: "I-verify sa {host}",
+      types: { certification: "Sertipikasyon", course: "Kurso", badge: "Badge" },
+      statuses: { earned: "Nakuha", "in-progress": "Kasalukuyan" },
     },
     getInTouch: {
       label: "Makipag-ugnayan",

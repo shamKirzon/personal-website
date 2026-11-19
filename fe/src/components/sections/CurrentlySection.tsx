@@ -61,23 +61,31 @@ const CurrentlySection = () => {
         type="button"
         onClick={() => setShowPreviousRoles((prev) => !prev)}
         aria-expanded={showPreviousRoles}
-        className="mt-6 flex cursor-pointer items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--panel-bg)] px-4 py-2 text-[14px] text-[var(--ink)] transition-all duration-150 hover:scale-[1.02] hover:border-[var(--line-strong)] hover:bg-[var(--hover-bg)] hover:font-semibold hover:text-[var(--ink)] active:scale-[0.97]"
+        className="mt-6 flex cursor-pointer items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--panel-bg)] px-4 py-2 text-[14px] text-[var(--ink)] transition-[color,background-color,border-color,box-shadow,transform,opacity] duration-150 hover:scale-[1.02] hover:border-[var(--line-strong)] hover:bg-[var(--hover-bg)] hover:text-[var(--ink)] active:scale-[0.97]"
       >
         <ChevronDown
           size={14}
           strokeWidth={2}
-          className={`text-[var(--ink-mid)] ${showPreviousRoles ? "rotate-180" : ""}`}
+          className={`text-[var(--ink-mid)] transition-transform duration-300 ease-out ${showPreviousRoles ? "rotate-180" : ""}`}
         />
         {t.currently.previousRoles}
       </button>
 
-      {showPreviousRoles && (
-        <ul className="mt-7 flex flex-col gap-9 border-l border-[var(--line-hairline)] pl-6">
-          {previousRoles.map((role) => (
-            <RoleEntry key={role.title.en} {...role} />
-          ))}
-        </ul>
-      )}
+      <div
+        aria-hidden={!showPreviousRoles}
+        inert={!showPreviousRoles}
+        className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
+          showPreviousRoles ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+        }`}
+      >
+        <div className="min-h-0 overflow-hidden">
+          <ul className="mt-7 flex flex-col gap-9 border-l border-[var(--line-hairline)] pl-6">
+            {previousRoles.map((role) => (
+              <RoleEntry key={role.title.en} {...role} />
+            ))}
+          </ul>
+        </div>
+      </div>
     </section>
   );
 };

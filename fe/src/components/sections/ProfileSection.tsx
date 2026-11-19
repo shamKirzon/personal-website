@@ -1,4 +1,5 @@
-import myProfile from "@/assets/images/profile.jpg";
+import { MapPin } from "lucide-react";
+import { defaultProfile } from "@/data/Profile-data";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const ProfileSection = () => {
@@ -8,8 +9,8 @@ const ProfileSection = () => {
   <section className="mx-auto max-w-[760px] px-5 sm:px-10 pt-8">
     <div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
       <img
-        src={myProfile}
-        alt="Shammy Kierson Suyat"
+        src={defaultProfile.path}
+        alt={defaultProfile.alt}
         className="h-[105px] w-[105px] shrink-0 self-stretch rounded-2xl object-cover sm:h-auto"
       />
 
@@ -23,19 +24,8 @@ const ProfileSection = () => {
         </p>
 
         <p className="flex items-center gap-2 text-[16px] text-[var(--ink-soft)]">
-          <svg
-            aria-hidden
-            viewBox="0 0 30 20"
-            className="h-[13px] w-[19.5px] shrink-0 rounded-[2px]"
-          >
-            <rect width="30" height="10" fill="#0038A8" />
-            <rect y="10" width="30" height="10" fill="#CE1126" />
-            <polygon points="0,0 0,20 17,10" fill="#FFFFFF" />
-            <circle cx="8" cy="10" r="3.2" fill="#FCD116" />
-            <circle cx="3" cy="3" r="1.1" fill="#FCD116" />
-            <circle cx="3" cy="17" r="1.1" fill="#FCD116" />
-            <circle cx="14.5" cy="10" r="1.1" fill="#FCD116" />
-          </svg>
+          {/* Drawn with currentColor, so it always matches the text color in both themes. */}
+          <MapPin aria-hidden size={17} strokeWidth={1.8} className="shrink-0" />
           {t.getInTouch.locationValue}
         </p>
       </div>

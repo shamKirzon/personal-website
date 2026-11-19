@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { usePresence } from "@/hooks/usePresence";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, X } from "lucide-react";
 import { project } from "@/data/Project-data";
@@ -11,7 +12,23 @@ const ProjectDetailPage = () => {
   const { slug } = useParams();
   const data = project.find((item) => item.slug === slug);
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
+  // Remember the last image so it stays on screen while the overlay fades out.
+  const [shownSrc, setShownSrc] = useState<string | null>(null);
+  const { mounted: lightboxMounted, visible: lightboxVisible } = usePresence(
+    lightboxSrc !== null,
+    220,
+  );
   const { language, t } = useLanguage();
+
+  useEffect(() => {
+    if (lightboxSrc) setShownSrc(lightboxSrc);
+  }, [lightboxSrc]);
+
+  useEffect(() => {
+    if (!lightboxSrc) return;
+    document.body.classList.add("overflow-hidden");
+    return () => document.body.classList.remove("overflow-hidden");
+  }, [lightboxSrc]);
 
   useEffect(() => {
     if (!lightboxSrc) return;
@@ -88,7 +105,7 @@ const ProjectDetailPage = () => {
             href={button.url}
             target="_blank"
             rel="noreferrer"
-            className="rounded-lg border border-[var(--line)] bg-[var(--panel-bg)] px-5 py-2.5 text-[15px] text-[var(--ink)] transition-all duration-150 hover:scale-[1.03] hover:border-[var(--line-strong)] active:scale-[0.97]"
+            className="rounded-lg border border-[var(--line)] bg-[var(--panel-bg)] px-5 py-2.5 text-[15px] text-[var(--ink)] transition-[color,background-color,border-color,box-shadow,transform,opacity] duration-150 hover:scale-[1.03] hover:border-[var(--line-strong)] active:scale-[0.97]"
           >
             {button.label[language]}
           </a>
@@ -122,23 +139,27 @@ const ProjectDetailPage = () => {
         </ul>
       </section>
 
-      {lightboxSrc && (
+      {lightboxMounted && shownSrc && (
         <div
           onClick={() => setLightboxSrc(null)}
-          className="fixed inset-0 z-50 flex cursor-zoom-out items-center justify-center bg-black/95"
+          className={`fixed inset-0 z-50 flex cursor-zoom-out items-center justify-center overscroll-contain bg-black/95 transition-opacity duration-200 ease-out ${
+            lightboxVisible ? "opacity-100" : "opacity-0"
+          }`}
         >
           <button
             type="button"
             aria-label="Close preview"
             onClick={() => setLightboxSrc(null)}
-            className="fixed right-6 top-5 cursor-pointer text-[var(--ink-mid)] transition-all duration-150 hover:scale-110 hover:text-[var(--ink)] active:scale-90"
+            className="fixed right-6 top-5 cursor-pointer text-[var(--ink-mid)] transition-[color,transform] duration-150 hover:scale-110 hover:text-[var(--ink)] active:scale-90"
           >
             <X size={22} strokeWidth={1.75} />
           </button>
           <img
-            src={lightboxSrc}
+            src={shownSrc}
             alt={data.name}
-            className="max-h-[88vh] max-w-[88vw] rounded-xl border border-[var(--line)] object-contain"
+            className={`max-h-[88vh] max-w-[88vw] rounded-xl border border-[var(--line)] object-contain transition-transform duration-200 ease-out ${
+              lightboxVisible ? "scale-100" : "scale-95"
+            }`}
           />
         </div>
       )}

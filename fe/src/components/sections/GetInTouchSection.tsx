@@ -172,7 +172,7 @@ const GetInTouchSection = () => {
             value={name}
             onChange={(event) => setName(event.target.value)}
             placeholder={t.getInTouch.namePlaceholder}
-            className="h-11 w-full rounded-lg border border-[var(--line-subtle)] bg-[var(--surface-muted)] px-4 text-[15px] text-[var(--ink)] outline-none transition-all duration-150 placeholder:text-[var(--ink-faint)] focus:border-[var(--line-strong)] focus:shadow-[0_0_0_3px_var(--overlay-soft)]"
+            className="h-11 w-full rounded-lg border border-[var(--line-subtle)] bg-[var(--surface-muted)] px-4 text-[15px] text-[var(--ink)] outline-none transition-[color,background-color,border-color,box-shadow,transform,opacity] duration-150 placeholder:text-[var(--ink-faint)] focus:border-[var(--line-strong)] focus:shadow-[0_0_0_3px_var(--overlay-soft)]"
           />
 
           <input
@@ -180,7 +180,7 @@ const GetInTouchSection = () => {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             placeholder={t.getInTouch.emailPlaceholder}
-            className="h-11 w-full rounded-lg border border-[var(--line-subtle)] bg-[var(--surface-muted)] px-4 text-[15px] text-[var(--ink)] outline-none transition-all duration-150 placeholder:text-[var(--ink-faint)] focus:border-[var(--line-strong)] focus:shadow-[0_0_0_3px_var(--overlay-soft)]"
+            className="h-11 w-full rounded-lg border border-[var(--line-subtle)] bg-[var(--surface-muted)] px-4 text-[15px] text-[var(--ink)] outline-none transition-[color,background-color,border-color,box-shadow,transform,opacity] duration-150 placeholder:text-[var(--ink-faint)] focus:border-[var(--line-strong)] focus:shadow-[0_0_0_3px_var(--overlay-soft)]"
           />
 
           <textarea
@@ -188,13 +188,13 @@ const GetInTouchSection = () => {
             onChange={(event) => setMessage(event.target.value)}
             placeholder={t.getInTouch.messagePlaceholder}
             rows={5}
-            className="w-full resize-none rounded-lg border border-[var(--line-subtle)] bg-[var(--surface-muted)] px-4 py-3 text-[15px] text-[var(--ink)] outline-none transition-all duration-150 placeholder:text-[var(--ink-faint)] focus:border-[var(--line-strong)] focus:shadow-[0_0_0_3px_var(--overlay-soft)]"
+            className="w-full resize-none rounded-lg border border-[var(--line-subtle)] bg-[var(--surface-muted)] px-4 py-3 text-[15px] text-[var(--ink)] outline-none transition-[color,background-color,border-color,box-shadow,transform,opacity] duration-150 placeholder:text-[var(--ink-faint)] focus:border-[var(--line-strong)] focus:shadow-[0_0_0_3px_var(--overlay-soft)]"
           />
 
           <button
             type="submit"
             disabled={isSending}
-            className={`mt-auto flex h-11 cursor-pointer items-center justify-center gap-2 rounded-lg text-[15px] font-semibold transition-all duration-150 hover:scale-[1.02] hover:opacity-90 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100 ${
+            className={`mt-auto flex h-11 cursor-pointer items-center justify-center gap-2 rounded-lg text-[15px] font-semibold transition-[color,background-color,border-color,box-shadow,transform,opacity] duration-150 hover:scale-[1.02] hover:opacity-90 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100 ${
               justSent
                 ? "bg-[#22c55e] text-white"
                 : "bg-[var(--cta-bg)] text-[var(--cta-ink)]"

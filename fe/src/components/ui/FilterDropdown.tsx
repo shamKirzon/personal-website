@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { CirclePlus, Search } from "lucide-react";
+import { usePresence } from "@/hooks/usePresence";
 
 export interface FilterOption {
   value: string;
@@ -26,6 +27,8 @@ const FilterDropdown = ({
 }: FilterDropdownProps) => {
   const [query, setQuery] = useState("");
   const rootRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
+  const { mounted, visible } = usePresence(isOpen, 150);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -48,7 +51,14 @@ const FilterDropdown = ({
   }, [isOpen, onOpenChange]);
 
   useEffect(() => {
-    if (!isOpen) setQuery("");
+    if (!mounted) setQuery("");
+  }, [mounted]);
+
+  // Focus the search box on desktop only: on touch screens it would pop the keyboard.
+  useEffect(() => {
+    if (isOpen && window.matchMedia("(pointer: fine)").matches) {
+      searchRef.current?.focus();
+    }
   }, [isOpen]);
 
   const visibleOptions = options.filter((option) =>
@@ -61,7 +71,7 @@ const FilterDropdown = ({
         type="button"
         onClick={() => onOpenChange(!isOpen)}
         aria-expanded={isOpen}
-        className={`flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-lg border px-3 text-[15px] transition-all duration-150 hover:scale-[1.02] active:scale-[0.97] sm:w-auto ${
+        className={`flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-lg border px-3 text-[15px] transition-[color,background-color,border-color,box-shadow,transform,opacity] duration-150 hover:scale-[1.02] active:scale-[0.97] sm:w-auto ${
           selected.length > 0
             ? "border-[var(--line-strong)] bg-[var(--overlay-strong)] text-[var(--ink)]"
             : "border-[var(--line-subtle)] bg-[var(--panel-bg)] text-[var(--ink)] shadow-[var(--panel-shadow)] hover:border-[var(--line-strong)]"
@@ -76,8 +86,12 @@ const FilterDropdown = ({
         )}
       </button>
 
-      {isOpen && (
-        <div className="absolute left-0 z-20 mt-2 w-full overflow-hidden rounded-lg border border-[var(--line)] bg-[var(--panel-bg)] shadow-xl sm:w-64">
+      {mounted && (
+        <div
+          className={`absolute left-0 z-20 mt-2 w-full origin-top-left overflow-hidden rounded-lg border border-[var(--line)] bg-[var(--panel-bg)] shadow-xl transition-[opacity,transform] duration-150 ease-out sm:w-64 ${
+            visible ? "translate-y-0 scale-100 opacity-100" : "-translate-y-1 scale-95 opacity-0"
+          }`}
+        >
           <div className="flex items-center gap-2 border-b border-[var(--line-subtle)] px-3">
             <Search
               size={15}
@@ -85,7 +99,7 @@ const FilterDropdown = ({
               className="shrink-0 text-[var(--ink-faint)]"
             />
             <input
-              autoFocus
+              ref={searchRef}
               type="text"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
