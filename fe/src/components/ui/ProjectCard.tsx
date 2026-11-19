@@ -26,7 +26,7 @@ const ProjectCard = ({
   return (
   <Link
     to={`/projects/${slug}`}
-    className="group flex h-full flex-col overflow-hidden rounded-xl border border-[var(--line-subtle)] bg-[var(--panel-bg)] shadow-[var(--panel-shadow)] transition-all duration-200 ease-out hover:border-[var(--line-strong)] hover:shadow-xl"
+    className="group flex h-full flex-col overflow-hidden rounded-xl border border-[var(--line-subtle)] bg-[var(--panel-bg)] shadow-[var(--panel-shadow)] transition-[transform,border-color,box-shadow] duration-200 ease-out hover:-translate-y-[3px] hover:border-[var(--line-strong)] hover:shadow-[var(--card-hover-shadow)] motion-reduce:hover:translate-y-0"
   >
     <div className="overflow-hidden">
       <img

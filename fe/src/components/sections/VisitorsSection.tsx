@@ -234,7 +234,7 @@ const VisitorsSection = () => {
               type="button"
               onClick={join}
               disabled={isJoining}
-              className="h-11 cursor-pointer rounded-lg bg-[var(--cta-bg)] px-5 text-[15px] font-semibold text-[var(--cta-ink)] transition-all duration-150 hover:scale-[1.02] hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--primary)] active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100"
+              className="h-11 cursor-pointer rounded-lg bg-[var(--cta-bg)] px-5 text-[15px] font-semibold text-[var(--cta-ink)] transition-[color,background-color,border-color,box-shadow,transform,opacity] duration-150 hover:scale-[1.02] hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--primary)] active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100"
             >
               {isJoining
                 ? t.visitorsMap.consentAdding
@@ -244,7 +244,7 @@ const VisitorsSection = () => {
               type="button"
               onClick={decline}
               disabled={isJoining}
-              className="h-11 cursor-pointer rounded-lg border border-[var(--line)] px-5 text-[15px] text-[var(--ink-mid)] transition-all duration-150 hover:border-[var(--line-strong)] hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--primary)] active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-70"
+              className="h-11 cursor-pointer rounded-lg border border-[var(--line)] px-5 text-[15px] text-[var(--ink-mid)] transition-[color,background-color,border-color,box-shadow,transform,opacity] duration-150 hover:border-[var(--line-strong)] hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--primary)] active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-70"
             >
               {t.visitorsMap.consentDecline}
             </button>

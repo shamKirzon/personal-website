@@ -198,7 +198,7 @@ const RecentProjects = () => {
                 }
               }}
             >
-              <div className="overflow-hidden">
+              <div className="-my-2 overflow-hidden py-2">
                 <div
                   className="flex transition-transform duration-500 ease-out"
                   style={{
@@ -256,7 +256,7 @@ const RecentProjects = () => {
                 aria-label="Recent projects"
                 tabIndex={0}
                 onKeyDown={onTrackKeyDown}
-                className="scrollbar-hide flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-[9%] py-1 outline-none sm:px-[19%]"
+                className="scrollbar-hide flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-[9%] py-2 outline-none sm:px-[19%]"
               >
                 {filtered.map((item, itemIndex) => (
                   <div
@@ -303,7 +303,7 @@ const RecentProjects = () => {
                           type="button"
                           aria-label={`Go to ${item.name}`}
                           onClick={() => scrollToIndex(dotIndex)}
-                          className={`h-1.5 cursor-pointer rounded-full transition-all duration-200 hover:scale-125 active:scale-90 ${
+                          className={`h-1.5 cursor-pointer rounded-full transition-[width,background-color,transform] duration-200 hover:scale-125 active:scale-90 ${
                             dotIndex === activeIndex
                               ? "w-5 bg-[var(--ink)]"
                               : "w-1.5 bg-[var(--line-strong)]"

@@ -35,4 +35,13 @@ export const myTechStack: TechStackGroup[] = [
     category: { en: "DevOps & Tools", fil: "DevOps at Mga Kasangkapan" },
     items: [{ title: "GitHub" }, { title: "Vercel" }, { title: "Firebase" }],
   },
+  {
+    category: { en: "AI", fil: "AI" },
+    items: [
+      { title: "Claude Code" },
+      { title: "Codex" },
+      { title: "Google Gemini" },
+      { title: "OpenAI" },
+    ],
+  },
 ];

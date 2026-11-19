@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import ProfileSection from "@/components/sections/ProfileSection";
 import CurrentlySection from "@/components/sections/CurrentlySection";
 import RecentProjects from "@/components/sections/RecentProjects";
+import CertificationsSection from "@/components/sections/CertificationsSection";
 import StackSection from "@/components/sections/StackSection";
 import GetInTouchSection from "@/components/sections/GetInTouchSection";
 import { Reveal } from "@/components/ui/Reveal";
@@ -29,6 +30,9 @@ const HomePage = () => {
       </Reveal>
       <Reveal>
         <RecentProjects />
+      </Reveal>
+      <Reveal>
+        <CertificationsSection />
       </Reveal>
       <Reveal>
         <StackSection />

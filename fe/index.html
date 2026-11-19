@@ -2,13 +2,14 @@
 <html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="https://cdn.jsdelivr.net/gh/vercel/geist-pixel-font@main/fonts/webfonts/GeistPixel-Square.woff2" />
     <link rel="icon" type="image/jpg" sizes="180x180" href="/profile.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@300..600&display=swap"
       rel="stylesheet"
     />
 
@@ -17,7 +18,11 @@
     <!-- Restores saved preferences before first paint to avoid a flash. -->
     <script>
       try {
-        if (localStorage.getItem("theme") === "light") {
+        // "light" | "dark" | "system" (default). "system" follows the device setting.
+        var theme = localStorage.getItem("theme");
+        var prefersLight =
+          window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+        if (theme === "light" || (theme !== "dark" && prefersLight)) {
           document.documentElement.classList.add("light");
         }
         if (localStorage.getItem("language") === "fil") {

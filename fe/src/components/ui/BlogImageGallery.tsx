@@ -73,7 +73,7 @@ const BlogImageGallery = ({ images, alt }: BlogImageGalleryProps) => {
                 type="button"
                 aria-label={`Go to image ${index + 1}`}
                 onClick={() => api?.scrollTo(index)}
-                className={`h-1.5 cursor-pointer rounded-full transition-all duration-200 hover:scale-125 active:scale-90 ${
+                className={`h-1.5 cursor-pointer rounded-full transition-[width,background-color,transform] duration-200 hover:scale-125 active:scale-90 ${
                   index === activeIndex
                     ? "w-5 bg-[var(--ink)]"
                     : "w-1.5 bg-[var(--line-strong)]"
